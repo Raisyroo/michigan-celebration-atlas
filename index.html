@@ -491,6 +491,103 @@
       .hero-button-wrap{
         margin-top:185px;
       }
+      html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  width: calc(100% - 24px);
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+.brand,
+.brand-text,
+.panel,
+.featured-card,
+.search-strip,
+.result,
+.theme-chip,
+.hero-banner,
+.desktop-sections,
+.featured-grid {
+  min-width: 0;
+}
+
+.search-strip input {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 96px;
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: calc(100% - 20px);
+    max-width: 100%;
+  }
+
+  .panel {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .featured-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .search-strip {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .theme-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+  }
+
+  .desktop-sections {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .bottom-nav {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    border-radius: 0;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  }
+
+  .brand-text {
+    font-size: 14px;
+  }
+}
     }
   </style>
 </head>
