@@ -20,7 +20,6 @@
       --shadow:0 8px 24px rgba(67,44,20,.12);
       --radius:18px;
       --poster-radius:14px;
-      --max:1180px;
     }
 
     *{box-sizing:border-box}
@@ -32,6 +31,7 @@
       background:
         radial-gradient(circle at top left, rgba(255,255,255,.45), transparent 25%),
         linear-gradient(180deg, #f7edd9 0%, #efe0be 100%);
+      padding-bottom: 96px;
     }
 
     a{text-decoration:none;color:inherit}
@@ -92,201 +92,59 @@
       font-size:15px;
     }
 
-    .nav-links a:hover{opacity:.8}
-
     .hero{
-      padding:16px 0 10px;
+      padding:16px 0 12px;
     }
 
-    .hero {
-  padding: 16px 0 10px;
-}
+    .hero-banner{
+      position:relative;
+      width:100%;
+      min-height:720px;
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(90,70,40,.10);
+      background-image:url("/images/michigan-festival-hero.jpg");
+      background-size:cover;
+      background-position:center center;
+    }
 
-@media (max-width: 768px) {
-  .hero-banner {
-    min-height: 620px;
-    background-position: center 42%;
-    background-size: cover;
-    border-radius: 24px;
-  }
+    .hero-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:34px 18px 24px;
+      background:linear-gradient(
+        180deg,
+        rgba(0,0,0,.06) 0%,
+        rgba(0,0,0,.02) 25%,
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,.04) 100%
+      );
+    }
 
-  .hero-overlay {
-    padding: 26px 16px 22px;
-    align-items: flex-start;
-  }
+    .hero-button-wrap{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-top:260px;
+    }
 
-  .atlas-title {
-    font-size: clamp(30px, 10vw, 56px);
-    line-height: 0.95;
-    letter-spacing: -0.5px;
-  }
-
-  .atlas-subtitle {
-    font-size: clamp(14px, 4.7vw, 22px);
-    line-height: 1.28;
-    max-width: 92%;
-    margin: 14px auto 0;
-  }
-
-  .hero-near-btn {
-    width: 100%;
-    max-width: 460px;
-    margin-top: 18px;
-    font-size: 17px;
-    padding: 16px 18px;
-  }
-
-  .brand-text {
-    font-size: 14px;
-  }
-
-  body {
-    padding-bottom: 96px;
-  }
-
-  .bottom-nav {
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-  }
-.hero-shell {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-.hero-copy,
-.hero-art,
-.panel,
-.featured-card,
-.theme-chip {
-  box-shadow: var(--shadow);
-}
-
-.hero-copy {
-  background: rgba(255, 248, 232, 0.85);
-  border: 1px solid rgba(90, 70, 40, 0.10);
-  border-radius: 24px;
-  padding: 18px;
-}
-
-.kicker {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: #fff8ea;
-  border: 1px solid #d6c19a;
-  color: #345274;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-h1 {
-  font-size: clamp(42px, 9vw, 78px);
-  line-height: 0.92;
-  letter-spacing: -1.2px;
-  margin: 0 0 14px;
-  color: #17385b;
-}
-
-.hero-copy p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.45;
-  color: #324555;
-}
-
-.hero-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.btn {
-  border: none;
-  border-radius: 999px;
-  padding: 14px 18px;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.btn-primary {
-  background: #274e74;
-  color: white;
-}
-
-.btn-secondary {
-  background: #f9f1dd;
-  color: #274e74;
-  border: 1px solid #d8c29a;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.hero-stat {
-  background: #f7f0e1;
-  border: 1px solid #dac7a5;
-  border-radius: 16px;
-  padding: 10px 12px;
-  min-height: 74px;
-}
-
-.hero-stat strong {
-  display: block;
-  color: #1d4064;
-  font-size: 16px;
-  margin-bottom: 3px;
-}
-
-.hero-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 14px;
-}
-
-.hero-art::before {
-  content: "";
-  position: absolute;
-  left: -5%;
-  right: -5%;
-  bottom: -2%;
-  height: 36%;
-  background:
-    radial-gradient(circle at 12% 100%, #447542 0 22%, transparent 23%),
-    radial-gradient(circle at 36% 100%, #2f6137 0 18%, transparent 19%),
-    radial-gradient(circle at 76% 100%, #3a6d42 0 18%, transparent 19%),
-    linear-gradient(180deg, #8ac86e, #60904f);
-}
-
-.hero-art::after {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: 18%;
-  height: 22%;
-  background:
-    radial-gradient(circle at 16% 0%, #f8f2e7 0 18%, transparent 19%),
-    radial-gradient(circle at 32% 0%, #f8f2e7 0 18%, transparent 19%),
-    radial-gradient(circle at 48% 0%, #f8f2e7 0 18%, transparent 19%),
-    radial-gradient(circle at 64% 0%, #f8f2e7 0 18%, transparent 19%),
-    radial-gradient(circle at 80% 0%, #f8f2e7 0 18%, transparent 19%),
-    linear-gradient(180deg, #fefcf6, #efe8d8);
-  border-radius: 22px 22px 0 0;
-  box-shadow: 0 -12px 0 rgba(255, 255, 255, 0.22);
-}
+    .near-btn{
+      width:min(100%, 660px);
+      background:linear-gradient(180deg,#6e7b43 0%, #455026 100%);
+      color:#fff6df;
+      border:3px solid #8b8f57;
+      border-radius:18px;
+      padding:16px 18px;
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.2px;
+      box-shadow:inset 0 0 0 2px rgba(255,245,214,.15), var(--shadow);
+      cursor:pointer;
+    }
 
     .section{
       padding:12px 0;
@@ -297,6 +155,7 @@ h1 {
       border:1px solid rgba(90,70,40,.10);
       border-radius:24px;
       padding:16px;
+      box-shadow:var(--shadow);
     }
 
     .section-title{
@@ -304,25 +163,13 @@ h1 {
       color:#17385b;
       margin:0 0 4px;
       line-height:1.02;
+      text-align:center;
     }
 
     .section-sub{
       margin:0 0 12px;
       color:#5f6d79;
       font-size:16px;
-    }
-
-    .near-btn{
-      width:100%;
-      background:linear-gradient(180deg,#6e7b43 0%, #455026 100%);
-      color:#fff6df;
-      border:3px solid #8b8f57;
-      border-radius:18px;
-      padding:16px 18px;
-      font-size:18px;
-      font-weight:700;
-      letter-spacing:.2px;
-      box-shadow:inset 0 0 0 2px rgba(255,245,214,.15), var(--shadow);
     }
 
     .results{
@@ -352,6 +199,7 @@ h1 {
       border:1px solid #d7c09a;
       border-radius:18px;
       overflow:hidden;
+      box-shadow:var(--shadow);
     }
 
     .poster-figure{
@@ -490,6 +338,7 @@ h1 {
       align-items:center;
       justify-content:flex-start;
       gap:6px;
+      box-shadow:var(--shadow);
     }
 
     .theme-art{
@@ -564,6 +413,7 @@ h1 {
       display:flex;
       justify-content:space-around;
       padding:10px 8px 12px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
     }
 
     .bottom-nav a{
@@ -584,15 +434,11 @@ h1 {
 
     @media (min-width: 860px){
       .nav-links{display:flex}
-      .hero-shell{
-        grid-template-columns:1.05fr .85fr;
-        align-items:stretch;
+      .theme-row{
+        grid-template-columns:repeat(5, minmax(110px, 1fr));
       }
       .desktop-sections{
         grid-template-columns:1.05fr .95fr;
-      }
-      .theme-row{
-        grid-template-columns:repeat(5, minmax(110px, 1fr));
       }
       .bottom-nav{
         width:min(740px, calc(100% - 24px));
@@ -605,13 +451,46 @@ h1 {
       }
     }
 
+    @media (max-width: 768px) {
+      .hero-banner {
+        min-height: 620px;
+        background-position: center 42%;
+        background-size: cover;
+        border-radius: 24px;
+      }
+
+      .hero-overlay {
+        padding: 26px 16px 22px;
+        align-items: flex-start;
+      }
+
+      .hero-button-wrap {
+        margin-top: 205px;
+      }
+
+      .near-btn {
+        width: 100%;
+        max-width: 460px;
+        margin-top: 0;
+        font-size: 17px;
+        padding: 16px 18px;
+      }
+
+      .brand-text {
+        font-size: 14px;
+      }
+    }
+
     @media (max-width: 420px){
-      h1{font-size:38px}
-      .featured-grid{gap:10px}
       .theme-label{font-size:12px}
       .theme-art{width:58px;height:58px}
-      .hero-copy{padding:16px}
       .panel{padding:14px}
+      .hero-banner{
+        min-height:560px;
+      }
+      .hero-button-wrap{
+        margin-top:185px;
+      }
     }
   </style>
 </head>
@@ -634,22 +513,21 @@ h1 {
 
   <main class="container">
 
-
-  <section class="hero">
-  <div class="hero-banner">
-    <div class="hero-overlay">
-      <div class="hero-title-wrap">
-        <button id="nearbyBtn" class="near-btn hero-near-btn">📍 Find Festivals Near You</button>
+    <section class="hero">
+      <div class="hero-banner">
+        <div class="hero-overlay">
+          <div class="hero-button-wrap">
+            <button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<div id="nearbyResults" class="results"></div>
+    <div id="nearbyResults" class="results"></div>
 
-   <section class="section">
+    <section class="section">
       <div class="panel">
-        <h2 class="section-title" style="text-align:center;">Featured Festivals</h2>
+        <h2 class="section-title">Featured Festivals</h2>
 
         <div class="featured-grid">
           <article class="featured-card">
@@ -696,7 +574,7 @@ h1 {
 
     <section class="section">
       <div class="panel">
-        <h2 class="section-title" style="text-align:center;">Browse by Theme</h2>
+        <h2 class="section-title">Browse by Theme</h2>
 
         <div class="theme-row">
           <div class="theme-chip">
@@ -726,7 +604,7 @@ h1 {
     <div class="desktop-sections">
       <section class="section" id="map">
         <div class="panel">
-          <h2 class="section-title">Interactive Michigan map</h2>
+          <h2 class="section-title" style="text-align:left;">Interactive Michigan map</h2>
           <p class="section-sub">Tap a marker to preview a festival.</p>
 
           <div class="map-box">
@@ -748,7 +626,7 @@ h1 {
 
       <section class="section" id="gallery">
         <div class="panel">
-          <h2 class="section-title">Poster Gallery</h2>
+          <h2 class="section-title" style="text-align:left;">Poster Gallery</h2>
           <p class="section-sub">3:4 placeholders sized to fit 18x24 vertical poster art later.</p>
 
           <div class="featured-grid" style="margin-top:8px;">
@@ -794,7 +672,7 @@ h1 {
 
     <section class="section" id="contribute">
       <div class="panel">
-        <h2 class="section-title">Research Contributor Portal</h2>
+        <h2 class="section-title" style="text-align:left;">Research Contributor Portal</h2>
         <p class="section-sub">For historians, journalists, hobby researchers, and local archive volunteers.</p>
 
         <div class="results">
