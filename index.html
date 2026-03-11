@@ -147,9 +147,30 @@
   .bottom-nav {
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
-}
+@media (max-width: 768px) {
+  .hero-banner {
+    min-height: 980px;
+    background-position: center top;
+  }
 
-}
+  .hero-overlay {
+    padding: 28px 16px 20px;
+    align-items: flex-start;
+  }
+
+  .atlas-title {
+    font-size: clamp(38px, 10vw, 68px);
+  }
+
+  .atlas-subtitle {
+    font-size: 20px;
+  }
+
+  .hero-near-btn {
+    margin-top: 22px;
+    font-size: 18px;
+    padding: 16px 18px;
+  }
     .hero-shell{
       display:grid;
       grid-template-columns:1fr;
