@@ -4,450 +4,785 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Michigan Celebration Atlas</title>
-  <meta name="description" content="A digital atlas of Michigan fairs, festivals, and local traditions." />
+  <meta name="description" content="A digital atlas of Michigan fairs, festivals, and traditions." />
   <style>
     :root{
-      --bg:#f4efe4;
-      --paper:#fff8ec;
-      --ink:#1f2933;
-      --muted:#6b7280;
-      --gold:#b8872f;
-      --blue:#264a73;
-      --teal:#2d6a73;
-      --shadow:0 10px 26px rgba(21,29,38,.10);
-      --radius:20px;
-      --max:1200px;
+      --paper:#f4e8cf;
+      --paper-2:#efe1c3;
+      --ink:#3a2b1f;
+      --muted:#6f5c46;
+      --navy:#23486b;
+      --gold:#9a7a2d;
+      --olive:#5c6733;
+      --olive-2:#788246;
+      --cream:#fff7e8;
+      --line:#c9b48e;
+      --shadow:0 8px 24px rgba(67,44,20,.12);
+      --radius:18px;
+      --poster-radius:14px;
+      --max:1180px;
     }
+
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:Georgia, "Times New Roman", serif;
       color:var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
       background:
-        radial-gradient(circle at top left, rgba(184,135,47,.12), transparent 35%),
-        linear-gradient(180deg,#f6f1e7 0%,#efe7d7 100%);
+        radial-gradient(circle at top left, rgba(255,255,255,.45), transparent 25%),
+        linear-gradient(180deg, #f7edd9 0%, #efe0be 100%);
     }
+
     a{text-decoration:none;color:inherit}
-    .container{width:min(100% - 1.5rem, var(--max));margin:auto}
+    img{max-width:100%;display:block}
+
+    .container{
+      width:min(calc(100% - 24px), 1180px);
+      margin-inline:auto;
+    }
+
     .topbar{
-      position:sticky;top:0;z-index:10;
-      background:rgba(250,246,238,.9);
-      backdrop-filter:blur(8px);
-      border-bottom:1px solid rgba(38,74,115,.12);
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(247,237,217,.92);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(120,100,70,.15);
     }
-    .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:1rem;
-      padding:.85rem 0;
+
+    .topbar .container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 0;
     }
-    .brand{display:flex;align-items:center;gap:.75rem;font-weight:700}
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+      font-weight:700;
+      color:#1d3552;
+    }
+
     .brand-mark{
-      width:42px;height:42px;border-radius:50%;
-      background:conic-gradient(from 180deg,var(--gold),#d4a04e,var(--blue),var(--teal),var(--gold));
+      width:32px;
+      height:32px;
+      border-radius:999px;
+      background:linear-gradient(135deg, #d7a538 0%, #2b5f8a 70%);
+      box-shadow:var(--shadow);
+      flex:0 0 auto;
+    }
+
+    .brand-text{
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .nav-links{
+      display:none;
+      gap:20px;
+      color:#244a6f;
+      font-weight:700;
+      font-size:15px;
+    }
+
+    .nav-links a:hover{opacity:.8}
+
+    .hero{
+      padding:16px 0 10px;
+    }
+
+    .hero-shell{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+
+    .hero-copy,
+    .hero-art,
+    .panel,
+    .featured-card,
+    .theme-chip{
       box-shadow:var(--shadow);
     }
-    .nav-links{display:flex;gap:1rem;flex-wrap:wrap}
-    .nav-links a{font-weight:700;color:var(--blue);font-size:.95rem}
-    .hero{padding:2rem 0 1.25rem}
-    .hero-grid{
-      display:grid;grid-template-columns:1.1fr .9fr;gap:1rem;align-items:stretch;
+
+    .hero-copy{
+      background:rgba(255,248,232,.85);
+      border:1px solid rgba(90,70,40,.10);
+      border-radius:24px;
+      padding:18px;
     }
-    .panel{
-      background:rgba(255,248,236,.88);
-      border:1px solid rgba(38,74,115,.10);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-    }
-    .hero-copy{padding:1.4rem}
+
     .kicker{
-      display:inline-block;padding:.4rem .7rem;border-radius:999px;background:#fff;
-      color:var(--blue);border:1px solid rgba(38,74,115,.12);font-size:.82rem;font-weight:700;
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      background:#fff8ea;
+      border:1px solid #d6c19a;
+      color:#345274;
+      font-size:13px;
+      font-weight:700;
+      margin-bottom:10px;
     }
+
     h1{
-      margin:.9rem 0 .8rem;
-      font-size:clamp(2rem,4vw,4rem);
-      line-height:1.03;
-      color:#17324f;
+      font-size:clamp(42px, 9vw, 78px);
+      line-height:.92;
+      letter-spacing:-1.2px;
+      margin:0 0 14px;
+      color:#17385b;
     }
-    h2{
-      margin:0 0 .35rem;
-      font-size:clamp(1.45rem,2.8vw,2.2rem);
-      color:#17324f;
+
+    .hero-copy p{
+      margin:0;
+      font-size:16px;
+      line-height:1.45;
+      color:#324555;
     }
-    .lead{font-size:1.08rem;line-height:1.55;color:#374151}
-    .hero-art{
-      min-height:340px;border-radius:var(--radius);overflow:hidden;position:relative;
-      background:
-        linear-gradient(180deg, rgba(26,68,111,.08), rgba(184,135,47,.12)),
-        linear-gradient(180deg,#cce3f2 0%,#f6d8a6 58%,#dfba6e 100%);
+
+    .hero-cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
     }
-    .hero-art::before{
-      content:"";position:absolute;inset:auto -5% 0 -5%;height:46%;
-      background:
-        radial-gradient(circle at 20% 80%, #3d6d48 0 18%, transparent 19%),
-        radial-gradient(circle at 30% 70%, #4f7f55 0 14%, transparent 15%),
-        radial-gradient(circle at 62% 78%, #315d3c 0 18%, transparent 19%),
-        linear-gradient(180deg,#8cc77d,#4d7b3f);
-    }
-    .hero-art::after{
-      content:"";position:absolute;left:8%;right:8%;bottom:18%;height:22%;
-      background:
-        radial-gradient(circle at 20% 0%, #faf5e8 0 18%, transparent 19%),
-        radial-gradient(circle at 40% 0%, #faf5e8 0 17%, transparent 18%),
-        radial-gradient(circle at 60% 0%, #faf5e8 0 18%, transparent 19%),
-        radial-gradient(circle at 80% 0%, #faf5e8 0 16%, transparent 17%),
-        linear-gradient(180deg,#ffffff,#eee6d5);
-      border-radius:22px 22px 0 0;
-    }
-    .hero-actions,.stat-row,.map-legend{display:flex;gap:.75rem;flex-wrap:wrap}
-    .hero-actions{margin-top:1.2rem}
+
     .btn{
-      border:none;border-radius:999px;padding:.9rem 1.15rem;display:inline-flex;
-      align-items:center;justify-content:center;font-weight:700;cursor:pointer;
+      border:none;
+      border-radius:999px;
+      padding:14px 18px;
+      font-family:inherit;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
     }
-    .btn-primary{background:var(--blue);color:#fff}
-    .btn-secondary{background:#fff;color:var(--blue);border:1px solid rgba(38,74,115,.15)}
-    .stat{
-      padding:.8rem 1rem;background:#fff;border-radius:16px;min-width:120px;
-      border:1px solid rgba(38,74,115,.09)
+
+    .btn-primary{
+      background:#274e74;
+      color:white;
     }
-    .stat strong{display:block;font-size:1.1rem;color:var(--blue)}
-    .section{padding:1rem 0 1.5rem}
-    .section-head{
-      display:flex;justify-content:space-between;gap:1rem;align-items:end;margin-bottom:.9rem
+
+    .btn-secondary{
+      background:#f9f1dd;
+      color:#274e74;
+      border:1px solid #d8c29a;
     }
-    .grid-2{display:grid;grid-template-columns:1.05fr .95fr;gap:1rem}
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-    .card{
-      background:rgba(255,248,236,.92);
-      border-radius:20px;overflow:hidden;border:1px solid rgba(38,74,115,.10);
-      box-shadow:var(--shadow);
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      margin-top:16px;
     }
-    .poster{aspect-ratio:4/5;position:relative;overflow:hidden}
-    .poster::after{
-      content:"";position:absolute;inset:0;
-      background:linear-gradient(180deg,transparent 35%, rgba(0,0,0,.28));
+
+    .hero-stat{
+      background:#f7f0e1;
+      border:1px solid #dac7a5;
+      border-radius:16px;
+      padding:10px 12px;
+      min-height:74px;
     }
-    .goodells{background:linear-gradient(180deg,#bfe0f0 0%,#f4c96b 52%,#6f9b56 53%,#496942 100%)}
-    .armada{background:linear-gradient(180deg,#8fb4de 0%,#f6bd6a 48%,#7e4f47 54%,#56342f 100%)}
-    .bayrama{background:linear-gradient(180deg,#a9ddf8 0%,#f0d28f 45%,#7bb1cf 46%,#2d6a73 100%)}
-    .midland{background:linear-gradient(180deg,#9fd0ef 0%,#ffd382 50%,#7aa85f 51%,#557145 100%)}
-    .yale{background:linear-gradient(180deg,#b4d0ec 0%,#eeb76a 48%,#c7724a 49%,#6f4128 100%)}
-    .cherry{background:linear-gradient(180deg,#95c0e2 0%,#f9c67a 48%,#7aa4c9 49%,#35526f 100%)}
+
+    .hero-stat strong{
+      display:block;
+      color:#1d4064;
+      font-size:16px;
+      margin-bottom:3px;
+    }
+
+    .hero-art{
+      position:relative;
+      overflow:hidden;
+      min-height:270px;
+      border-radius:24px;
+      border:1px solid rgba(90,70,40,.10);
+      background:
+        linear-gradient(180deg,#8fc2df 0%, #d4e7ef 24%, #f0d49c 62%, #7db767 63%, #7db767 100%);
+    }
+
+    .hero-art::before{
+      content:"";
+      position:absolute;
+      left:-5%;
+      right:-5%;
+      bottom:-2%;
+      height:36%;
+      background:
+        radial-gradient(circle at 12% 100%, #447542 0 22%, transparent 23%),
+        radial-gradient(circle at 36% 100%, #2f6137 0 18%, transparent 19%),
+        radial-gradient(circle at 76% 100%, #3a6d42 0 18%, transparent 19%),
+        linear-gradient(180deg,#8ac86e,#60904f);
+    }
+
+    .hero-art::after{
+      content:"";
+      position:absolute;
+      left:10%;
+      right:10%;
+      bottom:18%;
+      height:22%;
+      background:
+        radial-gradient(circle at 16% 0%, #f8f2e7 0 18%, transparent 19%),
+        radial-gradient(circle at 32% 0%, #f8f2e7 0 18%, transparent 19%),
+        radial-gradient(circle at 48% 0%, #f8f2e7 0 18%, transparent 19%),
+        radial-gradient(circle at 64% 0%, #f8f2e7 0 18%, transparent 19%),
+        radial-gradient(circle at 80% 0%, #f8f2e7 0 18%, transparent 19%),
+        linear-gradient(180deg,#fefcf6,#efe8d8);
+      border-radius:22px 22px 0 0;
+      box-shadow:0 -12px 0 rgba(255,255,255,.22);
+    }
+
+    .section{
+      padding:12px 0;
+    }
+
+    .panel{
+      background:rgba(255,248,232,.88);
+      border:1px solid rgba(90,70,40,.10);
+      border-radius:24px;
+      padding:16px;
+    }
+
+    .section-title{
+      font-size:28px;
+      color:#17385b;
+      margin:0 0 4px;
+      line-height:1.02;
+    }
+
+    .section-sub{
+      margin:0 0 12px;
+      color:#5f6d79;
+      font-size:16px;
+    }
+
+    .near-btn{
+      width:100%;
+      background:linear-gradient(180deg,#6e7b43 0%, #455026 100%);
+      color:#fff6df;
+      border:3px solid #8b8f57;
+      border-radius:18px;
+      padding:16px 18px;
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.2px;
+      box-shadow:inset 0 0 0 2px rgba(255,245,214,.15), var(--shadow);
+    }
+
+    .results{
+      display:grid;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .result{
+      background:#fff9ed;
+      border:1px solid #dcc7a3;
+      border-radius:16px;
+      padding:12px 14px;
+      color:#4f5b66;
+      font-size:15px;
+      line-height:1.45;
+    }
+
+    .featured-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .featured-card{
+      background:#f7edd9;
+      border:1px solid #d7c09a;
+      border-radius:18px;
+      overflow:hidden;
+    }
+
+    .poster-figure{
+      aspect-ratio:3 / 4;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid #d8c39f;
+      background:#c9d7e4;
+    }
+
+    .poster-figure::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, transparent 45%, rgba(0,0,0,.18));
+    }
+
+    .poster-goodells{
+      background:linear-gradient(180deg,#4d8abc 0%, #81b5da 28%, #eec97a 62%, #8fb566 63%, #4f7544 100%);
+    }
+
+    .poster-armada{
+      background:linear-gradient(180deg,#5b91c4 0%, #9bc2e4 28%, #e8c277 61%, #9f744b 62%, #5b4336 100%);
+    }
+
+    .poster-bayrama{
+      background:linear-gradient(180deg,#69a8d0 0%, #a9d7ee 30%, #ecd293 54%, #7cb4ca 55%, #35687b 100%);
+    }
+
+    .poster-midland{
+      background:linear-gradient(180deg,#67a9d2 0%, #a9d4eb 30%, #f2cf83 60%, #8ab669 61%, #57754a 100%);
+    }
+
+    .poster-yale{
+      background:linear-gradient(180deg,#74a9d1 0%, #bbd8ed 28%, #edc47c 58%, #c07047 59%, #6d422b 100%);
+    }
+
+    .poster-cherry{
+      background:linear-gradient(180deg,#6d9bc3 0%, #b8d3ea 25%, #efc67b 56%, #7ca6c6 57%, #375670 100%);
+    }
+
     .poster-label{
-      position:absolute;left:1rem;right:1rem;bottom:1rem;color:#fff;z-index:1
+      position:absolute;
+      left:12px;
+      right:12px;
+      bottom:12px;
+      z-index:2;
+      color:#fff7e9;
+      text-shadow:0 2px 4px rgba(0,0,0,.28);
     }
-    .poster-label h3{margin:0 0 .15rem;font-size:1.15rem}
-    .poster-label p{margin:0;font-size:.95rem;color:#f5efe4}
-    .card-body{padding:1rem}
-    .meta{display:flex;gap:.5rem;flex-wrap:wrap;margin:.2rem 0 .6rem}
-    .pill{
-      font-size:.78rem;padding:.3rem .55rem;border-radius:999px;background:#fff;
-      border:1px solid rgba(38,74,115,.10);color:var(--blue);font-weight:700
+
+    .poster-label .poster-name{
+      font-size:18px;
+      line-height:1.02;
+      font-weight:700;
+      margin:0 0 3px;
     }
-    .muted{color:var(--muted)}
-    .map-card,.search-card,.cta-card{padding:1.1rem}
+
+    .poster-label .poster-place{
+      margin:0;
+      font-size:13px;
+      opacity:.95;
+    }
+
+    .featured-body{
+      padding:12px;
+    }
+
+    .featured-title{
+      font-size:18px;
+      line-height:1;
+      margin:0 0 6px;
+      color:#3a2b1f;
+    }
+
+    .featured-copy{
+      margin:0;
+      font-size:14px;
+      color:#4d4335;
+      line-height:1.35;
+    }
+
+    .see-all-row{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:10px;
+    }
+
+    .see-all{
+      background:linear-gradient(180deg,#79874a 0%, #59622f 100%);
+      color:#fff1cf;
+      border-radius:999px;
+      padding:10px 16px;
+      font-weight:700;
+      font-size:15px;
+      border:2px solid rgba(255,242,208,.18);
+    }
+
+    .search-strip{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:#f7ecd4;
+      border:1px solid #d3bd97;
+      border-radius:16px;
+      padding:14px 16px;
+      margin-top:8px;
+    }
+
+    .search-strip input{
+      border:none;
+      background:transparent;
+      font:inherit;
+      font-size:17px;
+      color:#4e3d2e;
+      width:100%;
+      outline:none;
+    }
+
+    .theme-row{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .theme-chip{
+      background:#f9efdc;
+      border:1px solid #d9c39f;
+      border-radius:999px 999px 18px 18px;
+      padding:8px 4px 10px;
+      text-align:center;
+      min-height:104px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      gap:6px;
+    }
+
+    .theme-art{
+      width:64px;
+      height:64px;
+      border-radius:999px;
+      overflow:hidden;
+      border:2px solid rgba(255,255,255,.6);
+      box-shadow:inset 0 0 0 1px rgba(60,40,20,.08);
+    }
+
+    .theme-fair{background:linear-gradient(180deg,#87b5db 0%, #e8c57d 55%, #c47846 56%, #81522f 100%)}
+    .theme-water{background:linear-gradient(180deg,#7db2d7 0%, #d9edf6 28%, #e7d098 56%, #6fa3ba 57%, #315f72 100%)}
+    .theme-harvest{background:linear-gradient(180deg,#93c0df 0%, #d5ebf5 25%, #f0ca7d 55%, #d78641 56%, #7d5227 100%)}
+    .theme-balloon{background:linear-gradient(180deg,#73acd2 0%, #b7d9ef 30%, #efca81 59%, #87b567 60%, #57764b 100%)}
+    .theme-parade{background:linear-gradient(180deg,#7da9cf 0%, #c0dcef 29%, #edc47b 56%, #b87443 57%, #6b4728 100%)}
+
+    .theme-label{
+      font-size:14px;
+      font-weight:700;
+      line-height:1.05;
+      color:#3f3227;
+    }
+
+    .desktop-sections{
+      display:grid;
+      gap:12px;
+    }
+
+    .map-box{
+      background:#fbf4e6;
+      border:1px solid #dcc8a4;
+      border-radius:18px;
+      padding:8px;
+    }
+
     .michigan-map{
-      width:100%;height:auto;background:#fbf6eb;border-radius:18px;padding:.5rem;
-      border:1px solid rgba(38,74,115,.08)
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:14px;
+      background:#fdf7ea;
     }
-    .region{fill:#cfe0ec;stroke:#7f9ab3;stroke-width:2}
-    .dot{fill:#b8872f;stroke:#fff;stroke-width:2;cursor:pointer}
-    .dot:hover{fill:#17324f}
-    .notice{
-      padding:.9rem 1rem;border-radius:16px;background:#fff;border:1px solid rgba(38,74,115,.1)
+
+    .region{
+      fill:#cfe0ec;
+      stroke:#7f9ab3;
+      stroke-width:2;
     }
-    .search-bar{
-      display:flex;gap:.65rem;flex-wrap:wrap
+
+    .dot{
+      fill:#a17d2d;
+      stroke:#fff;
+      stroke-width:2;
+      cursor:pointer;
     }
-    .search-bar input,.field input,.field textarea{
-      width:100%;padding:1rem;border-radius:16px;border:1px solid rgba(38,74,115,.15);
-      background:#fff;font:inherit;color:inherit
-    }
-    .search-bar input{flex:1 1 260px}
-    .nearby-results,.search-results,.list{display:grid;gap:.75rem}
-    .list{list-style:none;padding:0;margin:0}
-    .list li,.result{
-      background:#fff;border:1px solid rgba(38,74,115,.10);border-radius:16px;padding:.9rem 1rem
-    }
-    .two-col{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
-    blockquote{
-      margin:0;padding:1rem 1rem 1rem 1.1rem;border-left:4px solid var(--gold);
-      background:#fff;border-radius:0 16px 16px 0
-    }
-    .fields{display:grid;grid-template-columns:repeat(2,1fr);gap:.85rem}
-    .full{grid-column:1/-1}
+
+    .dot:hover{fill:#23486b}
+
+    .footer-space{height:100px}
+
     .bottom-nav{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:.8rem;z-index:40;
-      width:min(100% - 1rem, 700px);display:none;gap:.4rem;
-      background:rgba(255,250,241,.94);border:1px solid rgba(38,74,115,.12);
-      box-shadow:var(--shadow);border-radius:22px;padding:.4rem
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:60;
+      background:rgba(245,233,206,.96);
+      backdrop-filter:blur(10px);
+      border-top:1px solid rgba(120,100,70,.18);
+      box-shadow:0 -8px 24px rgba(67,44,20,.10);
+      display:flex;
+      justify-content:space-around;
+      padding:10px 8px 12px;
     }
+
     .bottom-nav a{
-      flex:1;text-align:center;padding:.7rem .2rem;border-radius:16px;
-      font-size:.78rem;font-weight:700;color:var(--blue)
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:5px;
+      min-width:58px;
+      color:#5a4b37;
+      font-size:12px;
+      font-weight:700;
     }
-    footer{padding:2rem 0 6rem}
-    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:1rem}
-    @media (max-width:980px){
-      .hero-grid,.grid-2,.two-col,.footer-grid{grid-template-columns:1fr}
-      .cards{grid-template-columns:repeat(2,1fr)}
-      .gallery{grid-template-columns:repeat(3,1fr)}
+
+    .icon{
+      font-size:21px;
+      line-height:1;
     }
-    @media (max-width:720px){
-      .nav-links{display:none}
-      .cards,.gallery{grid-template-columns:repeat(2,1fr)}
-      .bottom-nav{display:flex}
-      .fields{grid-template-columns:1fr}
+
+    @media (min-width: 860px){
+      .nav-links{display:flex}
+      .hero-shell{
+        grid-template-columns:1.05fr .85fr;
+        align-items:stretch;
+      }
+      .desktop-sections{
+        grid-template-columns:1.05fr .95fr;
+      }
+      .theme-row{
+        grid-template-columns:repeat(5, minmax(110px, 1fr));
+      }
+      .bottom-nav{
+        width:min(740px, calc(100% - 24px));
+        left:50%;
+        right:auto;
+        transform:translateX(-50%);
+        border:1px solid rgba(120,100,70,.16);
+        border-radius:22px;
+        bottom:12px;
+      }
     }
-    @media (max-width:520px){
-      .cards,.gallery{grid-template-columns:1fr 1fr}
-      .search-bar{flex-direction:column}
+
+    @media (max-width: 420px){
+      h1{font-size:38px}
+      .featured-grid{gap:10px}
+      .theme-label{font-size:12px}
+      .theme-art{width:58px;height:58px}
+      .hero-copy{padding:16px}
+      .panel{padding:14px}
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <div class="container nav">
-      <a class="brand" href="#">
+
+  <header class="topbar">
+    <div class="container">
+      <a href="#" class="brand">
         <div class="brand-mark"></div>
-        <span>The Michigan Celebration Atlas</span>
+        <div class="brand-text">The Michigan Celebration Atlas</div>
       </a>
-      <div class="nav-links">
+      <nav class="nav-links">
         <a href="#map">Map</a>
         <a href="#gallery">Poster Gallery</a>
         <a href="#search">AI Search</a>
         <a href="#contribute">Contribute</a>
-      </div>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <main>
+  <main class="container">
+
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="panel hero-copy">
-          <span class="kicker">A digital atlas of fairs, festivals, and memory</span>
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <div class="kicker">A digital atlas of fairs, festivals, and memory</div>
           <h1>Michigan’s celebrations, mapped as story, place, and history.</h1>
-          <p class="lead">Explore county fairs, waterfront festivals, balloon launches, food traditions, and small-town gatherings through a beautiful, research-ready archive built for both people and AI-powered discovery.</p>
-          <div class="hero-actions">
+          <p>Explore county fairs, waterfront festivals, balloon launches, food traditions, and small-town gatherings through a beautiful, research-ready archive built for both people and AI-powered discovery.</p>
+
+          <div class="hero-cta-row">
             <a class="btn btn-primary" href="#map">Explore the map</a>
             <a class="btn btn-secondary" href="#search">Search the archive</a>
           </div>
-          <div class="stat-row">
-            <div class="stat"><strong>6</strong> starter festivals</div>
-            <div class="stat"><strong>AI-ready</strong> archive structure</div>
-            <div class="stat"><strong>Mobile</strong> discovery first</div>
-          </div>
-        </div>
-        <div class="panel hero-art"></div>
-      </div>
-    </section>
 
-    <section class="section" id="map">
-      <div class="container grid-2">
-        <div class="panel map-card">
-          <div class="section-head">
-            <div>
-              <h2>Interactive Michigan map</h2>
-              <div class="muted">Tap a marker to preview a festival.</div>
-            </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><strong>6</strong>starter festivals</div>
+            <div class="hero-stat"><strong>AI-ready</strong>archive structure</div>
+            <div class="hero-stat"><strong>Mobile</strong>discovery first</div>
           </div>
-          <svg class="michigan-map" viewBox="0 0 460 520" aria-label="Michigan festival map">
-            <path class="region" d="M87 34c31-10 64 2 90 26 25 23 42 50 84 49 24-1 48 15 47 41-2 42-47 59-76 77-31 20-39 47-57 75-14 22-33 35-61 32-43-5-82-41-85-93-1-23 9-47 7-67-2-20-21-32-21-55 0-40 32-71 72-85z"/>
-            <path class="region" d="M215 282c31-10 65-4 88 17 23 22 42 55 55 92 18 52 33 88 25 114-9 29-36 38-66 30-23-6-41-25-55-45-13-19-21-40-34-58-13-18-33-28-48-45-18-21-25-47-17-70 7-18 26-29 52-35z"/>
-            <circle class="dot" cx="257" cy="369" r="7" data-name="Goodells County Fair" data-text="Historic agricultural fair in St. Clair County with livestock barns, 4-H competition, and warm summer midway memories."></circle>
-            <circle class="dot" cx="248" cy="379" r="7" data-name="Armada Fair" data-text="One of Michigan’s best-known county fairs, remembered for livestock, midway lights, and demolition derby tradition."></circle>
-            <circle class="dot" cx="236" cy="390" r="7" data-name="Bay-Rama Fishfly Festival" data-text="New Baltimore waterfront festival famous for fishfly season, lakefront energy, boats, and carnival memories."></circle>
-            <circle class="dot" cx="218" cy="333" r="7" data-name="Midland Balloon Festival" data-text="Mass balloon ascensions over Midland created one of Michigan’s most memorable summer sky spectacles."></circle>
-            <circle class="dot" cx="273" cy="347" r="7" data-name="Yale Bologna Festival" data-text="Beloved small-town food festival built around Yale’s distinctive local identity and parade tradition."></circle>
-            <circle class="dot" cx="133" cy="137" r="7" data-name="National Cherry Festival" data-text="Traverse City’s major summer celebration blending waterfront tourism, cherries, parades, and huge crowds."></circle>
-          </svg>
-          <div class="map-legend" style="margin-top:.8rem">
-            <span class="pill">County Fair</span>
-            <span class="pill">Waterfront Festival</span>
-            <span class="pill">Balloon Festival</span>
-            <span class="pill">Food Festival</span>
-          </div>
-          <div id="mapInfo" class="notice" style="margin-top:.8rem">Tap a marker to preview a festival.</div>
         </div>
 
-        <div class="panel search-card">
-          <div class="section-head">
-            <div>
-              <h2>Find festivals near you</h2>
-              <div class="muted">Mobile-friendly local discovery.</div>
-            </div>
-          </div>
-          <p class="muted">Use your device location to surface the closest festivals in this starter archive.</p>
-          <button id="nearbyBtn" class="btn btn-primary">Find festivals near me</button>
-          <div id="nearbyResults" class="nearby-results" style="margin-top:1rem"></div>
-          <hr style="border:none;border-top:1px solid rgba(38,74,115,.1);margin:1.2rem 0;">
-          <div class="search-bar">
-            <input id="quickSearch" type="text" placeholder="Search by city, county, month, type, or tradition">
-            <button class="btn btn-secondary" onclick="runSearch()">Search archive</button>
-          </div>
-        </div>
+        <div class="hero-art"></div>
       </div>
     </section>
 
     <section class="section">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Featured atlas entries</h2>
-            <div class="muted">Poster-driven festival pages designed to feel like a museum, magazine, and archive at once.</div>
-          </div>
-        </div>
-        <div class="cards">
-          <div class="card">
-            <div class="poster goodells">
-              <div class="poster-label">
-                <h3>Goodells County Fair</h3>
-                <p>Goodells, Michigan</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="meta"><span class="pill">County Fair</span><span class="pill">July</span></div>
-              <div class="muted">Historic agricultural fair with livestock barns, 4-H competitions, horse arena tradition, and glowing summer midway memories.</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="poster armada">
-              <div class="poster-label">
-                <h3>Armada Fair</h3>
-                <p>Armada, Michigan</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="meta"><span class="pill">County Fair</span><span class="pill">August</span></div>
-              <div class="muted">One of Michigan’s most recognized county fairs, known for livestock, midway energy, and demolition derby memories.</div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="poster bayrama">
-              <div class="poster-label">
-                <h3>Bay-Rama Fishfly Festival</h3>
-                <p>New Baltimore, Michigan</p>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="meta"><span class="pill">Waterfront Festival</span><span class="pill">June</span></div>
-              <div class="muted">Lakefront festival famous for embracing fishfly season with parades, carnival rides, boats, and waterfront crowds.</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
+      <div id="nearbyResults" class="results"></div>
     </section>
 
-    <section class="section" id="gallery">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Poster gallery system</h2>
-            <div class="muted">These color-gradient placeholders can later be replaced with your real posters.</div>
-          </div>
+    <section class="section">
+      <div class="panel">
+        <h2 class="section-title" style="text-align:center;">Featured Festivals</h2>
+
+        <div class="featured-grid">
+          <article class="featured-card">
+            <div class="poster-figure poster-goodells">
+              <div class="poster-label">
+                <p class="poster-name">Goodells County Fair</p>
+                <p class="poster-place">Goodells, Michigan</p>
+              </div>
+            </div>
+            <div class="featured-body">
+              <h3 class="featured-title">Goodells</h3>
+              <p class="featured-copy">Generations have gathered in Goodells around livestock barns, 4-H traditions, and summer midway lights.</p>
+            </div>
+          </article>
+
+          <article class="featured-card">
+            <div class="poster-figure poster-armada">
+              <div class="poster-label">
+                <p class="poster-name">Armada Fair</p>
+                <p class="poster-place">Armada, Michigan</p>
+              </div>
+            </div>
+            <div class="featured-body">
+              <h3 class="featured-title">Armada</h3>
+              <p class="featured-copy">One of Michigan’s best-known county fairs, remembered for midway energy and grandstand tradition.</p>
+            </div>
+          </article>
         </div>
-        <div class="gallery">
-          <div class="card"><div class="poster goodells"><div class="poster-label"><h3>Goodells</h3><p>County Fair</p></div></div></div>
-          <div class="card"><div class="poster armada"><div class="poster-label"><h3>Armada</h3><p>County Fair</p></div></div></div>
-          <div class="card"><div class="poster bayrama"><div class="poster-label"><h3>Bay-Rama</h3><p>Fishfly Festival</p></div></div></div>
-          <div class="card"><div class="poster midland"><div class="poster-label"><h3>Midland</h3><p>Balloon Festival</p></div></div></div>
-          <div class="card"><div class="poster yale"><div class="poster-label"><h3>Yale</h3><p>Bologna Festival</p></div></div></div>
-          <div class="card"><div class="poster cherry"><div class="poster-label"><h3>Traverse City</h3><p>Cherry Festival</p></div></div></div>
-          <div class="card"><div class="poster midland"><div class="poster-label"><h3>Atlas</h3><p>Template Poster</p></div></div></div>
-          <div class="card"><div class="poster goodells"><div class="poster-label"><h3>Atlas</h3><p>Template Poster</p></div></div></div>
+
+        <div class="see-all-row">
+          <a href="#gallery" class="see-all">See All ›</a>
         </div>
       </div>
     </section>
 
     <section class="section" id="search">
-      <div class="container grid-2">
-        <div class="panel cta-card">
-          <div class="section-head">
-            <div>
-              <h2>AI-searchable archive</h2>
-              <div class="muted">Structured so both people and AI systems can understand the content.</div>
-            </div>
-          </div>
-          <blockquote>
-            Ask things like “Which Michigan festivals happen near Lake St. Clair?” or “What county fairs are in St. Clair County?”
-          </blockquote>
-          <div class="search-bar" style="margin-top:1rem">
-            <input id="archiveSearch" type="text" placeholder="Try: St. Clair County, waterfront festival, June, fishfly">
-            <button class="btn btn-secondary" onclick="runSearch()">Run search</button>
-          </div>
-          <div id="searchResults" class="search-results" style="margin-top:1rem"></div>
-        </div>
+      <div class="search-strip">
+        <span style="font-size:22px;line-height:1;">⌕</span>
+        <input id="archiveSearch" type="text" placeholder="Search Michigan’s Festivals & Fairs" />
+        <button onclick="runSearch()" style="border:none;background:none;font-size:22px;cursor:pointer;color:#66513c;">›</button>
+      </div>
+      <div id="searchResults" class="results"></div>
+    </section>
 
-        <div class="panel cta-card">
-          <h2>Festival database structure</h2>
-          <ul class="list">
-            <li><strong>Identity:</strong> name, city, county, type</li>
-            <li><strong>Time:</strong> month, season, founded</li>
-            <li><strong>Location:</strong> latitude and longitude</li>
-            <li><strong>Narrative:</strong> short summary, atmosphere</li>
-            <li><strong>Research:</strong> missing archive materials, traditions, source gaps</li>
-          </ul>
+    <section class="section">
+      <div class="panel">
+        <h2 class="section-title" style="text-align:center;">Browse by Theme</h2>
+
+        <div class="theme-row">
+          <div class="theme-chip">
+            <div class="theme-art theme-fair"></div>
+            <div class="theme-label">County<br>Fairs</div>
+          </div>
+          <div class="theme-chip">
+            <div class="theme-art theme-water"></div>
+            <div class="theme-label">Waterfront</div>
+          </div>
+          <div class="theme-chip">
+            <div class="theme-art theme-harvest"></div>
+            <div class="theme-label">Harvest</div>
+          </div>
+          <div class="theme-chip">
+            <div class="theme-art theme-balloon"></div>
+            <div class="theme-label">Balloons</div>
+          </div>
+          <div class="theme-chip">
+            <div class="theme-art theme-parade"></div>
+            <div class="theme-label">Parades</div>
+          </div>
         </div>
       </div>
     </section>
+
+    <div class="desktop-sections">
+      <section class="section" id="map">
+        <div class="panel">
+          <h2 class="section-title">Interactive Michigan map</h2>
+          <p class="section-sub">Tap a marker to preview a festival.</p>
+
+          <div class="map-box">
+            <svg class="michigan-map" viewBox="0 0 460 520" aria-label="Michigan festival map">
+              <path class="region" d="M87 34c31-10 64 2 90 26 25 23 42 50 84 49 24-1 48 15 47 41-2 42-47 59-76 77-31 20-39 47-57 75-14 22-33 35-61 32-43-5-82-41-85-93-1-23 9-47 7-67-2-20-21-32-21-55 0-40 32-71 72-85z"/>
+              <path class="region" d="M215 282c31-10 65-4 88 17 23 22 42 55 55 92 18 52 33 88 25 114-9 29-36 38-66 30-23-6-41-25-55-45-13-19-21-40-34-58-13-18-33-28-48-45-18-21-25-47-17-70 7-18 26-29 52-35z"/>
+              <circle class="dot" cx="257" cy="369" r="7" data-name="Goodells County Fair" data-text="Historic agricultural fair in St. Clair County with livestock barns, 4-H tradition, and warm summer midway memories."></circle>
+              <circle class="dot" cx="248" cy="379" r="7" data-name="Armada Fair" data-text="One of Michigan’s best-known county fairs, remembered for midway lights and grandstand tradition."></circle>
+              <circle class="dot" cx="236" cy="390" r="7" data-name="Bay-Rama Fishfly Festival" data-text="New Baltimore waterfront festival famous for fishfly season, lakefront crowds, and carnival energy."></circle>
+              <circle class="dot" cx="218" cy="333" r="7" data-name="Midland Balloon Festival" data-text="Mass balloon ascensions over Midland created one of Michigan’s most memorable summer sky spectacles."></circle>
+              <circle class="dot" cx="273" cy="347" r="7" data-name="Yale Bologna Festival" data-text="Beloved small-town festival built around Yale’s distinct food identity and local parade traditions."></circle>
+              <circle class="dot" cx="133" cy="137" r="7" data-name="National Cherry Festival" data-text="Traverse City’s major summer celebration blending cherries, tourism, water, and huge seasonal crowds."></circle>
+            </svg>
+          </div>
+
+          <div id="mapInfo" class="result" style="margin-top:10px;">Tap a marker to preview a festival.</div>
+        </div>
+      </section>
+
+      <section class="section" id="gallery">
+        <div class="panel">
+          <h2 class="section-title">Poster Gallery</h2>
+          <p class="section-sub">3:4 placeholders sized to fit 18x24 vertical poster art later.</p>
+
+          <div class="featured-grid" style="margin-top:8px;">
+            <article class="featured-card">
+              <div class="poster-figure poster-bayrama">
+                <div class="poster-label">
+                  <p class="poster-name">Bay-Rama Fishfly Festival</p>
+                  <p class="poster-place">New Baltimore, Michigan</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="featured-card">
+              <div class="poster-figure poster-midland">
+                <div class="poster-label">
+                  <p class="poster-name">Midland Balloon Festival</p>
+                  <p class="poster-place">Midland, Michigan</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="featured-card">
+              <div class="poster-figure poster-yale">
+                <div class="poster-label">
+                  <p class="poster-name">Yale Bologna Festival</p>
+                  <p class="poster-place">Yale, Michigan</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="featured-card">
+              <div class="poster-figure poster-cherry">
+                <div class="poster-label">
+                  <p class="poster-name">National Cherry Festival</p>
+                  <p class="poster-place">Traverse City, Michigan</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <section class="section" id="contribute">
-      <div class="container two-col">
-        <div class="panel cta-card">
-          <h2>Research contributor portal</h2>
-          <p>We’re looking for local historians, journalism students, hobby researchers, and volunteers who can help uncover archival materials from historical societies, libraries, fair boards, and newspaper collections.</p>
-          <ul class="list">
-            <li><strong>Your role:</strong> document photos, fair books, posters, parade programs, and local records that are not yet online.</li>
-            <li><strong>Our role:</strong> organize, summarize, design, and publish the material into a consistent atlas entry.</li>
-            <li><strong>Credit:</strong> contributor names can later be listed on the pages they help enrich.</li>
-          </ul>
-        </div>
+      <div class="panel">
+        <h2 class="section-title">Research Contributor Portal</h2>
+        <p class="section-sub">For historians, journalists, hobby researchers, and local archive volunteers.</p>
 
-        <div class="panel cta-card">
-          <h2>Interest form</h2>
-          <div class="fields">
-            <div class="field"><input type="text" placeholder="Your name"></div>
-            <div class="field"><input type="email" placeholder="Your email"></div>
-            <div class="field"><input type="text" placeholder="Town / city / research region"></div>
-            <div class="field"><input type="text" placeholder="Historian / student / volunteer"></div>
-            <div class="field full"><textarea rows="4" placeholder="What archives or local sources could you access?"></textarea></div>
-            <div class="field full"><textarea rows="4" placeholder="What festival or town interests you most?"></textarea></div>
-            <div class="field full"><button class="btn btn-primary">Submit interest</button></div>
-          </div>
+        <div class="results">
+          <div class="result"><strong>Your role:</strong> document posters, programs, scrapbooks, photos, and local records that are not yet online.</div>
+          <div class="result"><strong>Atlas role:</strong> organize, design, summarize, and publish material into a consistent archive.</div>
+          <div class="result"><strong>Credit:</strong> later, contributors can be listed on the pages they help enrich.</div>
         </div>
       </div>
     </section>
+
+    <div class="footer-space"></div>
   </main>
 
-  <footer>
-    <div class="container footer-grid">
-      <div class="notice">
-        <strong>The Michigan Celebration Atlas</strong><br>
-        A digital atlas documenting Michigan fairs, festivals, and community traditions through story, geography, imagery, and research.
-      </div>
-      <div class="notice">
-        <strong>Explore</strong><br>
-        <a href="#map">Interactive map</a><br>
-        <a href="#gallery">Poster gallery</a><br>
-        <a href="#search">AI search</a>
-      </div>
-      <div class="notice">
-        <strong>Build</strong><br>
-        <a href="#contribute">Contribute</a><br>
-        More festival pages coming next
-      </div>
-    </div>
-  </footer>
-
   <nav class="bottom-nav">
-    <a href="#">Home</a>
-    <a href="#map">Map</a>
-    <a href="#search">Search</a>
-    <a href="#gallery">Posters</a>
-    <a href="#contribute">Contribute</a>
+    <a href="#"><span class="icon">⌂</span><span>Home</span></a>
+    <a href="#map"><span class="icon">🗺</span><span>Map</span></a>
+    <a href="#search"><span class="icon">⌕</span><span>Search</span></a>
+    <a href="#gallery"><span class="icon">🖼</span><span>Posters</span></a>
+    <a href="#contribute"><span class="icon">📍</span><span>Near Me</span></a>
   </nav>
 
   <script>
@@ -516,10 +851,8 @@
 
     document.querySelectorAll('.dot').forEach(dot => {
       dot.addEventListener('click', () => {
-        const name = dot.dataset.name;
-        const text = dot.dataset.text;
         document.getElementById('mapInfo').innerHTML =
-          '<strong>' + name + '</strong><br><span class="muted">' + text + '</span>';
+          '<strong>' + dot.dataset.name + '</strong><br><span style="color:#6a5b49;">' + dot.dataset.text + '</span>';
       });
     });
 
@@ -531,7 +864,7 @@
       const a = Math.sin(dLat/2)**2 +
                 Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
                 Math.sin(dLon/2)**2;
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
     document.getElementById('nearbyBtn').addEventListener('click', () => {
@@ -548,44 +881,41 @@
             .map(f => ({ ...f, distance: distanceMiles(latitude, longitude, f.lat, f.lng) }))
             .sort((a, b) => a.distance - b.distance)
             .slice(0, 4);
+
           box.innerHTML = ranked.map(f =>
             '<div class="result"><strong>' + f.name + '</strong><br>' +
-            f.city + ', ' + f.county + '<br>' +
-            '<span class="muted">' + f.distance.toFixed(1) + ' miles away · ' + f.text + '</span></div>'
+            f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
+            f.distance.toFixed(1) + ' miles away · ' + f.text + '</span></div>'
           ).join('');
         },
         () => {
-          box.innerHTML = '<div class="result">Location was blocked or unavailable. You can still browse by map or search.</div>';
+          box.innerHTML = '<div class="result">Location was blocked or unavailable. You can still browse by theme, map, or search.</div>';
         }
       );
     });
 
     function runSearch() {
-      const q1 = document.getElementById('archiveSearch')?.value || '';
-      const q2 = document.getElementById('quickSearch')?.value || '';
-      const q = (q1 || q2).trim().toLowerCase();
-      const resultsBox = document.getElementById('searchResults');
-      if (!resultsBox) return;
+      const q = document.getElementById('archiveSearch').value.trim().toLowerCase();
+      const box = document.getElementById('searchResults');
+
+      if (!q) {
+        box.innerHTML = '<div class="result">Try searching for <strong>St. Clair County</strong>, <strong>waterfront</strong>, <strong>county fair</strong>, or <strong>July</strong>.</div>';
+        return;
+      }
 
       const results = festivals.filter(f => {
         const hay = [f.name, f.city, f.county, f.type, f.month, f.text].join(' ').toLowerCase();
         return hay.includes(q);
       });
 
-      if (!q) {
-        resultsBox.innerHTML = '<div class="result">Try a search like <strong>St. Clair County</strong>, <strong>waterfront</strong>, or <strong>July</strong>.</div>';
-        return;
-      }
-
       if (!results.length) {
-        resultsBox.innerHTML = '<div class="result">No matches yet. Try a city, county, month, or festival type.</div>';
+        box.innerHTML = '<div class="result">No matches yet. Try a city, county, month, or festival type.</div>';
         return;
       }
 
-      resultsBox.innerHTML = results.map(f =>
+      box.innerHTML = results.map(f =>
         '<div class="result"><strong>' + f.name + '</strong><br>' +
-        f.city + ', ' + f.county + '<br>' +
-        '<span class="muted">' + f.text + '</span></div>'
+        f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' + f.text + '</span></div>'
       ).join('');
     }
 
