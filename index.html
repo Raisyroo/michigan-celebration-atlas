@@ -96,46 +96,36 @@
   padding: 16px 0 12px;
 }
 
-.hero-banner {
+.hero {
+  padding: 16px 0 12px;
+}
+
+.hero-frame {
   position: relative;
   width: 100%;
-  min-height: 720px;
   border-radius: 26px;
   overflow: hidden;
   box-shadow: var(--shadow);
   border: 1px solid rgba(90,70,40,.10);
-  background-image: url("/images/michigan-festival-hero-mobile.jpg");
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-color: #efe1c3;
-}    
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 34px 18px 24px;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,.06) 0%,
-    rgba(0,0,0,.02) 25%,
-    rgba(0,0,0,0) 55%,
-    rgba(0,0,0,.04) 100%
-  );
+  background: #efe1c3;
 }
 
-.hero-button-wrap {
+.hero-img {
+  display: block;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 260px;
+  height: auto;
+}
+
+.hero-cta-wrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 14%;
+  width: min(92%, 660px);
 }
 
 .near-btn {
-  width: min(100%, 660px);
+  width: 100%;
   background: linear-gradient(180deg,#6e7b43 0%, #455026 100%);
   color: #fff6df;
   border: 3px solid #8b8f57;
@@ -149,39 +139,24 @@
 }
 
 @media (max-width: 768px) {
-  .hero-banner {
-    min-height: 700px;
+  .hero-frame {
     border-radius: 24px;
-    background-position: center top;
   }
 
-  .hero-overlay {
-    padding: 20px 16px 20px;
-  }
-
-  .hero-button-wrap {
-    margin-top: 245px;
+  .hero-cta-wrap {
+    width: min(90%, 460px);
+    bottom: 12%;
   }
 
   .near-btn {
-    width: 100%;
-    max-width: 460px;
     font-size: 17px;
     padding: 16px 18px;
-  }
-
-  .brand-text {
-    font-size: 14px;
   }
 }
 
 @media (max-width: 420px) {
-  .hero-banner {
-    min-height: 640px;
-  }
-
-  .hero-button-wrap {
-    margin-top: 220px;
+  .hero-cta-wrap {
+    bottom: 10%;
   }
 }
     .near-btn{
@@ -663,13 +638,16 @@ img, svg {
   <main class="container">
 
 <section class="hero">
- <div class="hero-banner">
-  <div class="hero-overlay">
-    <div class="hero-button-wrap">
+  <div class="hero-frame">
+    <img
+      src="/images/michigan-festival-hero-mobile.jpg"
+      alt="Michigan festival scene"
+      class="hero-img"
+    />
+    <div class="hero-cta-wrap">
       <button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
     </div>
   </div>
-</div>
 </section>
 
     <div id="nearbyResults" class="results"></div>
