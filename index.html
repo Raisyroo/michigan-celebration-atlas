@@ -611,14 +611,19 @@ img, svg {
   <main class="container">
 
     <section class="hero">
-      <div class="hero-banner">
-        <div class="hero-overlay">
-          <div class="hero-button-wrap">
-            <button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
-          </div>
-        </div>
+  <div class="hero-banner">
+    <picture class="hero-picture">
+      <source media="(max-width: 768px)" srcset="/images/michigan-festival-hero-mobile.jpg">
+      <img src="/images/michigan-festival-hero.jpg" alt="Michigan festival scene" class="hero-image">
+    </picture>
+
+    <div class="hero-overlay">
+      <div class="hero-button-wrap">
+        <button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <div id="nearbyResults" class="results"></div>
 
