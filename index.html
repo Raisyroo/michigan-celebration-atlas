@@ -42,48 +42,6 @@
       margin-inline:auto;
     }
 
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      background:rgba(247,237,217,.92);
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(120,100,70,.15);
-    }
-
-    .topbar .container{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:12px 0;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-      font-weight:700;
-      color:#1d3552;
-    }
-
-    .brand-mark{
-      width:32px;
-      height:32px;
-      border-radius:999px;
-      background:linear-gradient(135deg, #d7a538 0%, #2b5f8a 70%);
-      box-shadow:var(--shadow);
-      flex:0 0 auto;
-    }
-
-    .brand-text{
-      font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
     .nav-links{
       display:none;
       gap:20px;
@@ -489,22 +447,7 @@
 </head>
 <body>
 
-  <header class="topbar">
-    <div class="container">
-      <a href="#" class="brand">
-        <div class="brand-mark"></div>
-        <div class="brand-text">The Michigan Celebration Atlas</div>
-      </a>
-      <nav class="nav-links">
-        <a href="#map">Map</a>
-        <a href="#gallery">Poster Gallery</a>
-        <a href="#search">AI Search</a>
-        <a href="#contribute">Contribute</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
+ <main class="container">
 
     <section class="hero">
       <div class="hero-frame">
