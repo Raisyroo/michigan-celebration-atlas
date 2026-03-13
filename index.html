@@ -1,598 +1,686 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Michigan Celebration Atlas</title>
-  <meta
-    name="description"
-    content="A mobile-first digital archive of Michigan fairs, festivals, and local traditions."
-  />
-  <style>
-    :root {
-      --paper: #efe2c8;
-      --paper-deep: #e2cfac;
-      --ink: #2f2418;
-      --muted: #6f5b44;
-      --accent: #8a5b2c;
-      --accent-soft: rgba(138, 91, 44, 0.12);
-      --card: rgba(255, 249, 240, 0.72);
-      --line: rgba(94, 67, 34, 0.18);
-      --shadow: 0 10px 28px rgba(59, 41, 18, 0.16);
-      --radius: 22px;
-      --nav-height: 84px;
-      --max-width: 760px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Michigan Celebration Atlas</title>
+<meta name="description" content="A digital atlas of Michigan fairs, festivals, and traditions." />
+<style>
+body{
+margin:0;
+padding:0;
+width:100%;
+overflow-x:hidden;
 
-    * {
-      box-sizing: border-box;
-    }
+font-family: Georgia, "Times New Roman", serif;
 
-    html {
-      scroll-behavior: smooth;
-    }
+background-color:#efe1c3;
 
-    body {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
-      background:
-        linear-gradient(rgba(245, 236, 218, 0.82), rgba(239, 226, 200, 0.9)),
-        url("images/textures/vintage-paper.jpg") repeat;
-      background-size: auto, 700px;
-      min-height: 100vh;
-    }
+  background-image:
+    url("/images/textures/vintage-paper.jpg");
 
-    img {
-      display: block;
-      max-width: 100%;
-    }
+  background-size:900px auto;
+  background-repeat:repeat;
+  body {
+  background: url("images/textures/vintage-paper.jpg") repeat;
+  background-size: 600px;
+}
+:root{
+--paper:#f3e7cb;
+--paper-dark:#e7d8b6;
+--ink:#3d2f22;
+--navy:#1f3f68;
+--olive:#5f6c36;
+--olive-dark:#465125;
+--line:#ccb58c;
+--panel:#f7efdc;
+--shadow:0 10px 28px rgba(74,52,25,.12);
+--radius:22px;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+*{box-sizing:border-box}
+html,body{
+margin:0;
+padding:0;
+width:100%;
+overflow-x:hidden;
+scroll-behavior:smooth;
+font-family: Georgia, "Times New Roman", serif;
+background:
+radial-gradient(circle at top left, rgba(255,255,255,.4), transparent 25%),
+linear-gradient(180deg,#f6ecd7 0%, #efe1bf 100%);
+color:var(--ink);
+}
 
-    .page {
-      width: 100%;
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding-bottom: calc(var(--nav-height) + 20px);
-    }
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
 
-    .hero {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-bottom-left-radius: 26px;
-      border-bottom-right-radius: 26px;
-      box-shadow: 0 10px 34px rgba(46, 31, 14, 0.18);
-    }
+.container{
+width:min(calc(100% - 20px), 860px);
+margin-inline:auto;
+}
 
-    .hero img {
-      width: 100%;
-      height: auto;
-      min-height: 520px;
-      object-fit: cover;
-      object-position: center;
-    }
+.hero-full{
+width:100%;
+margin:0;
+padding:0;
+}
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(26, 18, 10, 0.12) 0%,
-          rgba(26, 18, 10, 0.18) 22%,
-          rgba(26, 18, 10, 0.44) 62%,
-          rgba(26, 18, 10, 0.68) 100%
-        );
-      display: flex;
-      align-items: flex-end;
-      padding: 22px 18px 20px;
-    }
+.hero-frame{
+position:relative;
+width:100%;
+overflow:hidden;
+background:#efe1c3;
+box-shadow:var(--shadow);
+}
 
-    .hero-copy {
-      color: #fffaf0;
-      max-width: 92%;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-    }
+.hero-img{
+display:block;
+width:100%;
+height:auto;
+}
 
-    .hero-kicker {
-      display: inline-block;
-      margin: 0 0 8px;
-      font-size: 0.78rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      opacity: 0.92;
-    }
+.hero-cta-wrap{
+position:absolute;
+left:50%;
+transform:translateX(-50%);
+bottom:8%;
+width:min(88%, 560px);
+}
 
-    .hero h1 {
-      margin: 0;
-      font-size: clamp(2rem, 6vw, 3.2rem);
-      line-height: 0.96;
-      letter-spacing: -0.02em;
-    }
+.near-btn{
+width:100%;
+border:none;
+cursor:pointer;
+font:inherit;
+font-weight:700;
+font-size:18px;
+color:#fff4da;
+padding:16px 18px;
+border-radius:18px;
+background:linear-gradient(180deg,var(--olive) 0%, var(--olive-dark) 100%);
+border:3px solid #8b8f57;
+box-shadow:
+inset 0 0 0 2px rgba(255,245,214,.14),
+0 6px 18px rgba(0,0,0,.14);
+}
 
-    .hero p {
-      margin: 12px 0 16px;
-      font-size: 1rem;
-      line-height: 1.35;
-      max-width: 28rem;
-    }
+.section{
+padding:14px 0;
+}
 
-    .hero-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 245, 230, 0.55);
-      background: rgba(255, 244, 223, 0.16);
-      color: #fffaf0;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      font-size: 0.95rem;
-      font-weight: 700;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
-    }
+.panel{
+background:rgba(247,239,220,.92);
+border:1px solid rgba(110,84,42,.10);
+border-radius:28px;
+box-shadow:var(--shadow);
+padding:18px 14px;
+}
 
-    .section {
-      padding: 18px 14px 0;
-    }
+.section-title{
+margin:0 0 12px;
+text-align:center;
+font-size:30px;
+line-height:1;
+color:var(--navy);
+letter-spacing:-.4px;
+}
 
-    .section-title-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
+.featured-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
 
-    .section-kicker {
-      margin: 0 0 4px;
-      color: var(--muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
+.festival-card{
+background:#f5ead3;
+border:1px solid #cfb98d;
+border-radius:18px;
+overflow:hidden;
+box-shadow:var(--shadow);
+min-width:0;
+}
 
-    .section-title {
-      margin: 0;
-      font-size: 1.48rem;
-      line-height: 1.1;
-      color: var(--ink);
-    }
+.festival-art{
+position:relative;
+aspect-ratio:3 / 4;
+overflow:hidden;
+border-bottom:1px solid #d2bd95;
+background:#cfdbe6;
+}
 
-    .section-link {
-      white-space: nowrap;
-      font-size: 0.95rem;
-      color: var(--accent);
-      font-weight: 700;
-    }
+.festival-art::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(180deg,transparent 42%, rgba(0,0,0,.18));
+}
 
-    .festival-grid {
-      display: grid;
-      gap: 16px;
-    }
+.art-goodells{
+background:linear-gradient(180deg,#4a87b9 0%, #89b9df 30%, #efd388 63%, #8db769 64%, #4b7144 100%);
+}
 
-    .festival-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(1px);
-      -webkit-backdrop-filter: blur(1px);
-    }
+.art-armada{
+background:linear-gradient(180deg,#6b98c7 0%, #a5cae7 30%, #efcf88 58%, #996f4c 59%, #5e4335 100%);
+}
 
-    .festival-card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-bottom: 1px solid var(--line);
-    }
+.festival-overlay{
+position:absolute;
+left:12px;
+right:12px;
+bottom:12px;
+z-index:2;
+color:#fff8e8;
+text-shadow:0 2px 6px rgba(0,0,0,.28);
+}
 
-    .festival-card-body {
-      padding: 14px 14px 16px;
-    }
+.festival-overlay h3{
+margin:0 0 4px;
+font-size:20px;
+line-height:.95;
+}
 
-    .festival-card h3 {
-      margin: 0 0 8px;
-      font-size: 1.28rem;
-      line-height: 1.1;
-    }
+.festival-overlay p{
+margin:0;
+font-size:13px;
+}
 
-    .festival-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.96rem;
-      line-height: 1.45;
-    }
+.festival-body{
+padding:12px;
+}
 
-    .search-panel {
-      background: rgba(255, 248, 236, 0.7);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 14px;
-      box-shadow: var(--shadow);
-    }
+.festival-title{
+margin:0 0 6px;
+font-size:22px;
+line-height:1;
+}
 
-    .search-label {
-      margin: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--ink);
-    }
+.festival-copy{
+margin:0;
+font-size:14px;
+line-height:1.35;
+color:#4e4335;
+}
 
-    .search-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255, 252, 246, 0.86);
-      border: 1px solid rgba(94, 67, 34, 0.14);
-      border-radius: 999px;
-      padding: 12px 14px;
-    }
+.see-all-row{
+display:flex;
+justify-content:flex-end;
+margin-top:12px;
+}
 
-    .search-bar input {
-      width: 100%;
-      border: 0;
-      outline: none;
-      background: transparent;
-      color: var(--ink);
-      font-family: inherit;
-      font-size: 1rem;
-    }
+.see-all{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:10px 18px;
+border-radius:999px;
+background:linear-gradient(180deg,#7a8849 0%, #59632f 100%);
+color:#fff0cd;
+font-weight:700;
+font-size:15px;
+border:2px solid rgba(255,243,216,.16);
+box-shadow:var(--shadow);
+}
 
-    .search-bar input::placeholder {
-      color: #8e7659;
-    }
+.search-strip{
+display:flex;
+align-items:center;
+gap:10px;
+background:#f7ecd4;
+border:1px solid #d0ba94;
+border-radius:16px;
+padding:14px 16px;
+box-shadow:var(--shadow);
+}
 
-    .search-hint {
-      margin: 10px 4px 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.4;
-    }
+.search-strip input{
+border:none;
+outline:none;
+background:transparent;
+width:100%;
+min-width:0;
+font:inherit;
+font-size:17px;
+color:#554634;
+}
 
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px 12px;
-    }
+.search-results{
+display:grid;
+gap:10px;
+margin-top:10px;
+}
 
-    .theme-item {
-      text-align: center;
-    }
+.result{
+background:#fff9ed;
+border:1px solid #dcc7a3;
+border-radius:16px;
+padding:12px 14px;
+color:#4f5b66;
+font-size:15px;
+line-height:1.45;
+}
 
-    .theme-circle {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid rgba(122, 89, 50, 0.16);
-      box-shadow: var(--shadow);
-      background: #ead7b8;
-    }
+.theme-wrap{
+padding-top:4px;
+}
 
-    .theme-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.theme-title{
+margin:0 0 10px;
+text-align:center;
+font-size:28px;
+line-height:1;
+color:#3a2b1f;
+}
 
-    .theme-label {
-      margin: 9px 0 0;
-      font-size: 0.9rem;
-      line-height: 1.2;
-      color: var(--ink);
-    }
+.theme-row{
+display:grid;
+grid-template-columns:repeat(5, 1fr);
+gap:8px;
+align-items:start;
+}
 
-    .scenic-strip-wrap {
-      padding: 20px 14px 0;
-    }
+.theme-item{
+text-align:center;
+min-width:0;
+}
 
-    .scenic-strip {
-      border-radius: 22px 22px 0 0;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-bottom: 0;
-      box-shadow: 0 -2px 18px rgba(59, 41, 18, 0.06);
-    }
+.theme-icon{
+width:100%;
+aspect-ratio:1.3 / 1;
+border-radius:999px;
+border:1px solid #cfb88f;
+box-shadow:var(--shadow);
+background:#d8e2eb;
+overflow:hidden;
+}
 
-    .scenic-strip img {
-      width: 100%;
-      height: 118px;
-      object-fit: cover;
-      object-position: center;
-      filter: saturate(0.95) contrast(1.02);
-    }
+.theme-fair{background:linear-gradient(180deg,#87b5db 0%, #e8c57d 55%, #c47846 56%, #81522f 100%)}
+.theme-water{background:linear-gradient(180deg,#7db2d7 0%, #d9edf6 28%, #e7d098 56%, #6fa3ba 57%, #315f72 100%)}
+.theme-harvest{background:linear-gradient(180deg,#93c0df 0%, #d5ebf5 25%, #f0ca7d 55%, #d78641 56%, #7d5227 100%)}
+.theme-balloon{background:linear-gradient(180deg,#73acd2 0%, #b7d9ef 30%, #efca81 59%, #87b567 60%, #57764b 100%)}
+.theme-parade{background:linear-gradient(180deg,#7da9cf 0%, #c0dcef 29%, #edc47b 56%, #b87443 57%, #6b4728 100%)}
 
-    .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: var(--max-width);
-      height: var(--nav-height);
-      background:
-        linear-gradient(to top, rgba(238, 224, 195, 0.98), rgba(247, 239, 222, 0.94));
-      border-top: 1px solid rgba(94, 67, 34, 0.14);
-      box-shadow: 0 -8px 24px rgba(56, 39, 17, 0.12);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 50;
-    }
+.theme-label{
+margin-top:6px;
+font-size:12px;
+line-height:1.05;
+font-weight:700;
+color:#3d3126;
+}
 
-    .bottom-nav-inner {
-      height: 100%;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      align-items: center;
-      padding: 8px 6px 10px;
-    }
+.scenic-strip{
+margin-top:14px;
+height:118px;
+border-radius:20px 20px 0 0;
+border:1px solid #d2bc95;
+border-bottom:none;
+overflow:hidden;
+box-shadow:var(--shadow);
+background:
+linear-gradient(180deg,#8fc0dd 0%, #d9edf6 30%, #f0d08f 56%, #8bb76a 57%, #5f8b4f 100%);
+position:relative;
+}
 
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
+.scenic-strip::before{
+content:"";
+position:absolute;
+left:-5%;
+right:-5%;
+bottom:-8%;
+height:50%;
+background:
+radial-gradient(circle at 12% 100%, #6c8b58 0 18%, transparent 19%),
+radial-gradient(circle at 78% 100%, #5a7b47 0 16%, transparent 17%),
+linear-gradient(180deg,#7bb56a,#507545);
+}
 
-    .nav-item .icon {
-      font-size: 1.2rem;
-      line-height: 1;
-    }
+.scenic-strip::after{
+content:"";
+position:absolute;
+left:6%;
+right:6%;
+bottom:10%;
+height:30%;
+background:
+linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.55));
+border-radius:999px;
+opacity:.65;
+}
 
-    .nav-item.active {
-      color: var(--accent);
-      font-weight: 700;
-    }
+.bottom-nav{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+z-index:60;
+background:rgba(245,233,206,.97);
+backdrop-filter:blur(10px);
+border-top:1px solid rgba(120,100,70,.18);
+box-shadow:0 -8px 24px rgba(67,44,20,.10);
+display:flex;
+justify-content:space-around;
+padding:10px 8px 12px;
+padding-bottom:calc(12px + env(safe-area-inset-bottom));
+}
 
-    @media (max-width: 380px) {
-      .hero img {
-        min-height: 480px;
-      }
+.bottom-nav a{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:5px;
+min-width:58px;
+color:#5a4b37;
+font-size:12px;
+font-weight:700;
+}
 
-      .hero-overlay {
-        padding: 18px 14px 18px;
-      }
+.icon{
+font-size:21px;
+line-height:1;
+}
 
-      .theme-grid {
-        gap: 12px 10px;
-      }
+.footer-space{
+height:110px;
+}
 
-      .theme-label {
-        font-size: 0.82rem;
-      }
-    }
+@media (min-width: 860px){
+.container{
+width:min(calc(100% - 32px), 980px);
+}
 
-    @media (min-width: 700px) {
-      .festival-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+.featured-grid{
+gap:16px;
+}
 
-      .theme-grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
+.theme-row{
+gap:12px;
+}
 
-      .scenic-strip img {
-        height: 160px;
-      }
-    }
-  </style>
+.bottom-nav{
+width:min(760px, calc(100% - 24px));
+left:50%;
+right:auto;
+transform:translateX(-50%);
+border:1px solid rgba(120,100,70,.16);
+border-radius:22px;
+bottom:12px;
+}
+}
+
+@media (max-width: 420px){
+.section-title{
+font-size:28px;
+}
+
+.festival-title{
+font-size:19px;
+}
+
+.festival-copy{
+font-size:13px;
+}
+
+.near-btn{
+font-size:16px;
+padding:15px 16px;
+}
+
+.theme-label{
+font-size:11px;
+}
+}
+</style>
 </head>
 <body>
-  <div class="page">
-    <header class="hero">
-      <img
-        src="images/hero/michigan-festival-hero-mobile.jpg"
-        alt="The Michigan Celebration Atlas cover artwork"
-      />
-      <div class="hero-overlay">
-        <div class="hero-copy">
-          <div class="hero-kicker">A Visual Festival Guide</div>
-          <h1>The Michigan Celebration Atlas</h1>
-          <p>
-            Exploring the fairs, festivals, and traditions that shaped Michigan
-            communities.
-          </p>
-          <a class="hero-button" href="#nearby">📍 Find Festivals Near You</a>
-        </div>
-      </div>
-    </header>
 
-    <main>
-      <section class="section">
-        <div class="section-title-row">
-          <div>
-            <p class="section-kicker">Featured Festival Posters</p>
-            <h2 class="section-title">Featured Festivals</h2>
-          </div>
-          <a class="section-link" href="#">See All &gt;</a>
-        </div>
+<section class="hero-full">
+<div class="hero-frame">
+<img
+src="/images/michigan-festival-hero-mobile.jpg"
+alt="Michigan festival scene"
+class="hero-img"
+/>
+<div class="hero-cta-wrap">
+<button id="nearbyBtn" class="near-btn">📍 Find Festivals Near You</button>
+</div>
+</div>
+</section>
 
-        <div class="festival-grid">
-          <article class="festival-card">
-            <img
-              src="images/featured/goodells-county-fair.jpg"
-              alt="Goodells County Fair poster illustration"
-              onerror="this.src='images/hero/michigan-festival-hero-mobile.jpg'"
-            />
-            <div class="festival-card-body">
-              <h3>Goodells County Fair</h3>
-              <p>
-                A beloved St. Clair County tradition of livestock barns, midway
-                lights, 4-H competitions, and warm summer fairground evenings.
-              </p>
-            </div>
-          </article>
+<main class="container">
 
-          <article class="festival-card">
-            <img
-              src="images/featured/armada-fair.jpg"
-              alt="Armada Fair poster illustration"
-              onerror="this.src='images/hero/michigan-festival-hero-mobile.jpg'"
-            />
-            <div class="festival-card-body">
-              <h3>Armada Fair</h3>
-              <p>
-                One of Michigan’s enduring county fair traditions, remembered
-                for rural pride, horse events, carnival rides, and community
-                gathering.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
+<section class="section">
+<div class="panel">
+<h2 class="section-title">Featured Festivals</h2>
 
-      <section class="section">
-        <div class="section-title-row">
-          <div>
-            <p class="section-kicker">Explore the Archive</p>
-            <h2 class="section-title">Search</h2>
-          </div>
-        </div>
+<div class="featured-grid">
+<article class="festival-card">
+<div class="festival-art art-goodells">
+<div class="festival-overlay">
+<h3>Goodells<br>County Fair</h3>
+<p>Goodells, Michigan</p>
+</div>
+</div>
+<div class="festival-body">
+<h3 class="festival-title">Goodells</h3>
+<p class="festival-copy">Generations have gathered in Goodells around livestock barns, 4-H traditions, and summer midway lights.</p>
+</div>
+</article>
 
-        <div class="search-panel">
-          <p class="search-label">🔍 Search Michigan’s Festivals &amp; Fairs</p>
-          <label class="search-bar">
-            <span aria-hidden="true">🔎</span>
-            <input
-              type="text"
-              placeholder="Search by festival, city, county, month..."
-            />
-          </label>
-          <p class="search-hint">
-            Try searching for St. Clair County, waterfront, or July.
-          </p>
-        </div>
-      </section>
+<article class="festival-card">
+<div class="festival-art art-armada">
+<div class="festival-overlay">
+<h3>Armada<br>Fair</h3>
+<p>Armada, Michigan</p>
+</div>
+</div>
+<div class="festival-body">
+<h3 class="festival-title">Armada</h3>
+<p class="festival-copy">One of Michigan’s best-known county fairs, remembered for midway energy and grandstand tradition.</p>
+</div>
+</article>
+</div>
 
-      <section class="section">
-        <div class="section-title-row">
-          <div>
-            <p class="section-kicker">Browse the Collection</p>
-            <h2 class="section-title">Browse by Theme</h2>
-          </div>
-        </div>
+<div class="see-all-row">
+<a href="#gallery" class="see-all">See All ›</a>
+</div>
+</div>
+</section>
 
-        <div class="theme-grid">
-          <a class="theme-item" href="#">
-            <div class="theme-circle">
-              <img
-                src="images/themes/county-fairs.png"
-                alt="County fairs theme"
-              />
-            </div>
-            <p class="theme-label">County Fairs</p>
-          </a>
+section {
+background: transparent;
+}
+<section class="section" id="search">
+<div class="search-strip">
+<span style="font-size:22px;line-height:1;">⌕</span>
+<input id="archiveSearch" type="text" placeholder="Search Michigan’s Festivals & Fairs" />
+<button onclick="runSearch()" style="border:none;background:none;font-size:22px;cursor:pointer;color:#66513c;">›</button>
+</div>
+<div id="searchResults" class="search-results"></div>
+</section>
 
-          <a class="theme-item" href="#">
-            <div class="theme-circle">
-              <img
-                src="images/themes/waterfront.png"
-                alt="Waterfront festivals theme"
-              />
-            </div>
-            <p class="theme-label">Waterfront</p>
-          </a>
+<section class="section theme-wrap">
+<div class="panel">
+<h2 class="theme-title">Browse by Theme</h2>
 
-          <a class="theme-item" href="#">
-            <div class="theme-circle">
-              <img
-                src="images/themes/harvest.png"
-                alt="Harvest festivals theme"
-              />
-            </div>
-            <p class="theme-label">Harvest</p>
-          </a>
+<div class="theme-row">
+<div class="theme-item">
+<div class="theme-icon theme-fair"></div>
+<div class="theme-label">County<br>Fairs</div>
+</div>
+<div class="theme-item">
+<div class="theme-icon theme-water"></div>
+<div class="theme-label">Waterfront</div>
+</div>
+<div class="theme-item">
+<div class="theme-icon theme-harvest"></div>
+<div class="theme-label">Harvest</div>
+</div>
+<div class="theme-item">
+<div class="theme-icon theme-balloon"></div>
+<div class="theme-label">Balloons</div>
+</div>
+<div class="theme-item">
+<div class="theme-icon theme-parade"></div>
+<div class="theme-label">Parades</div>
+</div>
+</div>
 
-          <a class="theme-item" href="#">
-            <div class="theme-circle">
-              <img
-                src="images/themes/balloons.png"
-                alt="Balloon festivals theme"
-              />
-            </div>
-            <p class="theme-label">Balloons</p>
-          </a>
+<div class="scenic-strip"></div>
+</div>
+</section>
 
-          <a class="theme-item" href="#">
-            <div class="theme-circle">
-              <img
-                src="images/themes/parades.png"
-                alt="Parades theme"
-              />
-            </div>
-            <p class="theme-label">Parades</p>
-          </a>
-        </div>
-      </section>
+<section class="section" id="gallery">
+<div class="panel">
+<h2 class="section-title" style="text-align:left;">Poster Gallery</h2>
+<div class="featured-grid">
+<article class="festival-card">
+<div class="festival-art art-goodells">
+<div class="festival-overlay">
+<h3>Goodells<br>County Fair</h3>
+<p>Poster Placeholder</p>
+</div>
+</div>
+</article>
+<article class="festival-card">
+<div class="festival-art art-armada">
+<div class="festival-overlay">
+<h3>Armada<br>Fair</h3>
+<p>Poster Placeholder</p>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
 
-      <section class="scenic-strip-wrap">
-        <div class="scenic-strip">
-          <img
-            src="images/hero/michigan-festival-hero.jpg"
-            alt="Scenic Michigan festival landscape illustration"
-            onerror="this.src='images/hero/michigan-festival-hero-mobile.jpg'"
-          />
-        </div>
-      </section>
-    </main>
-  </div>
+<section class="section" id="map">
+<div class="panel">
+<h2 class="section-title" style="text-align:left;">Interactive Michigan Map</h2>
+<div class="result" id="mapInfo">Tap a marker to preview a festival.</div>
+</div>
+</section>
 
-  <nav class="bottom-nav" aria-label="Primary navigation">
-    <div class="bottom-nav-inner">
-      <a class="nav-item active" href="#">
-        <span class="icon">⌂</span>
-        <span>Home</span>
-      </a>
-      <a class="nav-item" href="#">
-        <span class="icon">🗺</span>
-        <span>Map</span>
-      </a>
-      <a class="nav-item" href="#">
-        <span class="icon">⌕</span>
-        <span>Search</span>
-      </a>
-      <a class="nav-item" href="#">
-        <span class="icon">🖼</span>
-        <span>Posters</span>
-      </a>
-      <a class="nav-item" href="#nearby">
-        <span class="icon">📍</span>
-        <span>Near Me</span>
-      </a>
-    </div>
-  </nav>
+<section class="section" id="contribute">
+<div class="panel">
+<h2 class="section-title" style="text-align:left;">Research Contributor Portal</h2>
+<div class="search-results">
+<div class="result"><strong>Your role:</strong> document posters, programs, scrapbooks, photos, and local records that are not yet online.</div>
+<div class="result"><strong>Atlas role:</strong> organize, design, summarize, and publish material into a consistent archive.</div>
+<div class="result"><strong>Credit:</strong> contributors can later be listed on the pages they help enrich.</div>
+</div>
+</div>
+</section>
 
-  <script>
-    document.querySelector(".hero-button")?.addEventListener("click", function (e) {
-      e.preventDefault();
+<div id="nearbyResults" class="search-results"></div>
+<div class="footer-space"></div>
+</main>
 
-      if (!navigator.geolocation) {
-        alert("Geolocation is not supported in this browser.");
-        return;
-      }
+<nav class="bottom-nav">
+<a href="#"><span class="icon">⌂</span><span>Home</span></a>
+<a href="#map"><span class="icon">🗺</span><span>Map</span></a>
+<a href="#search"><span class="icon">⌕</span><span>Search</span></a>
+<a href="#gallery"><span class="icon">🖼</span><span>Posters</span></a>
+<a href="#contribute"><span class="icon">📍</span><span>Near Me</span></a>
+</nav>
 
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          const lat = position.coords.latitude.toFixed(4);
-          const lon = position.coords.longitude.toFixed(4);
-          alert("Location found: " + lat + ", " + lon + "\\nNext step: connect this to your nearby festivals list.");
-        },
-        function () {
-          alert("Unable to retrieve your location.");
-        }
-      );
-    });
-  </script>
+<script>
+const festivals = [
+{
+name: "Goodells County Fair",
+city: "Goodells",
+county: "St. Clair County",
+type: "County Fair",
+month: "July",
+lat: 42.9411,
+lng: -82.6682,
+text: "Historic agricultural fair with livestock barns, 4-H competitions, horse arena tradition, and glowing summer midway memories."
+},
+{
+name: "Armada Fair",
+city: "Armada",
+county: "Macomb County",
+type: "County Fair",
+month: "August",
+lat: 42.8445,
+lng: -82.8811,
+text: "One of Michigan’s most recognized county fairs, known for livestock, midway energy, and demolition derby memories."
+},
+{
+name: "Bay-Rama Fishfly Festival",
+city: "New Baltimore",
+county: "Macomb County",
+type: "Waterfront Festival",
+month: "June",
+lat: 42.6811,
+lng: -82.7366,
+text: "Lakefront festival famous for embracing fishfly season with parades, carnival rides, boats, and waterfront crowds."
+}
+];
+
+function distanceMiles(lat1, lon1, lat2, lon2) {
+const toRad = d => d * Math.PI / 180;
+const R = 3958.8;
+const dLat = toRad(lat2 - lat1);
+const dLon = toRad(lon2 - lon1);
+const a = Math.sin(dLat/2)**2 +
+Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+Math.sin(dLon/2)**2;
+return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+document.getElementById('nearbyBtn').addEventListener('click', () => {
+const box = document.getElementById('nearbyResults');
+if (!navigator.geolocation) {
+box.innerHTML = '<div class="result">This browser does not support geolocation.</div>';
+return;
+}
+box.innerHTML = '<div class="result">Finding festivals near you…</div>';
+navigator.geolocation.getCurrentPosition(
+pos => {
+const { latitude, longitude } = pos.coords;
+const ranked = festivals
+.map(f => ({ ...f, distance: distanceMiles(latitude, longitude, f.lat, f.lng) }))
+.sort((a, b) => a.distance - b.distance)
+.slice(0, 3);
+
+box.innerHTML = ranked.map(f =>
+'<div class="result"><strong>' + f.name + '</strong><br>' +
+f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
+f.distance.toFixed(1) + ' miles away · ' + f.text + '</span></div>'
+).join('');
+},
+() => {
+box.innerHTML = '<div class="result">Location was blocked or unavailable. You can still browse by theme or search.</div>';
+}
+);
+});
+
+function runSearch() {
+const q = document.getElementById('archiveSearch').value.trim().toLowerCase();
+const box = document.getElementById('searchResults');
+
+if (!q) {
+box.innerHTML = '<div class="result">Try searching for <strong>St. Clair County</strong>, <strong>waterfront</strong>, or <strong>July</strong>.</div>';
+return;
+}
+
+const results = festivals.filter(f => {
+const hay = [f.name, f.city, f.county, f.type, f.month, f.text].join(' ').toLowerCase();
+return hay.includes(q);
+});
+
+if (!results.length) {
+box.innerHTML = '<div class="result">No matches yet. Try a city, county, month, or festival type.</div>';
+return;
+}
+
+box.innerHTML = results.map(f =>
+'<div class="result"><strong>' + f.name + '</strong><br>' +
+f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' + f.text + '</span></div>'
+).join('');
+}
+
+runSearch();
+</script>
 </body>
 </html>
