@@ -544,68 +544,65 @@
       }
     }
   
-/* --- Card styling updated to use vintage paper background --- */
-.festival-feature-card,
-.theme-card,
-.poster-card {
-  background-image: url('/images/textures/vintage-paper.jpg');
-  background-size: cover;
-  background-repeat: repeat;
-  border-radius: 18px;
-  border: 1px solid rgba(120,93,60,0.25);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18), 0 2px 4px rgba(0,0,0,0.12);
-}
-
-/* Slight inner tone so cards remain readable over the page background */
-.festival-feature-card::before,
-.theme-card::before,
-.poster-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(255,248,232,0.55);
-  pointer-events: none;
-}
     /* --- TEST OVERRIDES: put at end of stylesheet --- */
 
+/* typography */
 .section-title,
 .theme-title,
 .story-title,
 .atlas-btn-image,
 .story-link {
-  font-family: 'Amiri', serif !important;
-  font-weight: 700 !important;
+  font-family: 'Amiri', serif;
+  font-weight: 700;
 }
 
+/* layout */
 .container {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 8px !important;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0 8px;
 }
 
+/* cards */
 .panel,
 .story-card,
 .poster-card {
-  background-color: #f4e7cf !important;
-  background-image: url('/images/textures/vintage-paper.jpg') !important;
-  background-size: 600px auto !important;
-  background-repeat: repeat !important;
-  border: 1px solid rgba(120, 93, 60, 0.22) !important;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14) !important;
+  background-color: #f4e7cf;
+  background-image: url('/images/textures/vintage-paper.jpg');
+  background-size: 600px auto;
+  background-repeat: repeat;
+  border: 1px solid rgba(120, 93, 60, 0.22);
+  box-shadow:
+  0 1px 0 rgba(255,255,255,0.6) inset,
+  0 8px 14px rgba(0,0,0,0.18),
+  0 2px 3px rgba(0,0,0,0.15);
 }
 
+/* featured layout */
 .story-card {
-  display: grid !important;
-  grid-template-columns: 38% 1fr !important;
-  gap: 14px !important;
+  display: grid;
+  grid-template-columns: 38% 1fr;
+  gap: 14px;
 }
 
-@media (max-width: 420px) {
-  .story-card {
-    grid-template-columns: 36% 1fr !important;
-  }
+/* paper edge highlight */
+.story-card,
+.panel,
+.poster-card {
+  position: relative;
+}
+
+.story-card::after,
+.panel::after,
+.poster-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.35);
+}
 }
 
 </style>
