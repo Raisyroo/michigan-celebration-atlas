@@ -87,29 +87,28 @@
       width: min(88%, 560px);
     }
 
-  .atlas-btn-image {
-  width: 100%;
-  min-height: 72px;
-  border: none;
-  background: transparent;
-  background-image: url('/images/ui/green-button.png');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  color: #fff1cf;
-  font-family: 'Cinzel', serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-transform: none;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.45);
-  cursor: pointer;
-  padding: 12px 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+    .atlas-btn-image {
+      width: 100%;
+      min-height: 72px;
+      border: none;
+      background: transparent;
+      background-image: url('/images/ui/green-button.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% 100%;
+      color: #fff1cf;
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
+      cursor: pointer;
+      padding: 12px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
     .atlas-btn-image.small {
       min-height: 58px;
@@ -539,7 +538,32 @@
         font-size: 11px;
       }
     }
-  </style>
+  
+/* --- Card styling updated to use vintage paper background --- */
+.festival-feature-card,
+.theme-card,
+.poster-card {
+  background-image: url('/images/textures/vintage-paper.jpg');
+  background-size: cover;
+  background-repeat: repeat;
+  border-radius: 18px;
+  border: 1px solid rgba(120,93,60,0.25);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18), 0 2px 4px rgba(0,0,0,0.12);
+}
+
+/* Slight inner tone so cards remain readable over the page background */
+.festival-feature-card::before,
+.theme-card::before,
+.poster-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(255,248,232,0.55);
+  pointer-events: none;
+}
+
+</style>
 </head>
 <body>
   <section class="hero-full">
@@ -557,7 +581,7 @@
   <main class="container">
     <section class="section">
       <div class="panel">
-        <h3 class="section-title">Featured Festivals</h3>
+        <h2 class="section-title">Featured Festivals</h2>
 
         <div class="featured-stack">
           <article class="story-card">
