@@ -6,9 +6,9 @@
   <title>The Michigan Celebration Atlas</title>
   <meta name="description" content="A digital atlas of Michigan fairs, festivals, and traditions." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Libre+Baskerville:wght@400;700&family=Lobster&display=swap" rel="stylesheet" />
+ <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lobster&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -567,13 +567,51 @@
   background: rgba(255,248,232,0.55);
   pointer-events: none;
 }
+    /* --- TEST OVERRIDES: put at end of stylesheet --- */
+
+.section-title,
+.theme-title,
+.story-title,
+.atlas-btn-image,
+.story-link {
+  font-family: 'Amiri', serif !important;
+  font-weight: 700 !important;
+}
+
+.container {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 8px !important;
+}
+
+.panel,
+.story-card,
+.poster-card {
+  background-color: #f4e7cf !important;
+  background-image: url('/images/textures/vintage-paper.jpg') !important;
+  background-size: 600px auto !important;
+  background-repeat: repeat !important;
+  border: 1px solid rgba(120, 93, 60, 0.22) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14) !important;
+}
+
+.story-card {
+  display: grid !important;
+  grid-template-columns: 38% 1fr !important;
+  gap: 14px !important;
+}
+
+@media (max-width: 420px) {
+  .story-card {
+    grid-template-columns: 36% 1fr !important;
+  }
+}
 
 </style>
 </head>
 <body>
-  <div style="background:red;color:white;padding:10px;font-size:24px;">
-TEST VERSION
-</div>
+ 
   <section class="hero-full">
     <div class="hero-frame">
       <img src="/images/michigan-festival-hero-mobile.png" alt="Michigan festival scene" class="hero-img" />
