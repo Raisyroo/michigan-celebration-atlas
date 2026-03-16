@@ -15,12 +15,9 @@
       --paper: #efe3c6;
       --paper-soft: #f6edd9;
       --paper-deep: #e3d1ad;
-      --paper-card: #f8ecd2;
       --ink: #3b281d;
       --ink-soft: #5e4936;
       --line: #c7ab7d;
-      --shadow: 0 8px 20px rgba(74, 52, 25, 0.10);
-      --radius: 24px;
     }
 
     * {
@@ -77,24 +74,6 @@
       box-shadow: none;
     }
 
-    /*.hero-frame::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 140px;
-      background: linear-gradient(
-        to bottom,
-        rgba(239,227,198,0) 0%,
-        rgba(239,227,198,0.35) 35%,
-        rgba(239,227,198,0.75) 70%,
-        rgba(239,227,198,1) 100%
-      );
-      pointer-events: none;
-      z-index: 1;
-    }
-    */
     .hero-img {
       width: 100%;
       height: auto;
@@ -184,12 +163,11 @@
       gap: 18px;
     }
 
-    /* FEATURED FESTIVAL */
     .story-card {
       display: grid;
-      grid-template-columns: minmax(160px, 44%) 1fr;
-      gap: 18px;
-      align-items: start;
+      grid-template-columns: minmax(170px, 46%) 1fr;
+      gap: 22px;
+      align-items: center;
       padding: 0;
       margin: 0;
       background: transparent;
@@ -203,37 +181,26 @@
       width: 100%;
     }
 
-.story-poster-frame {
-  width: 100%;
-  aspect-ratio: 1 / 1.38;
-  background: #f7f3ea;
-  border: 1px solid rgba(145, 126, 99, 0.15);
-  border-radius: 1px;
-  padding: 6px 6px;
-  box-shadow: none;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .story-poster-frame {
+      width: 100%;
+      aspect-ratio: 1 / 1.38;
+      background: #f7f3ea;
+      padding: 10px;
+      border: 1px solid rgba(150,135,110,0.45);
+      box-shadow:
+        inset 0 0 0 3px #ffffff,
+        inset 0 0 0 5px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
 
-.story-poster,
-.story-poster-video {
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
-  display: block;
-  border-radius: 0;
-  background: #f7f3ea;
-  border: 1px solid rgba(145, 126, 99, 0.22);
-}
-
-.story-poster {
-  object-fit: cover;
-}
-
-.story-poster-video {
-  object-fit: contain;
-}
+    .story-poster,
+    .story-poster-video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: none;
+      border-radius: 0;
+      background: #f7f3ea;
     }
 
     .story-poster {
@@ -241,7 +208,7 @@
     }
 
     .story-poster-video {
-      object-fit: contain;
+      object-fit: cover;
     }
 
     .story-content {
@@ -249,14 +216,13 @@
       display: flex;
       flex-direction: column;
       height: 100%;
-      padding-top: 2px;
       justify-content: center;
     }
 
     .story-title {
-      margin: 0 0 10px;
+      margin: 0 0 14px;
       font-family: 'Amiri', serif;
-      font-size: 30px;
+      font-size: 23px;
       line-height: 0.95;
       color: #2f1f15;
     }
@@ -274,7 +240,7 @@
 
     .story-copy {
       margin: 0 0 16px;
-      font-size: 17px;
+      font-size: 14px;
       line-height: 1.72;
       color: #443427;
     }
@@ -290,6 +256,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      align-self: flex-start;
       min-height: 48px;
       min-width: 180px;
       padding: 10px 18px;
@@ -536,7 +503,7 @@
     @media (max-width: 768px) {
       .story-card {
         grid-template-columns: 46% 1fr;
-        gap: 14px;
+        gap: 16px;
       }
 
       .story-title {
@@ -552,7 +519,7 @@
     @media (max-width: 520px) {
       .story-card {
         grid-template-columns: 45% 1fr;
-        gap: 12px;
+        gap: 14px;
       }
 
       .story-title {
