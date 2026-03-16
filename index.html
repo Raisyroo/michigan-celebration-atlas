@@ -1,994 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Michigan Celebration Atlas</title>
-  <meta name="description" content="A digital atlas of Michigan fairs, festivals, and traditions." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lobster&display=swap" rel="stylesheet" />
-
-  <style>
-    :root {
-      --paper: #efe3c6;
-      --paper-soft: #f6edd9;
-      --paper-deep: #e3d1ad;
-      --paper-card: #f8ecd2;
-      --ink: #3b281d;
-      --ink-soft: #5e4936;
-      --line: #cbb186;
-      --shadow: 0 10px 28px rgba(74, 52, 25, 0.12);
-      --radius: 24px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      overflow-x: hidden;
-      color: var(--ink);
-      font-family: 'Amiri', serif;
-      background-color: var(--paper);
-      background-image: url('/images/textures/vintage-paper.jpg');
-      background-size: 600px auto;
-      background-position: center top;
-      background-repeat: repeat;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    img,
-    video {
-      display: block;
-      max-width: 100%;
-    }
-
-    .container {
-      width: 100%;
-      max-width: none;
-      margin: 0;
-      padding: 0 8px;
-    }
-
-    .hero-full {
-      width: 100%;
-      background: transparent;
-    }
-
-    .hero-frame {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    .hero-frame::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 140px;
-      background: linear-gradient(
-        to bottom,
-        rgba(239,227,198,0) 0%,
-        rgba(239,227,198,0.35) 35%,
-        rgba(239,227,198,0.75) 70%,
-        rgba(239,227,198,1) 100%
-      );
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .hero-img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .hero-cta-wrap {
-      position: absolute;
-      left: 50%;
-      bottom: 8%;
-      transform: translateX(-50%);
-      width: min(88%, 560px);
-      z-index: 2;
-    }
-
-    .atlas-btn-image {
-      width: 100%;
-      min-height: 72px;
-      border: none;
-      background: transparent;
-      background-image: url('/images/ui/green-button.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 100% 100%;
-      color: #fff1cf;
-      font-family: 'Amiri', serif;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.45);
-      cursor: pointer;
-      padding: 12px 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .section {
-      padding: 14px 0;
-    }
-
-    .panel {
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      padding: 0;
-      margin: 0;
-      position: relative;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 0 0 14px;
-    }
-
-    .section-header::before,
-    .section-header::after {
-      content: "";
-      flex: 1 1 auto;
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        rgba(103, 78, 49, 0),
-        rgba(103, 78, 49, 0.65),
-        rgba(103, 78, 49, 0)
-      );
-    }
-
-    .section-title,
-    .theme-title {
-      margin: 0;
-      text-align: center;
-      font-family: 'Amiri', serif;
-      font-size: 22px;
-      line-height: 1.05;
-      color: #3a2b1f;
-      letter-spacing: 0.01em;
-      white-space: nowrap;
-    }
-
-    .featured-stack {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .story-card,
-    .poster-card,
-    .search-strip,
-    .result,
-    .scenic-strip {
-      background-color: #f4e7cf;
-      background-image: url('/images/textures/vintage-paper.jpg');
-      background-size: 600px auto;
-      background-repeat: repeat;
-      border: 1px solid rgba(120, 93, 60, 0.22);
-      position: relative;
-    }
-
-    .search-strip,
-    .result,
-    .poster-card,
-    .scenic-strip {
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.6) inset,
-        0 8px 14px rgba(0,0,0,0.18),
-        0 2px 3px rgba(0,0,0,0.15);
-    }
-
-    .search-strip::after,
-    .result::after,
-    .poster-card::after,
-    .scenic-strip::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.35);
-    }
-
-    .story-card {
-      display: grid;
-      grid-template-columns: 46% 1fr;
-      gap: 18px;
-      align-items: start;
-      border-radius: 22px;
-      padding: 18px;
-      background-color: var(--paper-card);
-      border: 1px solid rgba(120,93,60,0.16);
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.65) inset,
-        0 22px 32px rgba(66,46,24,0.16),
-        0 8px 12px rgba(66,46,24,0.10);
-      position: relative;
-    }
-
-    .story-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      pointer-events: none;
-      box-shadow:
-        inset 0 2px 4px rgba(255,255,255,0.35),
-        inset 0 -2px 3px rgba(120,93,60,0.08);
-    }
-
-    .story-card::after {
-      content: "";
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: -10px;
-      height: 22px;
-      border-radius: 50%;
-      background: rgba(71,49,28,0.10);
-      filter: blur(12px);
-      z-index: -1;
-    }
-
-    .story-poster-link {
-      display: block;
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-poster-frame {
-      background: #e9dcc0;
-      border-radius: 18px;
-      padding: 14px;
-      box-shadow:
-        inset 0 0 0 2px rgba(120,93,60,0.18),
-        0 6px 12px rgba(0,0,0,0.18);
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-poster,
-    .story-poster-video {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      display: block;
-      border-radius: 10px;
-      background: #d8dfeb;
-    }
-
-    .story-content {
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-title {
-      margin: 0 0 8px;
-      font-family: 'Amiri', serif;
-      font-size: 18px;
-      line-height: 1.05;
-      color: #3a2418;
-    }
-
-    .story-rule {
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        rgba(140,108,73,0.08),
-        rgba(140,108,73,0.7),
-        rgba(140,108,73,0.08)
-      );
-      margin: 0 0 12px;
-    }
-
-    .story-copy {
-      margin: 0 0 16px;
-      font-size: 14px;
-      line-height: 1.7;
-      color: #49392b;
-    }
-
-    .story-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-top: auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 50px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      font-family: 'Amiri', serif;
-      font-size: 13px;
-      font-weight: 700;
-      text-align: center;
-      box-shadow: 0 5px 14px rgba(74, 52, 25, 0.08);
-      border: 1px solid rgba(95, 72, 44, 0.18);
-      position: relative;
-      z-index: 1;
-    }
-
-    .story-link.info {
-      background: #557253;
-      color: #fff2da;
-    }
-
-    .search-strip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-radius: 16px;
-      padding: 14px 16px;
-    }
-
-    .search-strip input {
-      border: none;
-      outline: none;
-      background: transparent;
-      width: 100%;
-      min-width: 0;
-      font-family: 'Amiri', serif;
-      font-size: 17px;
-      color: #554634;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-btn,
-    .search-icon {
-      font-size: 22px;
-      line-height: 1;
-      color: #66513c;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .search-btn {
-      border: none;
-      background: none;
-      cursor: pointer;
-    }
-
-    .search-results {
-      display: grid;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .result {
-      border-radius: 16px;
-      padding: 12px 14px;
-      color: #4f5b66;
-      font-size: 15px;
-      line-height: 1.45;
-      position: relative;
-      z-index: 1;
-    }
-
-    .theme-row {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
-      align-items: start;
-    }
-
-    .theme-item {
-      text-align: center;
-      min-width: 0;
-    }
-
-    .theme-icon {
-      width: 100%;
-      aspect-ratio: 1.3 / 1;
-      border-radius: 999px;
-      border: 1px solid #cfb88f;
-      box-shadow: var(--shadow);
-      background: #d8e2eb;
-      overflow: hidden;
-    }
-
-    .theme-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .theme-label {
-      margin-top: 6px;
-      font-size: 12px;
-      line-height: 1.1;
-      font-weight: 700;
-      color: #3d3126;
-      font-family: 'Amiri', serif;
-    }
-
-    .poster-gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .poster-card {
-      border-radius: 18px;
-      overflow: hidden;
-    }
-
-    .poster-card-art {
-      position: relative;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-      background: #cfdbe6;
-      z-index: 1;
-    }
-
-    .poster-card-art img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .poster-overlay {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 12px;
-      color: #fff8e8;
-      text-shadow: 0 2px 6px rgba(0,0,0,.28);
-      z-index: 2;
-    }
-
-    .poster-overlay h3 {
-      margin: 0 0 4px;
-      font-family: 'Amiri', serif;
-      font-size: 18px;
-      line-height: 0.95;
-      font-weight: 700;
-    }
-
-    .poster-overlay p {
-      margin: 0;
-      font-size: 12px;
-    }
-
-    .festival-logo-script {
-      font-family: 'Amiri', serif;
-      font-size: 20px;
-      line-height: 1;
-    }
-
-    .scenic-strip {
-      margin-top: 14px;
-      height: 118px;
-      border-radius: 20px 20px 0 0;
-      border-bottom: none;
-      overflow: hidden;
-      background: #d8e2eb;
-    }
-
-    .scenic-strip img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
-    }
-
-    .bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 60;
-      background-color: rgba(245, 233, 206, 0.97);
-      background-image: url('/images/textures/vintage-paper.jpg');
-      background-size: 600px auto;
-      background-repeat: repeat;
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(120,100,70,.18);
-      box-shadow: 0 -8px 24px rgba(67,44,20,.10);
-      display: flex;
-      justify-content: space-around;
-      padding: 10px 8px 12px;
-      padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    }
-
-    .bottom-nav a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      min-width: 58px;
-      color: #5a4b37;
-      font-size: 12px;
-      font-weight: 700;
-      font-family: 'Amiri', serif;
-      text-align: center;
-    }
-
-    .nav-icon {
-      width: 26px;
-      height: 26px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .footer-space {
-      height: 110px;
-    }
-
-    @media (min-width: 860px) {
-      .container {
-        padding: 0 14px;
-      }
-
-      .theme-row {
-        gap: 12px;
-      }
-
-      .bottom-nav {
-        width: min(760px, calc(100% - 24px));
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        border: 1px solid rgba(120,100,70,.16);
-        border-radius: 22px;
-        bottom: 12px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .story-card {
-        grid-template-columns: 44% 1fr;
-        gap: 14px;
-        padding: 16px;
-      }
-
-      .story-title {
-        font-size: 16px;
-      }
-
-      .story-copy {
-        font-size: 12px;
-        line-height: 1.6;
-      }
-    }
-
-    @media (max-width: 420px) {
-      .section-title,
-      .theme-title {
-        font-size: 20px;
-      }
-
-      .section-header {
-        gap: 8px;
-      }
-
-      .story-card {
-        grid-template-columns: 42% 1fr;
-        gap: 12px;
-        padding: 14px;
-      }
-
-      .story-title {
-        font-size: 15px;
-      }
-
-      .story-copy {
-        font-size: 11px;
-        line-height: 1.5;
-        margin-bottom: 12px;
-      }
-
-      .atlas-btn-image {
-        font-size: 16px;
-        min-height: 68px;
-      }
-
-      .story-link {
-        min-height: 44px;
-        font-size: 12px;
-        padding: 8px 12px;
-      }
-
-      .theme-label {
-        font-size: 11px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>The Michigan Celebration Atlas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=Libre+Baskerville&family=Lobster&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--paper:#efe1c3;
+--paper-dark:#e4cda6;
+--ink:#3a2b1f;
+--accent:#5f7d5a;
+}
+
+body{
+margin:0;
+font-family:'Libre Baskerville',serif;
+background:var(--paper);
+color:var(--ink);
+}
+
+/* HERO */
+
+.hero{
+position:relative;
+height:360px;
+background-image:url("/images/hero/michigan-festival-hero.jpg");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+height:140px;
+background:linear-gradient(to bottom, rgba(239,225,195,0), var(--paper));
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+color:white;
+text-shadow:0 2px 6px rgba(0,0,0,0.4);
+}
+
+.hero h1{
+font-family:'Cinzel',serif;
+font-size:40px;
+margin:0;
+}
+
+.hero p{
+margin-top:10px;
+font-size:18px;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* SECTION TITLES */
+
+.section-title{
+font-family:'Cinzel',serif;
+text-align:center;
+font-size:28px;
+margin:30px 0 20px;
+position:relative;
+}
+
+.section-title::before,
+.section-title::after{
+content:"";
+position:absolute;
+top:50%;
+width:32%;
+height:1px;
+background:#b9a580;
+}
+
+.section-title::before{
+left:0;
+}
+
+.section-title::after{
+right:0;
+}
+
+/* FEATURE CARD */
+
+.feature-card{
+max-width:900px;
+margin:auto;
+background-image:url("/images/textures/vintage-paper.jpg");
+background-size:700px;
+border-radius:22px;
+padding:22px;
+box-shadow:0 18px 28px rgba(0,0,0,0.15);
+display:grid;
+grid-template-columns:280px 1fr;
+gap:26px;
+}
+
+/* POSTER FRAME */
+
+.poster-frame{
+
+background:var(--paper);
+padding:10px;
+border-radius:6px;
+
+box-shadow:
+0 4px 10px rgba(0,0,0,0.15);
+
+}
+
+/* POSTER IMAGE */
+
+.poster{
+
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+border:2px solid var(--paper);
+border-radius:4px;
+
+}
+
+/* TEXT SIDE */
+
+.feature-text h2{
+font-family:'Cormorant Garamond',serif;
+font-size:30px;
+margin:0 0 12px;
+}
+
+.feature-text p{
+line-height:1.6;
+font-size:17px;
+}
+
+.feature-btn{
+margin-top:20px;
+display:inline-block;
+background:#5f7d5a;
+color:white;
+padding:14px 32px;
+border-radius:14px;
+text-decoration:none;
+font-size:18px;
+}
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+.feature-card{
+grid-template-columns:1fr;
+}
+
+.poster-frame{
+max-width:240px;
+margin:auto;
+}
+
+.hero{
+height:300px;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+}
+
+</style>
+
 </head>
+
+
 <body>
-  <section class="hero-full">
-    <div class="hero-frame">
-      <img src="images/michigan-festival-hero-mobile.png" alt="Michigan festival scene" class="hero-img" fetchpriority="high" />
-      <div class="hero-cta-wrap">
-        <button id="nearbyBtn" class="atlas-btn-image">
-          <span>📍</span>
-          <span>Find Festivals Near You</span>
-        </button>
-      </div>
-    </div>
-  </section>
 
-  <main class="container">
-    <section class="section">
-      <div class="panel">
-        <div class="section-header">
-          <h2 class="section-title">Featured Festivals</h2>
-        </div>
-        <div class="featured-stack" id="featuredStack"></div>
-      </div>
-    </section>
 
-    <section class="section" id="search">
-      <div class="search-strip">
-        <span class="search-icon">⌕</span>
-        <input id="archiveSearch" type="text" placeholder="Search Michigan's Festivals & Fairs" />
-        <button class="search-btn" onclick="runSearch()">›</button>
-      </div>
-      <div id="searchResults" class="search-results"></div>
-    </section>
+<!-- HERO -->
 
-    <section class="section">
-      <div class="panel">
-        <div class="section-header">
-          <h2 class="theme-title">Browse by Theme</h2>
-        </div>
+<section class="hero">
 
-        <div class="theme-row">
-          <div class="theme-item">
-            <div class="theme-icon"><img src="/images/themes/county-fairs.jpg" alt="County fairs theme" /></div>
-            <div class="theme-label">County<br />Fairs</div>
-          </div>
+<div class="hero-content">
 
-          <div class="theme-item">
-            <div class="theme-icon"><img src="/images/themes/waterfront.jpg" alt="Waterfront festivals theme" /></div>
-            <div class="theme-label">Waterfront</div>
-          </div>
+<h1>The Michigan Celebration Atlas</h1>
 
-          <div class="theme-item">
-            <div class="theme-icon"><img src="/images/themes/harvest.jpg" alt="Harvest festivals theme" /></div>
-            <div class="theme-label">Harvest</div>
-          </div>
+<p>Exploring the fairs, festivals, and traditions that shaped Michigan communities.</p>
 
-          <div class="theme-item">
-            <div class="theme-icon"><img src="/images/themes/balloons.jpg" alt="Balloon festivals theme" /></div>
-            <div class="theme-label">Balloons</div>
-          </div>
+</div>
 
-          <div class="theme-item">
-            <div class="theme-icon"><img src="/images/themes/parades.jpg" alt="Parade festivals theme" /></div>
-            <div class="theme-label">Parades</div>
-          </div>
-        </div>
+</section>
 
-        <div class="scenic-strip">
-          <img src="/images/scenic/scenic-footer-strip.jpg" alt="Michigan scenic landscape" />
-        </div>
-      </div>
-    </section>
 
-    <section class="section" id="gallery">
-      <div class="panel">
-        <div class="section-header">
-          <h2 class="section-title" style="text-align:left;">Poster Gallery</h2>
-        </div>
 
-        <div class="poster-gallery-grid">
-          <article class="poster-card">
-            <div class="poster-card-art">
-              <img src="/images/posters/goodells-poster.jpg" alt="Goodells County Fair poster" />
-              <div class="poster-overlay">
-                <h3>Goodells<br />County Fair</h3>
-                <p>Poster Collection</p>
-              </div>
-            </div>
-          </article>
+<!-- FEATURED FESTIVAL -->
 
-          <article class="poster-card">
-            <div class="poster-card-art">
-              <img src="/images/posters/armada-poster.jpg" alt="Armada Fair poster" />
-              <div class="poster-overlay">
-                <h3 class="festival-logo-script">Armada Fair</h3>
-                <p>Poster Collection</p>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
+<h2 class="section-title">Featured Festivals</h2>
 
-    <section class="section" id="map">
-      <div class="panel">
-        <div class="section-header">
-          <h2 class="section-title" style="text-align:left;">Interactive Michigan Map</h2>
-        </div>
-        <div class="result" id="mapInfo">Tap a marker to preview a festival.</div>
-      </div>
-    </section>
 
-    <div id="nearbyResults" class="search-results"></div>
-    <div class="footer-space"></div>
-  </main>
+<div class="feature-card">
 
-  <nav class="bottom-nav">
-    <a href="#">
-      <img class="nav-icon" src="/images/icons/home.png" alt="Home icon" />
-      <span>Home</span>
-    </a>
-    <a href="#map">
-      <img class="nav-icon" src="/images/icons/map.png" alt="Map icon" />
-      <span>Map</span>
-    </a>
-    <a href="#search">
-      <img class="nav-icon" src="/images/icons/search.png" alt="Search icon" />
-      <span>Search</span>
-    </a>
-    <a href="#gallery">
-      <img class="nav-icon" src="/images/icons/posters.png" alt="Posters icon" />
-      <span>Posters</span>
-    </a>
-    <a href="#nearbyResults">
-      <img class="nav-icon" src="/images/icons/near-me.png" alt="Near Me icon" />
-      <span>Near Me</span>
-    </a>
-  </nav>
+<div class="poster-frame">
 
-  <script>
-    const featuredFestivals = [
-      {
-        name: "Romeo Peach Festival",
-        slug: "romeo",
-        posterImage: "/images/posters/romeo-poster.jpg",
-        videoMp4: "/images/posters/romeo-poster-animation.mp4",
-        landingUrl: "/romeo/index.html",
-        description: "The Romeo Peach Festival is a sun-drenched mosaic of small-town nostalgia, where the sticky-sweet scent of fresh harvests and the echoes of Labor Day parades have beckoned families to its historic, brick-lined streets for generations."
-      },
-      {
-        name: "Armada Fair",
-        slug: "armada",
-        posterImage: "/images/posters/armada-poster.jpg",
-        videoMp4: "/images/posters/armada-poster-animation.mp4",
-        landingUrl: "/armada/index.html",
-        description: "Since 1872, the Armada Fair has stood as one of Michigan's best-known county fairs, remembered for its midway glow, grandstand tradition, agricultural roots, and late-summer community gatherings."
-      },
-      {
-        name: "Goodells County Fair",
-        slug: "goodells",
-        posterImage: "/images/posters/goodells-poster.jpg",
-        videoMp4: "/images/posters/goodells-poster-animation.mp4",
-        landingUrl: "/goodells/index.html",
-        description: "Established in 1889, the Goodells County Fair brings together generations around livestock barns, 4-H traditions, carnival rides, and the enduring spirit of a classic Michigan summer fair."
-      }
-    ];
+<img class="poster"
+src="/images/posters/romeo-peach-festival.jpg">
 
-    const festivals = [
-      {
-        name: 'Goodells County Fair',
-        city: 'Goodells',
-        county: 'St. Clair County',
-        type: 'County Fair',
-        month: 'July',
-        lat: 42.9411,
-        lng: -82.6682,
-        text: 'Historic agricultural fair with livestock barns, 4-H competitions, horse arena tradition, and glowing summer midway memories.'
-      },
-      {
-        name: 'Armada Fair',
-        city: 'Armada',
-        county: 'Macomb County',
-        type: 'County Fair',
-        month: 'August',
-        lat: 42.8445,
-        lng: -82.8811,
-        text: "One of Michigan's most recognized county fairs, known for livestock, midway energy, and demolition derby memories."
-      },
-      {
-        name: 'Bay-Rama Fishfly Festival',
-        city: 'New Baltimore',
-        county: 'Macomb County',
-        type: 'Waterfront Festival',
-        month: 'June',
-        lat: 42.6811,
-        lng: -82.7366,
-        text: 'Lakefront festival famous for embracing fishfly season with parades, carnival rides, boats, and waterfront crowds.'
-      }
-    ];
+</div>
 
-    function getDailyFeaturedFestival() {
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start;
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      return featuredFestivals[dayOfYear % featuredFestivals.length];
-    }
 
-    function renderFeaturedFestival() {
-      const festival = getDailyFeaturedFestival();
-      const container = document.getElementById('featuredStack');
+<div class="feature-text">
 
-      const media = festival.videoMp4
-        ? `
-          <a href="${festival.landingUrl}" class="story-poster-link" aria-label="${festival.name}">
-            <div class="story-poster-frame">
-              <video
-                class="story-poster-video js-feature-video"
-                muted
-                autoplay
-                playsinline
-                webkit-playsinline="true"
-                preload="auto"
-                poster="${festival.posterImage}"
-              >
-                <source src="${festival.videoMp4}" type="video/mp4" />
-              </video>
-            </div>
-          </a>
-        `
-        : `
-          <a href="${festival.landingUrl}" class="story-poster-link" aria-label="${festival.name}">
-            <div class="story-poster-frame">
-              <img src="${festival.posterImage}" alt="${festival.name} poster" class="story-poster" />
-            </div>
-          </a>
-        `;
+<h2>Romeo Peach Festival</h2>
 
-      container.innerHTML = `
-        <article class="story-card">
-          ${media}
-          <div class="story-content">
-            <h3 class="story-title">${festival.name}</h3>
-            <div class="story-rule"></div>
-            <p class="story-copy">${festival.description}</p>
+<p>
 
-            <div class="story-actions">
-              <a href="${festival.landingUrl}" class="story-link info">Festival Information</a>
-            </div>
-          </div>
-        </article>
-      `;
+The Romeo Peach Festival is a sun-drenched mosaic of small-town nostalgia,
+where the sticky-sweet scent of fresh harvests and the echoes of Labor Day
+parades have beckoned families to its historic brick-lined streets for generations.
 
-      const video = container.querySelector('.js-feature-video');
-      if (video) {
-        video.muted = true;
-        video.defaultMuted = true;
-        video.setAttribute('muted', '');
-        video.setAttribute('autoplay', '');
-        video.setAttribute('playsinline', '');
+</p>
 
-        const tryPlay = () => {
-          const promise = video.play();
-          if (promise && typeof promise.catch === 'function') {
-            promise.catch(() => {});
-          }
-        };
+<a class="feature-btn" href="#">
+Festival Information
+</a>
 
-        video.addEventListener('loadedmetadata', tryPlay, { once: true });
-        video.addEventListener('canplay', tryPlay, { once: true });
+</div>
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              tryPlay();
-            } else {
-              video.pause();
-            }
-          });
-        }, { threshold: 0.35 });
+</div>
 
-        observer.observe(video);
-      }
-    }
 
-    function distanceMiles(lat1, lon1, lat2, lon2) {
-      const toRad = d => d * Math.PI / 180;
-      const R = 3958.8;
-      const dLat = toRad(lat2 - lat1);
-      const dLon = toRad(lon2 - lon1);
-      const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    }
 
-    document.getElementById('nearbyBtn').addEventListener('click', () => {
-      const box = document.getElementById('nearbyResults');
-
-      if (!navigator.geolocation) {
-        box.innerHTML = '<div class="result">This browser does not support geolocation.</div>';
-        return;
-      }
-
-      box.innerHTML = '<div class="result">Finding festivals near you…</div>';
-
-      navigator.geolocation.getCurrentPosition(
-        pos => {
-          const { latitude, longitude } = pos.coords;
-          const ranked = festivals
-            .map(f => ({ ...f, distance: distanceMiles(latitude, longitude, f.lat, f.lng) }))
-            .sort((a, b) => a.distance - b.distance)
-            .slice(0, 3);
-
-          box.innerHTML = ranked.map(f =>
-            '<div class="result"><strong>' + f.name + '</strong><br>' +
-            f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
-            f.distance.toFixed(1) + ' miles away · ' + f.text + '</span></div>'
-          ).join('');
-
-          box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        },
-        () => {
-          box.innerHTML = '<div class="result">Location was blocked or unavailable. You can still browse by theme or search.</div>';
-          box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      );
-    });
-
-    function runSearch() {
-      const q = document.getElementById('archiveSearch').value.trim().toLowerCase();
-      const box = document.getElementById('searchResults');
-
-      if (!q) {
-        box.innerHTML = '<div class="result">Try searching for <strong>St. Clair County</strong>, <strong>waterfront</strong>, or <strong>July</strong>.</div>';
-        return;
-      }
-
-      const results = festivals.filter(f => {
-        const hay = [f.name, f.city, f.county, f.type, f.month, f.text].join(' ').toLowerCase();
-        return hay.includes(q);
-      });
-
-      if (!results.length) {
-        box.innerHTML = '<div class="result">No matches yet. Try a city, county, month, or festival type.</div>';
-        return;
-      }
-
-      box.innerHTML = results.map(f =>
-        '<div class="result"><strong>' + f.name + '</strong><br>' +
-        f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
-        f.text + '</span></div>'
-      ).join('');
-    }
-
-    renderFeaturedFestival();
-  </script>
 </body>
+
 </html>
