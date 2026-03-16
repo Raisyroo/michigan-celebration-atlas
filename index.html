@@ -15,6 +15,7 @@
       --paper: #efe3c6;
       --paper-soft: #f6edd9;
       --paper-deep: #e3d1ad;
+      --paper-card: #f8ecd2;
       --ink: #3b281d;
       --ink-soft: #5e4936;
       --line: #cbb186;
@@ -82,14 +83,16 @@
       left: 0;
       right: 0;
       bottom: 0;
-      height: 110px;
+      height: 140px;
       background: linear-gradient(
         to bottom,
         rgba(239,227,198,0) 0%,
-        rgba(239,227,198,0.45) 52%,
+        rgba(239,227,198,0.35) 35%,
+        rgba(239,227,198,0.75) 70%,
         rgba(239,227,198,1) 100%
       );
       pointer-events: none;
+      z-index: 1;
     }
 
     .hero-img {
@@ -191,17 +194,22 @@
       background-size: 600px auto;
       background-repeat: repeat;
       border: 1px solid rgba(120, 93, 60, 0.22);
+      position: relative;
+    }
+
+    .search-strip,
+    .result,
+    .poster-card,
+    .scenic-strip {
       box-shadow:
         0 1px 0 rgba(255,255,255,0.6) inset,
         0 8px 14px rgba(0,0,0,0.18),
         0 2px 3px rgba(0,0,0,0.15);
-      position: relative;
     }
 
-    .story-card::after,
-    .poster-card::after,
     .search-strip::after,
     .result::after,
+    .poster-card::after,
     .scenic-strip::after {
       content: "";
       position: absolute;
@@ -213,11 +221,42 @@
 
     .story-card {
       display: grid;
-      grid-template-columns: 44% 1fr;
-      gap: 12px;
+      grid-template-columns: 46% 1fr;
+      gap: 18px;
       align-items: start;
       border-radius: 22px;
-      padding: 12px;
+      padding: 18px;
+      background-color: var(--paper-card);
+      border: 1px solid rgba(120,93,60,0.16);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.65) inset,
+        0 22px 32px rgba(66,46,24,0.16),
+        0 8px 12px rgba(66,46,24,0.10);
+      position: relative;
+    }
+
+    .story-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.35),
+        inset 0 -2px 3px rgba(120,93,60,0.08);
+    }
+
+    .story-card::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: -10px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(71,49,28,0.10);
+      filter: blur(12px);
+      z-index: -1;
     }
 
     .story-poster-link {
@@ -227,12 +266,12 @@
     }
 
     .story-poster-frame {
-      background: rgba(236, 222, 194, 0.88);
-      border: 1px solid #d5bf98;
-      border-radius: 16px;
-      padding: 0;
-      overflow: hidden;
-      box-shadow: inset 0 0 0 1px rgba(120,93,60,0.10);
+      background: #e9dcc0;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow:
+        inset 0 0 0 2px rgba(120,93,60,0.18),
+        0 6px 12px rgba(0,0,0,0.18);
       position: relative;
       z-index: 1;
     }
@@ -240,11 +279,11 @@
     .story-poster,
     .story-poster-video {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: contain;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
       display: block;
-      border-radius: 0;
-      background: #ecdec2;
+      border-radius: 10px;
+      background: #d8dfeb;
     }
 
     .story-content {
@@ -277,8 +316,8 @@
 
     .story-copy {
       margin: 0 0 16px;
-      font-size: 13px;
-      line-height: 1.68;
+      font-size: 14px;
+      line-height: 1.7;
       color: #49392b;
     }
 
@@ -540,8 +579,8 @@
     @media (max-width: 768px) {
       .story-card {
         grid-template-columns: 44% 1fr;
-        gap: 12px;
-        padding: 12px;
+        gap: 14px;
+        padding: 16px;
       }
 
       .story-title {
@@ -565,9 +604,9 @@
       }
 
       .story-card {
-        grid-template-columns: 45% 1fr;
-        gap: 10px;
-        padding: 10px;
+        grid-template-columns: 42% 1fr;
+        gap: 12px;
+        padding: 14px;
       }
 
       .story-title {
@@ -860,9 +899,7 @@
         const tryPlay = () => {
           const promise = video.play();
           if (promise && typeof promise.catch === 'function') {
-            promise.catch(() => {
-              video.controls = false;
-            });
+            promise.catch(() => {});
           }
         };
 
