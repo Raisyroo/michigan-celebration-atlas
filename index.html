@@ -184,11 +184,11 @@
       gap: 18px;
     }
 
-    /* FEATURED FESTIVAL — no outer card */
+    /* FEATURED FESTIVAL */
     .story-card {
       display: grid;
-      grid-template-columns: minmax(140px, 42%) 1fr;
-      gap: 16px;
+      grid-template-columns: minmax(160px, 44%) 1fr;
+      gap: 18px;
       align-items: start;
       padding: 0;
       margin: 0;
@@ -205,14 +205,11 @@
 
     .story-poster-frame {
       width: 100%;
-      aspect-ratio: 1 / 1;
-      background-color: var(--paper);
-      background-image: url('/images/textures/vintage-paper.jpg');
-      background-size: 600px auto;
-      background-repeat: repeat;
-      border: 1px solid rgba(143, 116, 77, 0.22);
-      border-radius: 2px;
-      padding: 10px;
+      aspect-ratio: 1 / 1.36;
+      background: #f7f3ea;
+      border: 1px solid rgba(165, 151, 129, 0.65);
+      border-radius: 1px;
+      padding: 4px;
       box-shadow: none;
       overflow: hidden;
     }
@@ -221,11 +218,19 @@
     .story-poster-video {
       width: 100%;
       height: 100%;
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
+      aspect-ratio: 1 / 1.32;
+      display: block;
       border-radius: 0;
-      border: 1px solid rgba(123, 95, 62, 0.12);
-      background: #d8dfeb;
+      background: #f7f3ea;
+      border: 1px solid rgba(145, 126, 99, 0.22);
+    }
+
+    .story-poster {
+      object-fit: cover;
+    }
+
+    .story-poster-video {
+      object-fit: contain;
     }
 
     .story-content {
@@ -290,7 +295,6 @@
       color: #fff2da;
     }
 
-    /* Search can remain slightly defined but not boxed like a card */
     .search-strip {
       display: flex;
       align-items: center;
@@ -381,7 +385,6 @@
       font-family: 'Amiri', serif;
     }
 
-    /* Poster gallery — no outer container cards */
     .poster-gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -400,13 +403,10 @@
       position: relative;
       aspect-ratio: 1 / 1;
       overflow: hidden;
-      background-color: var(--paper);
-      background-image: url('/images/textures/vintage-paper.jpg');
-      background-size: 600px auto;
-      background-repeat: repeat;
-      border: 1px solid rgba(143, 116, 77, 0.22);
-      border-radius: 2px;
-      padding: 8px;
+      background: #f7f3ea;
+      border: 1px solid rgba(165, 151, 129, 0.55);
+      border-radius: 1px;
+      padding: 4px;
       box-shadow: none;
     }
 
@@ -415,7 +415,7 @@
       height: 100%;
       object-fit: cover;
       border-radius: 0;
-      border: 1px solid rgba(123, 95, 62, 0.12);
+      border: 1px solid rgba(145, 126, 99, 0.20);
     }
 
     .poster-meta {
@@ -523,7 +523,7 @@
 
     @media (max-width: 768px) {
       .story-card {
-        grid-template-columns: 44% 1fr;
+        grid-template-columns: 46% 1fr;
         gap: 14px;
       }
 
@@ -539,7 +539,7 @@
 
     @media (max-width: 520px) {
       .story-card {
-        grid-template-columns: 42% 1fr;
+        grid-template-columns: 45% 1fr;
         gap: 12px;
       }
 
@@ -571,7 +571,7 @@
       }
 
       .story-card {
-        grid-template-columns: 40% 1fr;
+        grid-template-columns: 44% 1fr;
         gap: 12px;
       }
 
@@ -819,6 +819,7 @@
                 class="story-poster-video js-feature-video"
                 muted
                 autoplay
+                loop
                 playsinline
                 webkit-playsinline="true"
                 preload="auto"
@@ -857,6 +858,7 @@
         video.defaultMuted = true;
         video.setAttribute('muted', '');
         video.setAttribute('autoplay', '');
+        video.setAttribute('loop', '');
         video.setAttribute('playsinline', '');
 
         const tryPlay = () => {
