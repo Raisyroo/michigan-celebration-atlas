@@ -203,7 +203,7 @@
       width: 100%;
     }
 
-   .story-poster-frame {
+.story-poster-frame {
   width: 100%;
   aspect-ratio: 1 / 1.38;
   background: #f7f3ea;
@@ -212,16 +212,27 @@
   padding: 4px;
   box-shadow: none;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-   .story-poster,
+.story-poster,
 .story-poster-video {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
   display: block;
   border-radius: 0;
   background: #f7f3ea;
   border: 1px solid rgba(145, 126, 99, 0.22);
+}
+
+.story-poster {
+  object-fit: cover;
+}
+
+.story-poster-video {
+  object-fit: contain;
 }
     }
 
