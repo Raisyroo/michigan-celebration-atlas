@@ -143,15 +143,36 @@
       position: relative;
     }
 
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 14px;
+    }
+
+    .section-header::before,
+    .section-header::after {
+      content: "";
+      flex: 1 1 auto;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        rgba(103, 78, 49, 0),
+        rgba(103, 78, 49, 0.65),
+        rgba(103, 78, 49, 0)
+      );
+    }
+
     .section-title,
     .theme-title {
-      margin: 0 0 14px;
+      margin: 0;
       text-align: center;
       font-family: 'Amiri', serif;
-      font-size: 26px;
+      font-size: 22px;
       line-height: 1.05;
       color: #3a2b1f;
       letter-spacing: 0.01em;
+      white-space: nowrap;
     }
 
     .featured-stack {
@@ -192,8 +213,8 @@
 
     .story-card {
       display: grid;
-      grid-template-columns: 38% 1fr;
-      gap: 14px;
+      grid-template-columns: 44% 1fr;
+      gap: 12px;
       align-items: start;
       border-radius: 22px;
       padding: 12px;
@@ -219,11 +240,11 @@
     .story-poster,
     .story-poster-video {
       width: 100%;
-      aspect-ratio: 3 / 4.2;
-      object-fit: cover;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
       display: block;
       border-radius: 0;
-      background: #d8dfeb;
+      background: #ecdec2;
     }
 
     .story-content {
@@ -238,8 +259,8 @@
     .story-title {
       margin: 0 0 8px;
       font-family: 'Amiri', serif;
-      font-size: 20px;
-      line-height: 1.02;
+      font-size: 18px;
+      line-height: 1.05;
       color: #3a2418;
     }
 
@@ -256,8 +277,8 @@
 
     .story-copy {
       margin: 0 0 16px;
-      font-size: 14px;
-      line-height: 1.7;
+      font-size: 13px;
+      line-height: 1.68;
       color: #49392b;
     }
 
@@ -287,14 +308,9 @@
       z-index: 1;
     }
 
-    .story-link.photos {
+    .story-link.info {
       background: #557253;
       color: #fff2da;
-    }
-
-    .story-link.history {
-      background: #d6c39d;
-      color: #3d281d;
     }
 
     .search-strip {
@@ -523,35 +539,39 @@
 
     @media (max-width: 768px) {
       .story-card {
-        grid-template-columns: 40% 1fr;
-        gap: 14px;
+        grid-template-columns: 44% 1fr;
+        gap: 12px;
         padding: 12px;
       }
 
       .story-title {
-        font-size: 18px;
+        font-size: 16px;
       }
 
       .story-copy {
-        font-size: 13px;
-        line-height: 1.62;
+        font-size: 12px;
+        line-height: 1.6;
       }
     }
 
     @media (max-width: 420px) {
       .section-title,
       .theme-title {
-        font-size: 24px;
+        font-size: 20px;
+      }
+
+      .section-header {
+        gap: 8px;
       }
 
       .story-card {
-        grid-template-columns: 39% 1fr;
-        gap: 12px;
+        grid-template-columns: 45% 1fr;
+        gap: 10px;
         padding: 10px;
       }
 
       .story-title {
-        font-size: 16px;
+        font-size: 15px;
       }
 
       .story-copy {
@@ -593,8 +613,9 @@
   <main class="container">
     <section class="section">
       <div class="panel">
-        <h2 class="section-title">Featured Festivals</h2>
-
+        <div class="section-header">
+          <h2 class="section-title">Featured Festivals</h2>
+        </div>
         <div class="featured-stack" id="featuredStack"></div>
       </div>
     </section>
@@ -610,7 +631,9 @@
 
     <section class="section">
       <div class="panel">
-        <h2 class="theme-title">Browse by Theme</h2>
+        <div class="section-header">
+          <h2 class="theme-title">Browse by Theme</h2>
+        </div>
 
         <div class="theme-row">
           <div class="theme-item">
@@ -647,7 +670,9 @@
 
     <section class="section" id="gallery">
       <div class="panel">
-        <h2 class="section-title" style="text-align:left;">Poster Gallery</h2>
+        <div class="section-header">
+          <h2 class="section-title" style="text-align:left;">Poster Gallery</h2>
+        </div>
 
         <div class="poster-gallery-grid">
           <article class="poster-card">
@@ -675,7 +700,9 @@
 
     <section class="section" id="map">
       <div class="panel">
-        <h2 class="section-title" style="text-align:left;">Interactive Michigan Map</h2>
+        <div class="section-header">
+          <h2 class="section-title" style="text-align:left;">Interactive Michigan Map</h2>
+        </div>
         <div class="result" id="mapInfo">Tap a marker to preview a festival.</div>
       </div>
     </section>
@@ -715,7 +742,6 @@
         posterImage: "/images/posters/romeo-poster.jpg",
         videoMp4: "/images/posters/romeo-poster-animation.mp4",
         landingUrl: "/romeo/index.html",
-        photosUrl: "/romeo/photos.html",
         description: "The Romeo Peach Festival is a sun-drenched mosaic of small-town nostalgia, where the sticky-sweet scent of fresh harvests and the echoes of Labor Day parades have beckoned families to its historic, brick-lined streets for generations."
       },
       {
@@ -724,7 +750,6 @@
         posterImage: "/images/posters/armada-poster.jpg",
         videoMp4: "/images/posters/armada-poster-animation.mp4",
         landingUrl: "/armada/index.html",
-        photosUrl: "/armada/photos.html",
         description: "Since 1872, the Armada Fair has stood as one of Michigan's best-known county fairs, remembered for its midway glow, grandstand tradition, agricultural roots, and late-summer community gatherings."
       },
       {
@@ -733,43 +758,42 @@
         posterImage: "/images/posters/goodells-poster.jpg",
         videoMp4: "/images/posters/goodells-poster-animation.mp4",
         landingUrl: "/goodells/index.html",
-        photosUrl: "/goodells/photos.html",
         description: "Established in 1889, the Goodells County Fair brings together generations around livestock barns, 4-H traditions, carnival rides, and the enduring spirit of a classic Michigan summer fair."
       }
     ];
 
     const festivals = [
-  {
-    name: 'Goodells County Fair',
-    city: 'Goodells',
-    county: 'St. Clair County',
-    type: 'County Fair',
-    month: 'July',
-    lat: 42.9411,
-    lng: -82.6682,
-    text: 'Historic agricultural fair with livestock barns, 4-H competitions, horse arena tradition, and glowing summer midway memories.'
-  },
-  {
-    name: 'Armada Fair',
-    city: 'Armada',
-    county: 'Macomb County',
-    type: 'County Fair',
-    month: 'August',
-    lat: 42.8445,
-    lng: -82.8811,
-    text: "One of Michigan's most recognized county fairs, known for livestock, midway energy, and demolition derby memories."
-  },
-  {
-    name: 'Bay-Rama Fishfly Festival',
-    city: 'New Baltimore',
-    county: 'Macomb County',
-    type: 'Waterfront Festival',
-    month: 'June',
-    lat: 42.6811,
-    lng: -82.7366,
-    text: 'Lakefront festival famous for embracing fishfly season with parades, carnival rides, boats, and waterfront crowds.'
-  }
-];
+      {
+        name: 'Goodells County Fair',
+        city: 'Goodells',
+        county: 'St. Clair County',
+        type: 'County Fair',
+        month: 'July',
+        lat: 42.9411,
+        lng: -82.6682,
+        text: 'Historic agricultural fair with livestock barns, 4-H competitions, horse arena tradition, and glowing summer midway memories.'
+      },
+      {
+        name: 'Armada Fair',
+        city: 'Armada',
+        county: 'Macomb County',
+        type: 'County Fair',
+        month: 'August',
+        lat: 42.8445,
+        lng: -82.8811,
+        text: "One of Michigan's most recognized county fairs, known for livestock, midway energy, and demolition derby memories."
+      },
+      {
+        name: 'Bay-Rama Fishfly Festival',
+        city: 'New Baltimore',
+        county: 'Macomb County',
+        type: 'Waterfront Festival',
+        month: 'June',
+        lat: 42.6811,
+        lng: -82.7366,
+        text: 'Lakefront festival famous for embracing fishfly season with parades, carnival rides, boats, and waterfront crowds.'
+      }
+    ];
 
     function getDailyFeaturedFestival() {
       const now = new Date();
@@ -791,9 +815,10 @@
               <video
                 class="story-poster-video js-feature-video"
                 muted
+                autoplay
                 playsinline
                 webkit-playsinline="true"
-                preload="metadata"
+                preload="auto"
                 poster="${festival.posterImage}"
               >
                 <source src="${festival.videoMp4}" type="video/mp4" />
@@ -818,8 +843,7 @@
             <p class="story-copy">${festival.description}</p>
 
             <div class="story-actions">
-              <a href="${festival.photosUrl}" class="story-link photos">View Photos</a>
-              <a href="${festival.landingUrl}" class="story-link history">Festival History</a>
+              <a href="${festival.landingUrl}" class="story-link info">Festival Information</a>
             </div>
           </div>
         </article>
@@ -827,18 +851,23 @@
 
       const video = container.querySelector('.js-feature-video');
       if (video) {
-        video.autoplay = true;
         video.muted = true;
         video.defaultMuted = true;
+        video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.setAttribute('playsinline', '');
 
         const tryPlay = () => {
-          const p = video.play();
-          if (p && typeof p.catch === 'function') {
-            p.catch(() => {});
+          const promise = video.play();
+          if (promise && typeof promise.catch === 'function') {
+            promise.catch(() => {
+              video.controls = false;
+            });
           }
         };
 
-        video.addEventListener('loadeddata', tryPlay, { once: true });
+        video.addEventListener('loadedmetadata', tryPlay, { once: true });
+        video.addEventListener('canplay', tryPlay, { once: true });
 
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
