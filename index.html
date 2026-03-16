@@ -194,18 +194,16 @@
       background: rgba(236, 222, 194, 0.88);
       border: 1px solid #d5bf98;
       border-radius: 16px;
-      padding: 10px;
+      padding: 0;
+      overflow: hidden;
       box-shadow: inset 0 0 0 1px rgba(120,93,60,0.10);
       position: relative;
       z-index: 1;
     }
 
-    .story-poster {
-      width: 100%;
-      aspect-ratio: 3 / 4.2;
-      object-fit: cover;
-      border-radius: 8px;
-      background: #d8dfeb;
+    .story-poster,
+    .story-poster-video {
+      border-radius: 0;
     }
 
     .story-poster-video {
