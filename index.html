@@ -484,103 +484,121 @@
       height: 110px;
     }
 
-    @media (min-width: 860px) {
-      .container {
-        padding: 0 16px;
-      }
+   @media (min-width: 860px) {
+  .container {
+    padding: 0 16px;
+  }
 
-      .theme-row {
-        gap: 12px;
-      }
+  .theme-row {
+    gap: 12px;
+  }
 
-      .bottom-nav {
-        width: min(760px, calc(100% - 24px));
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        border: 1px solid rgba(120,100,70,.14);
-        border-radius: 22px;
-        bottom: 12px;
-      }
-    }
+  .bottom-nav {
+    width: min(760px, calc(100% - 24px));
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    border: 1px solid rgba(120,100,70,.14);
+    border-radius: 22px;
+    bottom: 12px;
+  }
+}
 
-    @media (max-width: 768px) {
-      .story-card {
-        grid-template-columns: 46% 1fr;
-        gap: 16px;
-      }
+@media (max-width: 768px) {
+  .story-card {
+    grid-template-columns: 40% 1fr;
+    gap: 18px;
+  }
 
-      .story-title {
-        font-size: 20px;
-      }
+  .story-title {
+    font-size: 30px;
+    line-height: 1.02;
+    white-space: nowrap;
+  }
 
-      .story-copy {
-        font-size: 13px;
-        line-height: 1.6;
-      }
-    }
+  .story-copy {
+    font-size: 22px;
+    line-height: 1.42;
+  }
 
-    @media (max-width: 520px) {
-      .story-card {
-        grid-template-columns: 45% 1fr;
-        gap: 14px;
-      }
+  .story-link {
+    font-size: 18px;
+  }
+}
 
-      .story-title {
-        font-size: 18px;
-      }
+@media (max-width: 520px) {
+  .story-card {
+    grid-template-columns: 40% 1fr;
+    gap: 16px;
+  }
 
-      .story-copy {
-        font-size: 12px;
-        line-height: 1.55;
-      }
+  .story-title {
+    font-size: 28px;
+    line-height: 1.02;
+    white-space: nowrap;
+  }
 
-      .story-link {
-        min-width: 160px;
-        min-height: 44px;
-        font-size: 13px;
-        padding: 8px 14px;
-      }
-    }
+  .story-copy {
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
 
-    @media (max-width: 420px) {
-      .section-title,
-      .theme-title {
-        font-size: 20px;
-      }
+  .story-link {
+    min-width: 170px;
+    min-height: 46px;
+    font-size: 18px;
+    padding: 8px 16px;
+  }
+}
 
-      .section-header {
-        gap: 8px;
-      }
+@media (max-width: 420px) {
+  .section-title,
+  .theme-title {
+    font-size: 20px;
+  }
 
-      .story-card {
-        grid-template-columns: 44% 1fr;
-        gap: 12px;
-      }
+  .section-header {
+    gap: 8px;
+  }
 
-      .story-title {
-        font-size: 17px;
-      }
+  .story-card {
+    grid-template-columns: 39% 1fr;
+    gap: 14px;
+  }
 
-      .story-copy {
-        font-size: 11px;
-        line-height: 1.5;
-        margin-bottom: 12px;
-      }
+  .story-title {
+    font-size: 26px;
+    line-height: 1.02;
+    white-space: nowrap;
+  }
 
-      .atlas-btn-image {
-        font-size: 16px;
-        min-height: 68px;
-      }
+  .story-copy {
+    font-size: 19px;
+    line-height: 1.36;
+    margin-bottom: 12px;
+  }
 
-      .theme-label {
-        font-size: 11px;
-      }
+  .atlas-btn-image {
+    font-size: 16px;
+    min-height: 68px;
+  }
 
-      .poster-meta h3 {
-        font-size: 16px;
-      }
-    }
+  .theme-label {
+    font-size: 11px;
+  }
+
+  .poster-meta h3 {
+    font-size: 16px;
+  }
+
+  .story-link {
+    min-width: 160px;
+    min-height: 44px;
+    font-size: 17px;
+    padding: 8px 14px;
+  }
+}
   </style>
 </head>
 <body>
