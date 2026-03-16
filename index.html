@@ -1,251 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>The Michigan Celebration Atlas</title>
+<meta name="description" content="A digital atlas of Michigan fairs, festivals, and traditions." />
 
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Cormorant+Garamond:wght@400;600&family=Libre+Baskerville&family=Lobster&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Libre+Baskerville:wght@400;700&family=Lobster&display=swap" rel="stylesheet" />
 
 <style>
-
-:root{
---paper:#efe1c3;
---paper-dark:#e4cda6;
---ink:#3a2b1f;
---accent:#5f7d5a;
+:root {
+--paper: #efe3c6;
+--paper-soft: #f6edd9;
+--paper-deep: #e3d1ad;
+      --paper-card: #f8ecd2;
+--ink: #3b281d;
+--ink-soft: #5e4936;
+--line: #cbb186;
+@@ -82,14 +83,16 @@
+left: 0;
+right: 0;
+bottom: 0;
+      height: 110px;
+      height: 140px;
+background: linear-gradient(
+to bottom,
+rgba(239,227,198,0) 0%,
+        rgba(239,227,198,0.45) 52%,
+        rgba(239,227,198,0.35) 35%,
+        rgba(239,227,198,0.75) 70%,
+rgba(239,227,198,1) 100%
+);
+pointer-events: none;
+      z-index: 1;
 }
 
-body{
-margin:0;
-font-family:'Libre Baskerville',serif;
-background:var(--paper);
-color:var(--ink);
-}
+.hero-img {
+@@ -191,17 +194,22 @@
+background-size: 600px auto;
+background-repeat: repeat;
+border: 1px solid rgba(120, 93, 60, 0.22);
+      position: relative;
+    }
 
-/* HERO */
-
-.hero{
-position:relative;
-height:360px;
-background-image:url("/images/hero/michigan-festival-hero.jpg");
-background-size:cover;
-background-position:center;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-}
-
-.hero::after{
-content:"";
-position:absolute;
-bottom:0;
-left:0;
-right:0;
-height:140px;
-background:linear-gradient(to bottom, rgba(239,225,195,0), var(--paper));
-}
-
-.hero-content{
-position:relative;
-z-index:2;
-color:white;
-text-shadow:0 2px 6px rgba(0,0,0,0.4);
-}
-
-.hero h1{
-font-family:'Cinzel',serif;
-font-size:40px;
-margin:0;
-}
-
-.hero p{
-margin-top:10px;
-font-size:18px;
-max-width:500px;
-margin-left:auto;
-margin-right:auto;
-}
-
-/* SECTION TITLES */
-
-.section-title{
-font-family:'Cinzel',serif;
-text-align:center;
-font-size:28px;
-margin:30px 0 20px;
-position:relative;
-}
-
-.section-title::before,
-.section-title::after{
-content:"";
-position:absolute;
-top:50%;
-width:32%;
-height:1px;
-background:#b9a580;
-}
-
-.section-title::before{
-left:0;
-}
-
-.section-title::after{
-right:0;
-}
-
-/* FEATURE CARD */
-
-.feature-card{
-max-width:900px;
-margin:auto;
-background-image:url("/images/textures/vintage-paper.jpg");
-background-size:700px;
-border-radius:22px;
-padding:22px;
-box-shadow:0 18px 28px rgba(0,0,0,0.15);
-display:grid;
-grid-template-columns:280px 1fr;
-gap:26px;
-}
-
-/* POSTER FRAME */
-
-.poster-frame{
-
-background:var(--paper);
-padding:10px;
-border-radius:6px;
-
+    .search-strip,
+    .result,
+    .poster-card,
+    .scenic-strip {
 box-shadow:
-0 4px 10px rgba(0,0,0,0.15);
-
+0 1px 0 rgba(255,255,255,0.6) inset,
+0 8px 14px rgba(0,0,0,0.18),
+0 2px 3px rgba(0,0,0,0.15);
+      position: relative;
 }
 
-/* POSTER IMAGE */
+    .story-card::after,
+    .poster-card::after,
+.search-strip::after,
+.result::after,
+    .poster-card::after,
+.scenic-strip::after {
+content: "";
+position: absolute;
+@@ -213,11 +221,42 @@
 
-.poster{
+.story-card {
+display: grid;
+      grid-template-columns: 44% 1fr;
+      gap: 12px;
+      grid-template-columns: 46% 1fr;
+      gap: 18px;
+align-items: start;
+border-radius: 22px;
+      padding: 12px;
+      padding: 18px;
+      background-color: var(--paper-card);
+      border: 1px solid rgba(120,93,60,0.16);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.65) inset,
+        0 22px 32px rgba(66,46,24,0.16),
+        0 8px 12px rgba(66,46,24,0.10);
+      position: relative;
+    }
 
-width:100%;
-aspect-ratio:1/1;
-object-fit:cover;
-border:2px solid var(--paper);
-border-radius:4px;
+    .story-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow:
+        inset 0 2px 4px rgba(255,255,255,0.35),
+        inset 0 -2px 3px rgba(120,93,60,0.08);
+    }
 
+    .story-card::after {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: -10px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(71,49,28,0.10);
+      filter: blur(12px);
+      z-index: -1;
 }
 
-/* TEXT SIDE */
-
-.feature-text h2{
-font-family:'Cormorant Garamond',serif;
-font-size:30px;
-margin:0 0 12px;
+.story-poster-link {
+@@ -227,24 +266,24 @@
 }
 
-.feature-text p{
-line-height:1.6;
-font-size:17px;
+.story-poster-frame {
+      background: rgba(236, 222, 194, 0.88);
+      border: 1px solid #d5bf98;
+      border-radius: 16px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(120,93,60,0.10);
+      background: #e9dcc0;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow:
+        inset 0 0 0 2px rgba(120,93,60,0.18),
+        0 6px 12px rgba(0,0,0,0.18);
+position: relative;
+z-index: 1;
 }
 
-.feature-btn{
-margin-top:20px;
-display:inline-block;
-background:#5f7d5a;
-color:white;
-padding:14px 32px;
-border-radius:14px;
-text-decoration:none;
-font-size:18px;
+.story-poster,
+.story-poster-video {
+width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+display: block;
+      border-radius: 0;
+      background: #ecdec2;
+      border-radius: 10px;
+      background: #d8dfeb;
 }
 
-/* MOBILE */
+.story-content {
+@@ -277,8 +316,8 @@
 
-@media (max-width:700px){
-
-.feature-card{
-grid-template-columns:1fr;
+.story-copy {
+margin: 0 0 16px;
+      font-size: 13px;
+      line-height: 1.68;
+      font-size: 14px;
+      line-height: 1.7;
+color: #49392b;
 }
 
-.poster-frame{
-max-width:240px;
-margin:auto;
+@@ -540,8 +579,8 @@
+@media (max-width: 768px) {
+.story-card {
+grid-template-columns: 44% 1fr;
+        gap: 12px;
+        padding: 12px;
+        gap: 14px;
+        padding: 16px;
 }
 
-.hero{
-height:300px;
+.story-title {
+@@ -565,9 +604,9 @@
 }
 
-.hero h1{
-font-size:32px;
+.story-card {
+        grid-template-columns: 45% 1fr;
+        gap: 10px;
+        padding: 10px;
+        grid-template-columns: 42% 1fr;
+        gap: 12px;
+        padding: 14px;
 }
 
+.story-title {
+@@ -860,98 +899,96 @@
+const tryPlay = () => {
+const promise = video.play();
+if (promise && typeof promise.catch === 'function') {
+            promise.catch(() => {
+              video.controls = false;
+            });
+            promise.catch(() => {});
+}
+};
+
+video.addEventListener('loadedmetadata', tryPlay, { once: true });
+video.addEventListener('canplay', tryPlay, { once: true });
+
+const observer = new IntersectionObserver((entries) => {
+entries.forEach((entry) => {
+if (entry.isIntersecting) {
+tryPlay();
+} else {
+video.pause();
+}
+});
+}, { threshold: 0.35 });
+
+observer.observe(video);
+}
 }
 
-</style>
+function distanceMiles(lat1, lon1, lat2, lon2) {
+const toRad = d => d * Math.PI / 180;
+const R = 3958.8;
+const dLat = toRad(lat2 - lat1);
+const dLon = toRad(lon2 - lon1);
+const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
 
-</head>
+document.getElementById('nearbyBtn').addEventListener('click', () => {
+const box = document.getElementById('nearbyResults');
 
+if (!navigator.geolocation) {
+box.innerHTML = '<div class="result">This browser does not support geolocation.</div>';
+return;
+}
 
-<body>
+box.innerHTML = '<div class="result">Finding festivals near you…</div>';
 
+navigator.geolocation.getCurrentPosition(
+pos => {
+const { latitude, longitude } = pos.coords;
+const ranked = festivals
+.map(f => ({ ...f, distance: distanceMiles(latitude, longitude, f.lat, f.lng) }))
+.sort((a, b) => a.distance - b.distance)
+.slice(0, 3);
 
-<!-- HERO -->
+box.innerHTML = ranked.map(f =>
+'<div class="result"><strong>' + f.name + '</strong><br>' +
+f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
+f.distance.toFixed(1) + ' miles away · ' + f.text + '</span></div>'
+).join('');
 
-<section class="hero">
+box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+},
+() => {
+box.innerHTML = '<div class="result">Location was blocked or unavailable. You can still browse by theme or search.</div>';
+box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+);
+});
 
-<div class="hero-content">
+function runSearch() {
+const q = document.getElementById('archiveSearch').value.trim().toLowerCase();
+const box = document.getElementById('searchResults');
 
-<h1>The Michigan Celebration Atlas</h1>
+if (!q) {
+box.innerHTML = '<div class="result">Try searching for <strong>St. Clair County</strong>, <strong>waterfront</strong>, or <strong>July</strong>.</div>';
+return;
+}
 
-<p>Exploring the fairs, festivals, and traditions that shaped Michigan communities.</p>
+const results = festivals.filter(f => {
+const hay = [f.name, f.city, f.county, f.type, f.month, f.text].join(' ').toLowerCase();
+return hay.includes(q);
+});
 
-</div>
+if (!results.length) {
+box.innerHTML = '<div class="result">No matches yet. Try a city, county, month, or festival type.</div>';
+return;
+}
 
-</section>
+box.innerHTML = results.map(f =>
+'<div class="result"><strong>' + f.name + '</strong><br>' +
+f.city + ', ' + f.county + '<br><span style="color:#6a5b49;">' +
+f.text + '</span></div>'
+).join('');
+}
 
-
-
-<!-- FEATURED FESTIVAL -->
-
-<h2 class="section-title">Featured Festivals</h2>
-
-
-<div class="feature-card">
-
-<div class="poster-frame">
-
-<img class="poster"
-src="/images/posters/romeo-peach-festival.jpg">
-
-</div>
-
-
-<div class="feature-text">
-
-<h2>Romeo Peach Festival</h2>
-
-<p>
-
-The Romeo Peach Festival is a sun-drenched mosaic of small-town nostalgia,
-where the sticky-sweet scent of fresh harvests and the echoes of Labor Day
-parades have beckoned families to its historic brick-lined streets for generations.
-
-</p>
-
-<a class="feature-btn" href="#">
-Festival Information
-</a>
-
-</div>
-
-</div>
-
-
-
+renderFeaturedFestival();
+</script>
 </body>
-
 </html>
