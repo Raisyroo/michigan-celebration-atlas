@@ -65,43 +65,46 @@
     }
 
     .hero-frame {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      background: transparent;
-      box-shadow: none;
-    }
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: none;
+}
 
-    .hero-img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+.hero-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-   .hero-cta-wrap {
+.hero-cta-wrap {
   position: absolute;
   left: 50%;
-  bottom: 18px; /* key fix */
+  bottom: 12px !important;
   transform: translateX(-50%);
   width: 100%;
   display: flex;
   justify-content: center;
-  z-index: 3;
+  z-index: 5;
+  pointer-events: none;
 }
 
-   .atlas-btn-image {
-  width: 88%;
-  max-width: 420px;
-  height: 58px;
+.atlas-btn-image {
+  width: 82% !important;
+  max-width: 360px !important;
+  height: 52px !important;
+  min-height: 52px !important;
   border: none;
   background: transparent;
-  background-image: url('/images/ui/nearbyBtn.png'); /* IMPORTANT */
+  background-image: url('/images/ui/nearbyBtn.png') !important;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: contain !important;
   cursor: pointer;
   padding: 0;
   display: block;
+  pointer-events: auto;
 }
 
     .nearby-btn-img {
