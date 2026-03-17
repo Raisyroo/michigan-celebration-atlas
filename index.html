@@ -81,23 +81,31 @@
 .hero-cta-wrap {
   position: absolute;
   left: 50%;
-  bottom: 2px;
+  bottom: 2px !important;
   transform: translateX(-50%);
   width: 100%;
   display: flex;
   justify-content: center;
   z-index: 5;
+  pointer-events: none;
 }
 
 .atlas-btn-image {
-  width: 68%;
-  max-width: 300px;
-  aspect-ratio: 486 / 112;
+  width: 74% !important;
+  max-width: 200px !important;
+  aspect-ratio: 466 / 111;
+  height: auto !important;
+  min-height: 0 !important;
   border: none;
-  background: transparent url('/images/ui/nearbyBtn.png') center / 100% 100% no-repeat;
+  background: transparent;
+  background-image: url('/images/ui/nearbyBtn.png') !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% auto !important;
   cursor: pointer;
   padding: 0;
   display: block;
+  pointer-events: auto;
 }
    
     .section {
