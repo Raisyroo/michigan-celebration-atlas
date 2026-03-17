@@ -110,6 +110,21 @@
       gap: 10px;
     }
 
+    .nearby-btn-img {
+  width: 100%;
+  height: 80px; /* adjust if needed */
+  border: none;
+  background: transparent;
+  background-image: url('/images/ui/nearby-btn.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+}
+    .nearby-btn-img:active {
+  transform: scale(0.98);
+}
+
     .section {
       padding: 14px 0;
     }
@@ -605,10 +620,7 @@
     <div class="hero-frame">
       <img src="images/michigan-festival-hero-mobile.png" alt="Michigan festival scene" class="hero-img" fetchpriority="high" />
       <div class="hero-cta-wrap">
-        <button id="nearbyBtn" class="atlas-btn-image">
-          <span>📍</span>
-          <span>Find Festivals Near You</span>
-        </button>
+        <button id="nearbyBtn" class="atlas-btn-image nearby-btn-img"></button>
       </div>
     </div>
   </section>
