@@ -81,15 +81,16 @@
     .hero-cta-wrap {
       position: absolute;
       left: 50%;
-      bottom: 8%;
+      bottom: 3%;
       transform: translateX(-50%);
       width: min(88%, 560px);
       z-index: 2;
     }
 
     .atlas-btn-image {
-      width: 100%;
+      width: 90%;
       min-height: 72px;
+      max-width: 420px;
       border: none;
       background: transparent;
       background-image: url('/images/ui/green-button.png');
@@ -112,7 +113,7 @@
 
     .nearby-btn-img {
   width: 100%;
-  height: 80px; /* adjust if needed */
+  height: 60px; /* adjust if needed */
   border: none;
   background: transparent;
   background-image: url('/images/ui/nearby-btn.png');
@@ -620,7 +621,7 @@
     <div class="hero-frame">
       <img src="images/michigan-festival-hero-mobile.png" alt="Michigan festival scene" class="hero-img" fetchpriority="high" />
       <div class="hero-cta-wrap">
-        <button id="nearbyBtn" class="atlas-btn-image nearby-btn-img"></button>
+        <button id="nearbyBtn" class="atlas-btn-image" aria-label="Find Festivals Near You"></button>
       </div>
     </div>
   </section>
