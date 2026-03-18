@@ -1,247 +1,516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Romeo Peach Festival | Michigan Celebration Atlas</title>
+  <meta name="description" content="Explore the Romeo Peach Festival through art, history, gallery images, and festival details." />
 
-<title>Romeo Peach Festival | Michigan Celebration Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Infant:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
 
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Infant:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #efe3c6;
+      --paper-soft: rgba(246, 237, 217, 0.42);
+      --ink: #3b281d;
+      --ink-soft: #5e4936;
+      --line: rgba(120, 93, 60, 0.14);
+      --green: #557253;
+      --peach: #cf8b62;
+      --cream: #fff2da;
+      --shadow-soft: 0 8px 24px rgba(74, 52, 25, 0.06);
+    }
 
-<style>
-:root {
-  --paper: #efe3c6;
-  --ink: #3b281d;
-  --ink-soft: #5e4936;
-  --accent: #557253;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-body {
-  margin:0;
-  font-family:'Amiri', serif;
-  background: var(--paper);
-  background-image:url('/images/textures/vintage-paper.jpg');
-  color:var(--ink);
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* ===== GLOBAL ===== */
-.container {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 18px 14px;
-}
+    body {
+      margin: 0;
+      font-family: 'Amiri', serif;
+      color: var(--ink);
+      background-color: var(--paper);
+      background-image: url('/images/textures/vintage-paper.jpg');
+      background-size: 600px auto;
+      background-repeat: repeat;
+      background-position: center top;
+    }
 
-/* ===== HERO ===== */
-.hero {
-  text-align:center;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.hero h1 {
-  font-size: 34px;
-  margin: 10px 0 6px;
-}
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-.hero p {
-  margin: 0;
-  font-size: 16px;
-}
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 18px 14px 40px;
+    }
 
-.hero .tagline {
-  font-style: italic;
-  margin-top:6px;
-}
+    .festival-head {
+      text-align: center;
+      margin-bottom: 18px;
+    }
 
-/* ===== POSTER ===== */
-.poster-wrap {
-  margin: 18px 0;
-}
+    .festival-head h1 {
+      margin: 0 0 8px;
+      font-size: 36px;
+      line-height: 1.02;
+      font-weight: 700;
+    }
 
-.poster {
-  width:100%;
-  aspect-ratio:1/1;
-  border:1px solid rgba(140,120,90,.4);
-  padding:6px;
-  background:#f7f3ea;
-}
+    .festival-subhead {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.25;
+    }
 
-.poster img {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
+    .festival-tagline {
+      margin: 8px 0 0;
+      font-size: 17px;
+      line-height: 1.35;
+      font-style: italic;
+      color: var(--ink-soft);
+    }
 
-/* ===== BUTTONS ===== */
-.btn {
-  display:block;
-  width:100%;
-  max-width:320px;
-  margin:12px auto;
-  padding:14px;
-  border-radius:14px;
-  text-align:center;
-  font-size:18px;
-}
+    .festival-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
 
-.btn-primary {
-  background:var(--accent);
-  color:#fff;
-}
+    .festival-poster-col {
+      text-align: center;
+    }
 
-.btn-secondary {
-  border:1px solid #bfa77a;
-}
+    .poster {
+      max-width: 360px;
+      margin: 0 auto;
+      padding: 6px;
+      background: #f7f3ea;
+      border: 1px solid rgba(165, 151, 129, 0.55);
+      box-shadow: var(--shadow-soft);
+    }
 
-/* ===== SECTION ===== */
-.section {
-  margin-top:28px;
-}
+    .poster img {
+      width: 100%;
+      height: auto;
+    }
 
-.section h2 {
-  text-align:center;
-  font-size:22px;
-  margin-bottom:12px;
-}
+    .poster-meta {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 13px;
+      color: #6a5b49;
+    }
 
-/* ===== HISTORY ===== */
-.history p {
-  line-height:1.6;
-}
+    .festival-hero-copy h2 {
+      margin: 0 0 12px;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
 
-/* ===== IMAGE BLOCK ===== */
-.vintage-img {
-  margin-top:12px;
-  border:1px solid rgba(140,120,90,.4);
-  padding:6px;
-  background:#f7f3ea;
-}
+    .festival-hero-copy p {
+      margin: 0 0 18px;
+      font-size: 18px;
+      line-height: 1.55;
+    }
 
-.vintage-img img {
-  width:100%;
-}
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
 
-/* ===== GALLERY ===== */
-.gallery-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1.15;
+      text-align: center;
+      border: 1px solid rgba(95, 72, 44, 0.16);
+      box-shadow: 0 4px 10px rgba(74, 52, 25, 0.08);
+      font-family: 'Cormorant Infant', serif;
+      font-weight: 600;
+    }
 
-.gallery-grid img {
-  width:100%;
-  border-radius:6px;
-}
+    .btn-primary,
+    .btn-green {
+      background: var(--green);
+      color: var(--cream);
+    }
 
-/* ===== INFO ===== */
-.info-block {
-  margin-bottom:18px;
-}
+    .btn-accent {
+      background: var(--peach);
+      color: #fff7ee;
+    }
 
-.info-block h3 {
-  margin:6px 0;
-}
+    .buy-print-btn {
+      margin-top: 10px;
+    }
 
-.info-btn {
-  display:inline-block;
-  padding:10px 16px;
-  background:var(--accent);
-  color:white;
-  border-radius:10px;
-  margin-top:8px;
-}
+    .section-card {
+      margin-top: 26px;
+      padding: 18px;
+      border-radius: 24px;
+      background: var(--paper-soft);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
 
-/* ===== DESKTOP ===== */
-@media(min-width:900px){
+    .history-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: center;
+    }
 
-  .hero h1 {
-    font-size:44px;
-  }
+    .history-copy h2,
+    .section-heading {
+      margin: 0 0 14px;
+      font-size: 34px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
 
-  .poster {
-    max-width:420px;
-    margin:0 auto;
-  }
+    .history-copy p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.6;
+    }
 
-  .gallery-grid {
-    grid-template-columns:repeat(4,1fr);
-  }
+    .history-image-frame {
+      padding: 6px;
+      background: #f7f3ea;
+      border: 1px solid rgba(165, 151, 129, 0.55);
+      box-shadow: var(--shadow-soft);
+    }
 
-}
-</style>
+    .history-image-frame img {
+      width: 100%;
+      height: auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .gallery-actions {
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .info-block h3 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 700;
+    }
+
+    .info-block p,
+    .info-block li {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .info-block p + p,
+    .info-block ul {
+      margin-top: 6px;
+    }
+
+    .info-block ul {
+      padding-left: 22px;
+    }
+
+    .info-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .back-link-wrap {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .back-link {
+      font-size: 17px;
+      color: var(--ink-soft);
+    }
+
+    @media (min-width: 861px) {
+      .container {
+        max-width: 1180px;
+        padding: 20px 24px 50px;
+      }
+
+      .festival-head {
+        margin-bottom: 26px;
+      }
+
+      .festival-head h1 {
+        font-size: 72px;
+      }
+
+      .festival-subhead {
+        font-size: 30px;
+      }
+
+      .festival-tagline {
+        font-size: 23px;
+      }
+
+      .festival-hero-grid {
+        grid-template-columns: 460px minmax(0, 1fr);
+        gap: 44px;
+        max-width: 1100px;
+        margin: 0 auto;
+        align-items: center;
+      }
+
+      .poster {
+        max-width: 460px;
+      }
+
+      .poster-meta {
+        font-size: 16px;
+      }
+
+      .festival-hero-copy {
+        text-align: left;
+      }
+
+      .festival-hero-copy h2 {
+        font-size: 58px;
+        line-height: 1.02;
+        margin-bottom: 18px;
+      }
+
+      .festival-hero-copy p {
+        font-size: 28px;
+        line-height: 1.5;
+        max-width: 18ch;
+      }
+
+      .hero-actions {
+        gap: 16px;
+      }
+
+      .btn {
+        min-height: 58px;
+        padding: 14px 24px;
+        border-radius: 16px;
+        font-size: 24px;
+      }
+
+      .section-card {
+        max-width: 1120px;
+        margin: 34px auto 0;
+        padding: 28px;
+        border-radius: 28px;
+      }
+
+      .history-grid {
+        grid-template-columns: 1.15fr 0.95fr;
+        gap: 36px;
+      }
+
+      .history-copy h2,
+      .section-heading {
+        font-size: 58px;
+        margin-bottom: 18px;
+      }
+
+      .history-copy p {
+        font-size: 28px;
+        line-height: 1.55;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 26px 42px;
+      }
+
+      .info-block h3 {
+        font-size: 34px;
+      }
+
+      .info-block p,
+      .info-block li {
+        font-size: 24px;
+        line-height: 1.55;
+      }
+
+      .back-link {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="container">
+    <section class="festival-head">
+      <h1>Romeo Peach Festival</h1>
+      <p class="festival-subhead">Romeo, Michigan • Late August</p>
+      <p class="festival-tagline">A Michigan summer tradition since 1931</p>
+    </section>
 
-<div class="container">
+    <section class="festival-hero-grid">
+      <div class="festival-poster-col">
+        <div class="poster">
+          <img src="/images/posters/romeo-poster.jpg" alt="Romeo Peach Festival poster" />
+        </div>
+        <div class="poster-meta">Michigan Celebration Atlas — Archive Print No. 001</div>
+        <div class="buy-print-btn">
+          <a class="btn btn-primary" href="#buy-print">Buy This Print</a>
+        </div>
+      </div>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Romeo Peach Festival</h1>
-  <p>Romeo, Michigan • Late August</p>
-  <p class="tagline">A Michigan summer tradition since 1931</p>
-</section>
+      <div class="festival-hero-copy">
+        <h2>Explore the Romeo Peach Festival!</h2>
+        <p>
+          Dive into the sights and sounds of Romeo’s beloved summer tradition.
+          Learn the festival’s stored history, see event details, and browse a gallery of timeless photos.
+        </p>
 
-<!-- POSTER -->
-<div class="poster-wrap">
-  <div class="poster">
-    <img src="/images/posters/romeo-poster.jpg">
-  </div>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="#festival-info">Festival Information</a>
+          <a class="btn btn-green" href="#festival-gallery">View Gallery</a>
+        </div>
+      </div>
+    </section>
 
-  <a class="btn btn-primary">Explore the Festival</a>
-  <a class="btn btn-secondary">Buy This Print</a>
-</div>
+    <section class="section-card history-card">
+      <div class="history-grid">
+        <div class="history-copy">
+          <h2>History</h2>
+          <p>
+            Since 1931, the Romeo Peach Festival has been a cherished event, marking the arrival of harvest time and the end of summer.
+            With parades, delicious peach treats, and small-town charm, it remains a beloved tradition.
+          </p>
+        </div>
 
-<!-- HISTORY -->
-<section class="section history">
-  <h2>History</h2>
-  <p>
-    Since 1931, the Romeo Peach Festival has been a cherished event marking the arrival of harvest time and the end of summer. With parades, peach treats, and small-town charm, it remains a beloved tradition.
-  </p>
+        <div class="history-image-frame">
+          <img src="/images/history/romeo-history.jpg" alt="Historic Romeo Peach Festival parade scene" />
+        </div>
+      </div>
+    </section>
 
-  <div class="vintage-img">
-    <img src="/images/history/romeo-history.jpg">
-  </div>
-</section>
+    <section class="section-card" id="festival-gallery">
+      <h2 class="section-heading">Festival Gallery</h2>
 
-<!-- GALLERY -->
-<section class="section">
-  <h2>Festival Gallery</h2>
+      <div class="gallery-grid">
+        <img src="/images/gallery/romeo1.jpg" alt="Romeo Peach Festival at night" />
+        <img src="/images/gallery/romeo2.jpg" alt="Festival parade float" />
+        <img src="/images/gallery/romeo3.jpg" alt="Crowds under string lights" />
+        <img src="/images/gallery/romeo4.jpg" alt="Peach food stand" />
+      </div>
 
-  <div class="gallery-grid">
-    <img src="/images/gallery/romeo1.jpg">
-    <img src="/images/gallery/romeo2.jpg">
-    <img src="/images/gallery/romeo3.jpg">
-    <img src="/images/gallery/romeo4.jpg">
-  </div>
+      <div class="gallery-actions">
+        <a class="btn btn-primary" href="#festival-info">View Festival Details</a>
+      </div>
+    </section>
 
-  <a class="btn btn-primary">View All Photos</a>
-</section>
+    <section class="section-card" id="festival-info">
+      <h2 class="section-heading">Festival Information</h2>
 
-<!-- INFO -->
-<section class="section">
-  <h2>Festival Information</h2>
+      <div class="info-grid">
+        <div class="info-block">
+          <h3>Dates &amp; Hours</h3>
+          <p>Thursday, August 29 – Labor Day, September 2</p>
+          <p>Thursday–Sunday • 11 AM – 11 PM</p>
+          <p>Monday • 9 AM – 6 PM</p>
+        </div>
 
-  <div class="info-block">
-    <h3>Dates & Hours</h3>
-    <p>Aug 29 – Sept 2</p>
-    <p>11 AM – 11 PM</p>
-  </div>
+        <div class="info-block">
+          <h3>Location</h3>
+          <p>Downtown Romeo, Michigan</p>
+          <p>Main St., Romeo, MI 48065</p>
+          <div class="info-actions">
+            <a class="btn btn-primary" href="https://maps.google.com/?q=Romeo+Michigan" target="_blank" rel="noopener">Get Directions</a>
+          </div>
+        </div>
 
-  <div class="info-block">
-    <h3>Location</h3>
-    <p>Downtown Romeo, Michigan</p>
-    <a class="info-btn">Get Directions</a>
-  </div>
+        <div class="info-block">
+          <h3>Key Events</h3>
+          <ul>
+            <li>Thursday: Vintage Car Parade at 7 PM</li>
+            <li>Saturday: Peach Queen Crowning at 7:30 PM</li>
+            <li>Sunday: Peach Festival Parade at 1:30 PM</li>
+            <li>Labor Day: Classic Car &amp; Tractor Show, Carnival Wrap-Up, Fireworks at Dusk</li>
+          </ul>
+        </div>
 
-  <div class="info-block">
-    <h3>Key Events</h3>
-    <p>• Parade</p>
-    <p>• Peach Queen</p>
-    <p>• Fireworks</p>
-  </div>
+        <div class="info-block">
+          <h3>Admission</h3>
+          <p>Free Entry — Wristbands Needed for Carnival Rides</p>
+          <div class="info-actions">
+            <a class="btn btn-accent" href="https://romeopeachfestival.net/" target="_blank" rel="noopener">Official Festival Website</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</section>
+    <section class="section-card" id="buy-print">
+      <h2 class="section-heading">Archive Print</h2>
+      <div class="info-grid">
+        <div class="info-block">
+          <h3>Romeo Peach Festival Poster</h3>
+          <p>Michigan Celebration Atlas — Archive Print No. 001</p>
+          <p>Available as part of the Atlas print collection.</p>
+        </div>
+        <div class="info-block">
+          <h3>Purchase</h3>
+          <p>Add your future print purchase link here when ready.</p>
+          <div class="info-actions">
+            <a class="btn btn-primary" href="#">Buy This Print</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-</div>
-
+    <div class="back-link-wrap">
+      <a class="back-link" href="/">← Back to Michigan Celebration Atlas</a>
+    </div>
+  </main>
 </body>
 </html>
