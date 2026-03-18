@@ -186,7 +186,7 @@
       line-height: 1.05;
     }
 
-     .history-grid {
+    .history-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
@@ -208,6 +208,35 @@
     .history-image-frame img {
       width: 100%;
       height: auto;
+    }
+
+    .gallery-heading {
+      position: relative;
+      margin: 0 0 22px;
+      text-align: center;
+      font-family: 'Amiri', serif;
+      font-size: 34px;
+      line-height: 1.05;
+      color: #3b281d;
+    }
+
+    .gallery-heading::before,
+    .gallery-heading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 22%;
+      max-width: 140px;
+      height: 1px;
+      background: rgba(120, 93, 60, 0.28);
+    }
+
+    .gallery-heading::before {
+      left: 0;
+    }
+
+    .gallery-heading::after {
+      right: 0;
     }
 
     .gallery-grid {
@@ -238,6 +267,7 @@
       object-fit: cover;
       object-position: center;
       display: block;
+      border-radius: 18px;
     }
 
     .thumb-left img {
@@ -252,85 +282,6 @@
       display: grid;
       gap: 18px;
     }
-
-    .gallery-heading {
-  position: relative;
-  margin: 0 0 22px;
-  text-align: center;
-  font-family: 'Amiri', serif;
-  font-size: 34px;
-  line-height: 1.05;
-  color: #3b281d;
-}
-
-.gallery-heading::before,
-.gallery-heading::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 22%;
-  max-width: 140px;
-  height: 1px;
-  background: rgba(120, 93, 60, 0.28);
-}
-
-.gallery-heading::before {
-  left: 0;
-}
-
-.gallery-heading::after {
-  right: 0;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-.gallery-thumb {
-  appearance: none;
-  border: none;
-  background: none;
-  padding: 0;
-  margin: 0;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 18px;
-  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08);
-}
-
-.gallery-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  border-radius: 18px;
-}
-
-.thumb-left img {
-  object-position: 42% center;
-}
-
-.gallery-actions {
-  text-align: center;
-}
-
-@media (min-width: 861px) {
-  .gallery-heading {
-    font-size: 58px;
-    margin-bottom: 28px;
-  }
-
-  .gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
 
     .info-block h3 {
       margin: 0 0 6px;
@@ -513,6 +464,11 @@
         margin-bottom: 18px;
       }
 
+      .gallery-heading {
+        font-size: 58px;
+        margin-bottom: 28px;
+      }
+
       .history-grid {
         grid-template-columns: 1.15fr 0.95fr;
         gap: 36px;
@@ -631,65 +587,58 @@
       </div>
     </section>
 
-   <section class="section-card" id="festival-gallery">
-  <h2 class="gallery-heading">Festival Gallery</h2>
+    <section class="section-card" id="festival-gallery">
+      <h2 class="gallery-heading">Festival Gallery</h2>
 
-  <div class="gallery-grid" id="festivalGallery">
-    ...
-  </div>
+      <div class="gallery-grid" id="festivalGallery">
+        <button class="gallery-thumb thumb-left" type="button" data-full="/images/gallery/romeo1.jpg" data-alt="Ferris wheel glowing above the midway at sunset">
+          <img src="/images/gallery/romeo1.jpg" alt="Ferris wheel glowing above the midway at sunset" />
+        </button>
 
-   <!-- Existing 4 -->
-  <button class="gallery-thumb thumb-left" type="button" data-full="/images/gallery/romeo1.jpg" data-alt="Ferris wheel glowing above the midway at sunset">
-    <img src="/images/gallery/romeo1.jpg" alt="Ferris wheel glowing above the midway at sunset" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo2.jpg" data-alt="Classic car shining on display along Main Street">
+          <img src="/images/gallery/romeo2.jpg" alt="Classic car shining on display along Main Street" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo2.jpg" data-alt="Classic car shining on display along Main Street">
-    <img src="/images/gallery/romeo2.jpg" alt="Classic car shining on display along Main Street" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo3.jpg" data-alt="Festival crowds drifting through the grounds at golden hour">
+          <img src="/images/gallery/romeo3.jpg" alt="Festival crowds drifting through the grounds at golden hour" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo3.jpg" data-alt="Festival crowds drifting through the grounds at golden hour">
-    <img src="/images/gallery/romeo3.jpg" alt="Festival crowds drifting through the grounds at golden hour" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo4.jpg" data-alt="Children laughing as the carousel spins beneath warm lights">
+          <img src="/images/gallery/romeo4.jpg" alt="Children laughing as the carousel spins beneath warm lights" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo4.jpg" data-alt="Children laughing as the carousel spins beneath warm lights">
-    <img src="/images/gallery/romeo4.jpg" alt="Children laughing as the carousel spins beneath warm lights" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo5.jpg" data-alt="Mounted police leading the parade down Main Street">
+          <img src="/images/gallery/romeo5.jpg" alt="Mounted police leading the parade down Main Street" />
+        </button>
 
-  <!-- NEW IMAGES -->
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo6.jpg" data-alt="Cold drinks poured beneath the buzz of a lively beer tent">
+          <img src="/images/gallery/romeo6.jpg" alt="Cold drinks poured beneath the buzz of a lively beer tent" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo5.jpg" data-alt="Mounted police leading the parade down Main Street">
-    <img src="/images/gallery/romeo5.jpg" alt="Mounted police leading the parade down Main Street" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo7.jpg" data-alt="Warm peach cobbler served fresh from a bustling carnival stand">
+          <img src="/images/gallery/romeo7.jpg" alt="Warm peach cobbler served fresh from a bustling carnival stand" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo6.jpg" data-alt="Cold drinks poured beneath the buzz of a lively beer tent">
-    <img src="/images/gallery/romeo6.jpg" alt="Cold drinks poured beneath the buzz of a lively beer tent" />
-  </button>
-       
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo7.jpg" data-alt="Warm peach cobbler served fresh from a bustling carnival stand">
-    <img src="/images/gallery/romeo7.jpg" alt="Warm peach cobbler served fresh from a bustling carnival stand" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo8.jpg" data-alt="A quiet moment at the balloon game surrounded by bright carnival prizes">
+          <img src="/images/gallery/romeo8.jpg" alt="A quiet moment at the balloon game surrounded by bright carnival prizes" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo8.jpg" data-alt="A quiet moment at the balloon game surrounded by bright carnival prizes">
-    <img src="/images/gallery/romeo8.jpg" alt="A quiet moment at the balloon game surrounded by bright carnival prizes" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo9.jpg" data-alt="Colorful midway alive with rides, games, and summer crowds">
+          <img src="/images/gallery/romeo9.jpg" alt="Colorful midway alive with rides, games, and summer crowds" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo9.jpg" data-alt="Colorful midway alive with rides, games, and summer crowds">
-    <img src="/images/gallery/romeo9.jpg" alt="Colorful midway alive with rides, games, and summer crowds" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo10.jpg" data-alt="Friends sharing drinks and stories beneath a crowded festival tent">
+          <img src="/images/gallery/romeo10.jpg" alt="Friends sharing drinks and stories beneath a crowded festival tent" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo10.jpg" data-alt="Friends sharing drinks and stories beneath a crowded festival tent">
-    <img src="/images/gallery/romeo10.jpg" alt="Friends sharing drinks and stories beneath a crowded festival tent" />
-  </button>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo11.jpg" data-alt="Peach jam and handmade goods displayed at a sunny market booth">
+          <img src="/images/gallery/romeo11.jpg" alt="Peach jam and handmade goods displayed at a sunny market booth" />
+        </button>
 
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo11.jpg" data-alt="Peach jam and handmade goods displayed at a sunny market booth">
-    <img src="/images/gallery/romeo11.jpg" alt="Peach jam and handmade goods displayed at a sunny market booth" />
-  </button>
-
-  <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo12.jpg" data-alt="Fresh peach cobbler served to festival visitors under warm lights">
-    <img src="/images/gallery/romeo12.jpg" alt="Fresh peach cobbler served to festival visitors under warm lights" />
-  </button>
-
-</div>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo12.jpg" data-alt="Fresh peach cobbler served to festival visitors under warm lights">
+          <img src="/images/gallery/romeo12.jpg" alt="Fresh peach cobbler served to festival visitors under warm lights" />
+        </button>
+      </div>
 
       <div class="gallery-actions">
         <a class="btn btn-green" href="#festival-info">Festival Information</a>
