@@ -592,7 +592,65 @@
         font-size: 17px;
         padding: 8px 14px;
       }
-    }
+      @media (min-width: 1024px) {
+
+  .page-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .section {
+    padding: 28px 0;
+  }
+
+  .panel {
+    padding: 28px;
+    border-radius: 22px;
+    background: rgba(246, 237, 217, 0.55);
+    border: 1px solid rgba(120, 93, 60, 0.14);
+    box-shadow: 0 8px 24px rgba(74, 52, 25, 0.06);
+  }
+
+  .story-card {
+    max-width: 920px;
+    margin: 0 auto;
+    gap: 30px;
+  }
+
+  .story-content {
+    max-width: 520px;
+  }
+
+  .story-title {
+    font-size: 26px;
+  }
+
+  .story-copy {
+    font-size: 18px;
+  }
+
+  .poster-gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .theme-row {
+    gap: 16px;
+  }
+
+  .theme-label {
+    font-size: 14px;
+  }
+
+  .bottom-nav {
+    display: none;
+  }
+
+  .footer-space {
+    height: 40px;
+  }
+}
   </style>
 </head>
 <body>
@@ -605,7 +663,7 @@
     </div>
   </section>
 
-  <main class="container">
+ <main class="container page-wrap">
     <section class="section">
       <div class="panel">
         <div class="section-header">
