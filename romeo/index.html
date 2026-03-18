@@ -1,1 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<title>Romeo Peach Festival | Michigan Celebration Atlas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Infant:wght@500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --paper: #efe3c6;
+  --ink: #3b281d;
+  --ink-soft: #5e4936;
+  --accent: #557253;
+}
+
+body {
+  margin:0;
+  font-family:'Amiri', serif;
+  background: var(--paper);
+  background-image:url('/images/textures/vintage-paper.jpg');
+  color:var(--ink);
+}
+
+/* ===== GLOBAL ===== */
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 18px 14px;
+}
+
+/* ===== HERO ===== */
+.hero {
+  text-align:center;
+}
+
+.hero h1 {
+  font-size: 34px;
+  margin: 10px 0 6px;
+}
+
+.hero p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.hero .tagline {
+  font-style: italic;
+  margin-top:6px;
+}
+
+/* ===== POSTER ===== */
+.poster-wrap {
+  margin: 18px 0;
+}
+
+.poster {
+  width:100%;
+  aspect-ratio:1/1;
+  border:1px solid rgba(140,120,90,.4);
+  padding:6px;
+  background:#f7f3ea;
+}
+
+.poster img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+  display:block;
+  width:100%;
+  max-width:320px;
+  margin:12px auto;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-size:18px;
+}
+
+.btn-primary {
+  background:var(--accent);
+  color:#fff;
+}
+
+.btn-secondary {
+  border:1px solid #bfa77a;
+}
+
+/* ===== SECTION ===== */
+.section {
+  margin-top:28px;
+}
+
+.section h2 {
+  text-align:center;
+  font-size:22px;
+  margin-bottom:12px;
+}
+
+/* ===== HISTORY ===== */
+.history p {
+  line-height:1.6;
+}
+
+/* ===== IMAGE BLOCK ===== */
+.vintage-img {
+  margin-top:12px;
+  border:1px solid rgba(140,120,90,.4);
+  padding:6px;
+  background:#f7f3ea;
+}
+
+.vintage-img img {
+  width:100%;
+}
+
+/* ===== GALLERY ===== */
+.gallery-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.gallery-grid img {
+  width:100%;
+  border-radius:6px;
+}
+
+/* ===== INFO ===== */
+.info-block {
+  margin-bottom:18px;
+}
+
+.info-block h3 {
+  margin:6px 0;
+}
+
+.info-btn {
+  display:inline-block;
+  padding:10px 16px;
+  background:var(--accent);
+  color:white;
+  border-radius:10px;
+  margin-top:8px;
+}
+
+/* ===== DESKTOP ===== */
+@media(min-width:900px){
+
+  .hero h1 {
+    font-size:44px;
+  }
+
+  .poster {
+    max-width:420px;
+    margin:0 auto;
+  }
+
+  .gallery-grid {
+    grid-template-columns:repeat(4,1fr);
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Romeo Peach Festival</h1>
+  <p>Romeo, Michigan • Late August</p>
+  <p class="tagline">A Michigan summer tradition since 1931</p>
+</section>
+
+<!-- POSTER -->
+<div class="poster-wrap">
+  <div class="poster">
+    <img src="/images/posters/romeo-poster.jpg">
+  </div>
+
+  <a class="btn btn-primary">Explore the Festival</a>
+  <a class="btn btn-secondary">Buy This Print</a>
+</div>
+
+<!-- HISTORY -->
+<section class="section history">
+  <h2>History</h2>
+  <p>
+    Since 1931, the Romeo Peach Festival has been a cherished event marking the arrival of harvest time and the end of summer. With parades, peach treats, and small-town charm, it remains a beloved tradition.
+  </p>
+
+  <div class="vintage-img">
+    <img src="/images/history/romeo-history.jpg">
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section">
+  <h2>Festival Gallery</h2>
+
+  <div class="gallery-grid">
+    <img src="/images/gallery/romeo1.jpg">
+    <img src="/images/gallery/romeo2.jpg">
+    <img src="/images/gallery/romeo3.jpg">
+    <img src="/images/gallery/romeo4.jpg">
+  </div>
+
+  <a class="btn btn-primary">View All Photos</a>
+</section>
+
+<!-- INFO -->
+<section class="section">
+  <h2>Festival Information</h2>
+
+  <div class="info-block">
+    <h3>Dates & Hours</h3>
+    <p>Aug 29 – Sept 2</p>
+    <p>11 AM – 11 PM</p>
+  </div>
+
+  <div class="info-block">
+    <h3>Location</h3>
+    <p>Downtown Romeo, Michigan</p>
+    <a class="info-btn">Get Directions</a>
+  </div>
+
+  <div class="info-block">
+    <h3>Key Events</h3>
+    <p>• Parade</p>
+    <p>• Peach Queen</p>
+    <p>• Fireworks</p>
+  </div>
+
+</section>
+
+</div>
+
+</body>
+</html>
