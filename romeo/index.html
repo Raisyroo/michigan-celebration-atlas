@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Romeo Peach Festival | Michigan Celebration Atlas</title>
-  <meta name="description" content="Explore the Romeo Peach Festival through art, history, gallery images, and festival details." />
+  <meta name="description" content="Explore the Romeo Peach Festival through poster art, history, gallery images, and festival information." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,8 +33,8 @@
 
     body {
       margin: 0;
-      font-family: 'Amiri', serif;
       color: var(--ink);
+      font-family: 'Amiri', serif;
       background-color: var(--paper);
       background-image: url('/images/textures/vintage-paper.jpg');
       background-size: 600px auto;
@@ -55,12 +55,12 @@
     .container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 18px 14px 40px;
+      padding: 18px 14px 48px;
     }
 
     .festival-head {
       text-align: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .festival-head h1 {
@@ -73,13 +73,13 @@
     .festival-subhead {
       margin: 0;
       font-size: 18px;
-      line-height: 1.25;
+      line-height: 1.35;
     }
 
     .festival-tagline {
       margin: 8px 0 0;
       font-size: 17px;
-      line-height: 1.35;
+      line-height: 1.4;
       font-style: italic;
       color: var(--ink-soft);
     }
@@ -87,7 +87,7 @@
     .festival-hero-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 22px;
       align-items: start;
     }
 
@@ -110,20 +110,19 @@
     }
 
     .poster-meta {
-      margin-top: 8px;
-      text-align: center;
-      font-size: 13px;
+      margin-top: 10px;
+      font-size: 14px;
       color: #6a5b49;
+      line-height: 1.35;
     }
 
     .festival-hero-copy h2 {
       margin: 0 0 12px;
       font-size: 30px;
-      line-height: 1.05;
-      font-weight: 700;
+      line-height: 1.06;
     }
 
-   .festival-hero-copy p {
+    .festival-hero-copy p {
       margin: 0 0 18px;
       font-size: 18px;
       line-height: 1.55;
@@ -143,12 +142,11 @@
       padding: 10px 18px;
       border-radius: 12px;
       font-size: 18px;
-      line-height: 1.15;
+      line-height: 1.1;
       text-align: center;
       border: 1px solid rgba(95, 72, 44, 0.16);
       box-shadow: 0 4px 10px rgba(74, 52, 25, 0.08);
-      font-family: 'Cormorant Infant', serif;
-      font-weight: 600;
+      cursor: pointer;
     }
 
     .btn-primary,
@@ -162,8 +160,13 @@
       color: #fff7ee;
     }
 
-    .buy-print-btn {
-      margin-top: 10px;
+    .buy-print-wrap {
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .buy-print-wrap .btn {
+      min-width: 210px;
     }
 
     .section-card {
@@ -175,19 +178,19 @@
       box-shadow: var(--shadow-soft);
     }
 
+    .section-heading,
+    .history-copy h2,
+    .info-heading {
+      margin: 0 0 14px;
+      font-size: 34px;
+      line-height: 1.05;
+    }
+
     .history-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
       align-items: center;
-    }
-
-    .history-copy h2,
-    .section-heading {
-      margin: 0 0 14px;
-      font-size: 34px;
-      line-height: 1.05;
-      font-weight: 700;
     }
 
     .history-copy p {
@@ -200,7 +203,6 @@
       padding: 6px;
       background: #f7f3ea;
       border: 1px solid rgba(165, 151, 129, 0.55);
-      box-shadow: var(--shadow-soft);
     }
 
     .history-image-frame img {
@@ -212,187 +214,290 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
+      margin-bottom: 22px;
     }
 
-   .gallery-thumb {
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: var(--shadow-soft);
-}
+    .gallery-thumb {
+      appearance: none;
+      border: none;
+      background: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08);
+    }
 
-.gallery-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
+    .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .thumb-left img {
+      object-position: 42% center;
+    }
 
     .gallery-actions {
-      margin-top: 18px;
       text-align: center;
     }
 
-    .info-grid {
+    .info-list {
       display: grid;
       gap: 18px;
     }
 
     .info-block h3 {
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       font-size: 24px;
-      line-height: 1.1;
-      font-weight: 700;
+      line-height: 1.15;
     }
 
-    .info-block p,
-    .info-block li {
+    .info-block p {
       margin: 0;
-      font-size: 17px;
+      font-size: 18px;
       line-height: 1.55;
     }
 
-    .info-block p + p,
-    .info-block ul {
-      margin-top: 6px;
+    .info-block p + p {
+      margin-top: 4px;
     }
 
-    .info-block ul {
-      padding-left: 22px;
+    .info-button-row {
+      margin-top: 10px;
     }
 
-    .info-actions {
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 20, 13, 0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .lightbox.is-open {
       display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 8px;
     }
 
-    .back-link-wrap {
+    .lightbox-stage {
+      position: relative;
+      width: min(92vw, 1200px);
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-stage img {
+      max-width: 100%;
+      max-height: 78vh;
+      border-radius: 12px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+      background: #111;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .lightbox-nav {
+      border: none;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 40px;
+      line-height: 1;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .lightbox-prev,
+    .lightbox-next {
+      margin: 0 12px;
+    }
+
+    .lightbox-caption,
+    .lightbox-count {
+      color: #f6edd9;
+      margin-top: 12px;
       text-align: center;
-      margin-top: 30px;
+      font-family: 'Amiri', serif;
     }
 
-    .back-link {
-      font-size: 17px;
-      color: var(--ink-soft);
+    .lightbox-caption {
+      font-size: 20px;
+    }
+
+    .lightbox-count {
+      font-size: 16px;
+      opacity: 0.85;
     }
 
     @media (min-width: 861px) {
-  .container {
-    max-width: 1180px;
-    padding: 20px 24px 50px;
-  }
+      .container {
+        max-width: 1180px;
+        padding: 20px 24px 56px;
+      }
 
-  .festival-head {
-    margin-bottom: 26px;
-  }
+      .festival-head {
+        margin-bottom: 28px;
+      }
 
-  .festival-head h1 {
-    font-size: 72px;
-  }
+      .festival-head h1 {
+        font-size: 72px;
+      }
 
-  .festival-subhead {
-    font-size: 30px;
-  }
+      .festival-subhead {
+        font-size: 30px;
+      }
 
-  .festival-tagline {
-    font-size: 23px;
-  }
+      .festival-tagline {
+        font-size: 23px;
+      }
 
-  .festival-hero-grid {
-    grid-template-columns: 460px minmax(0, 1fr);
-    gap: 44px;
-    max-width: 1100px;
-    margin: 0 auto;
-    align-items: center;
-  }
+      .festival-hero-grid {
+        grid-template-columns: 460px minmax(0, 1fr);
+        gap: 44px;
+        max-width: 1100px;
+        margin: 0 auto;
+        align-items: center;
+      }
 
-  .poster {
-    max-width: 460px;
-  }
+      .poster {
+        max-width: 460px;
+      }
 
-  .poster-meta {
-    font-size: 16px;
-  }
+      .festival-hero-copy {
+        text-align: left;
+      }
 
-  .festival-hero-copy {
-    text-align: left;
-    max-width: 620px;
-  }
+      .festival-hero-copy h2 {
+        font-size: 58px;
+        line-height: 1.02;
+        margin-bottom: 18px;
+      }
 
-  .festival-hero-copy h2 {
-    font-size: 58px;
-    line-height: 1.02;
-    margin-bottom: 18px;
-  }
+      .festival-hero-copy p {
+        font-size: 28px;
+        line-height: 1.5;
+        max-width: 18ch;
+      }
 
-  .festival-hero-copy p {
-    font-size: 28px;
-    line-height: 1.5;
-    max-width: 620px;
-  }
+      .hero-actions {
+        gap: 16px;
+      }
 
-  .hero-actions {
-    gap: 16px;
-  }
+      .btn {
+        min-height: 58px;
+        padding: 14px 24px;
+        border-radius: 16px;
+        font-size: 24px;
+      }
 
-  .btn {
-    min-height: 58px;
-    padding: 14px 24px;
-    border-radius: 16px;
-    font-size: 24px;
-  }
+      .buy-print-wrap .btn {
+        min-width: 250px;
+      }
 
-  .section-card {
-    max-width: 1120px;
-    margin: 34px auto 0;
-    padding: 28px;
-    border-radius: 28px;
-  }
+      .section-card {
+        max-width: 1120px;
+        margin: 34px auto 0;
+        padding: 28px;
+        border-radius: 28px;
+      }
 
-  .history-grid {
-    grid-template-columns: 1.15fr 0.95fr;
-    gap: 36px;
-  }
+      .section-heading,
+      .history-copy h2,
+      .info-heading {
+        font-size: 58px;
+        margin-bottom: 18px;
+      }
 
-  .history-copy h2,
-  .section-heading {
-    font-size: 58px;
-    margin-bottom: 18px;
-  }
+      .history-grid {
+        grid-template-columns: 1.15fr 0.95fr;
+        gap: 36px;
+      }
 
-  .history-copy p {
-    font-size: 28px;
-    line-height: 1.55;
-  }
+      .history-copy p {
+        font-size: 28px;
+        line-height: 1.55;
+      }
 
-  .gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
+      .gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
 
-  .info-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 26px 42px;
-  }
+      .info-list {
+        grid-template-columns: 1fr 1fr;
+        gap: 28px 36px;
+      }
 
-  .info-block h3 {
-    font-size: 34px;
-  }
+      .info-block h3 {
+        font-size: 34px;
+      }
 
-  .info-block p,
-  .info-block li {
-    font-size: 24px;
-    line-height: 1.55;
-  }
+      .info-block p {
+        font-size: 24px;
+      }
+    }
 
-  .back-link {
-    font-size: 22px;
-  }
-}
-    
+    @media (max-width: 860px) {
+      .lightbox {
+        padding: 14px;
+      }
+
+      .lightbox-stage {
+        width: 100%;
+      }
+
+      .lightbox-stage img {
+        max-height: 72vh;
+      }
+
+      .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+      }
+
+      .lightbox-prev {
+        left: 8px;
+        margin: 0;
+      }
+
+      .lightbox-next {
+        right: 8px;
+        margin: 0;
+      }
+
+      .lightbox-caption {
+        font-size: 18px;
+        padding: 0 42px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -409,8 +514,8 @@
           <img src="/images/posters/romeo-poster.jpg" alt="Romeo Peach Festival poster" />
         </div>
         <div class="poster-meta">Michigan Celebration Atlas — Archive Print No. 001</div>
-        <div class="buy-print-btn">
-          <a class="btn btn-primary" href="#buy-print">Buy This Print</a>
+        <div class="buy-print-wrap">
+          <a class="btn btn-green" href="/shop/romeo-print.html">Buy This Print</a>
         </div>
       </div>
 
@@ -418,7 +523,8 @@
         <h2>Explore the Romeo Peach Festival!</h2>
         <p>
           Dive into the sights and sounds of Romeo’s beloved summer tradition.
-          Learn the festival’s stored history, see event details, and browse a gallery of timeless photos.
+          Learn the festival’s history, see event details, and browse a gallery
+          of timeless photos.
         </p>
 
         <div class="hero-actions">
@@ -433,8 +539,10 @@
         <div class="history-copy">
           <h2>History</h2>
           <p>
-            Since 1931, the Romeo Peach Festival has been a cherished event, marking the arrival of harvest time and the end of summer.
-            With parades, delicious peach treats, and small-town charm, it remains a beloved tradition.
+            Since 1931, the Romeo Peach Festival has been a cherished event,
+            marking the arrival of harvest time and the end of summer. With
+            parades, delicious peach treats, and small-town charm, it remains
+            a beloved tradition.
           </p>
         </div>
 
@@ -447,33 +555,33 @@
     <section class="section-card" id="festival-gallery">
       <h2 class="section-heading">Festival Gallery</h2>
 
-     <div class="gallery-grid">
-  <div class="gallery-thumb">
-    <img src="/images/gallery/romeo1.jpg" alt="">
-  </div>
+      <div class="gallery-grid" id="festivalGallery">
+        <button class="gallery-thumb thumb-left" type="button" data-full="/images/gallery/romeo1.jpg" data-alt="Ferris wheel and circus train at sunset">
+          <img src="/images/gallery/romeo1.jpg" alt="Ferris wheel and circus train at sunset" />
+        </button>
 
-  <div class="gallery-thumb">
-    <img src="/images/gallery/romeo2.jpg" alt="">
-  </div>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo2.jpg" data-alt="Classic car on display at the festival">
+          <img src="/images/gallery/romeo2.jpg" alt="Classic car on display at the festival" />
+        </button>
 
-  <div class="gallery-thumb">
-    <img src="/images/gallery/romeo3.jpg" alt="">
-  </div>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo3.jpg" data-alt="Festival grounds from above at golden hour">
+          <img src="/images/gallery/romeo3.jpg" alt="Festival grounds from above at golden hour" />
+        </button>
 
-  <div class="gallery-thumb">
-    <img src="/images/gallery/romeo4.jpg" alt="">
-  </div>
-</div>
+        <button class="gallery-thumb" type="button" data-full="/images/gallery/romeo4.jpg" data-alt="Children riding the carousel">
+          <img src="/images/gallery/romeo4.jpg" alt="Children riding the carousel" />
+        </button>
+      </div>
 
       <div class="gallery-actions">
-        <a class="btn btn-primary" href="#festival-info">View Festival Details</a>
+        <a class="btn btn-green" href="#festival-info">Festival Information</a>
       </div>
     </section>
 
     <section class="section-card" id="festival-info">
-      <h2 class="section-heading">Festival Information</h2>
+      <h2 class="info-heading">Festival Information</h2>
 
-      <div class="info-grid">
+      <div class="info-list">
         <div class="info-block">
           <h3>Dates &amp; Hours</h3>
           <p>Thursday, August 29 – Labor Day, September 2</p>
@@ -485,52 +593,109 @@
           <h3>Location</h3>
           <p>Downtown Romeo, Michigan</p>
           <p>Main St., Romeo, MI 48065</p>
-          <div class="info-actions">
-            <a class="btn btn-primary" href="https://maps.google.com/?q=Romeo+Michigan" target="_blank" rel="noopener">Get Directions</a>
+          <div class="info-button-row">
+            <a class="btn btn-green" href="https://maps.google.com/?q=Romeo+Michigan" target="_blank" rel="noopener">Get Directions</a>
           </div>
         </div>
 
         <div class="info-block">
           <h3>Key Events</h3>
-          <ul>
-            <li>Thursday: Vintage Car Parade at 7 PM</li>
-            <li>Saturday: Peach Queen Crowning at 7:30 PM</li>
-            <li>Sunday: Peach Festival Parade at 1:30 PM</li>
-            <li>Labor Day: Classic Car &amp; Tractor Show, Carnival Wrap-Up, Fireworks at Dusk</li>
-          </ul>
+          <p>Thursday: Vintage Car Parade at 7 PM</p>
+          <p>Saturday: Peach Queen Crowning at 7:30 PM</p>
+          <p>Sunday: Peach Festival Parade at 1:30 PM</p>
+          <p>Labor Day: Classic Car &amp; Tractor Show, Carnival Wrap-Up, Fireworks at Dusk</p>
         </div>
 
         <div class="info-block">
-          <h3>Admission</h3>
-          <p>Free Entry — Wristbands Needed for Carnival Rides</p>
-          <div class="info-actions">
-            <a class="btn btn-accent" href="https://romeopeachfestival.net/" target="_blank" rel="noopener">Official Festival Website</a>
+          <h3>Official Website</h3>
+          <p>Visit the official festival site for the latest updates, vendor information, and current schedules.</p>
+          <div class="info-button-row">
+            <a class="btn btn-accent" href="https://example.com" target="_blank" rel="noopener">Official Festival Website</a>
           </div>
         </div>
       </div>
     </section>
-
-    <section class="section-card" id="buy-print">
-      <h2 class="section-heading">Archive Print</h2>
-      <div class="info-grid">
-        <div class="info-block">
-          <h3>Romeo Peach Festival Poster</h3>
-          <p>Michigan Celebration Atlas — Archive Print No. 001</p>
-          <p>Available as part of the Atlas print collection.</p>
-        </div>
-        <div class="info-block">
-          <h3>Purchase</h3>
-          <p>Add your future print purchase link here when ready.</p>
-          <div class="info-actions">
-            <a class="btn btn-primary" href="#">Buy This Print</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="back-link-wrap">
-      <a class="back-link" href="/">← Back to Michigan Celebration Atlas</a>
-    </div>
   </main>
+
+  <div class="lightbox" id="galleryLightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close gallery">×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+
+    <div class="lightbox-stage">
+      <img id="lightboxImage" src="" alt="" />
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+      <div class="lightbox-count" id="lightboxCount"></div>
+    </div>
+
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">›</button>
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('galleryLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxCount = document.getElementById('lightboxCount');
+    const closeBtn = document.getElementById('lightboxClose');
+    const prevBtn = document.getElementById('lightboxPrev');
+    const nextBtn = document.getElementById('lightboxNext');
+
+    const thumbs = Array.from(document.querySelectorAll('#festivalGallery .gallery-thumb'));
+    let currentIndex = 0;
+
+    function showImage(index) {
+      currentIndex = index;
+      const thumb = thumbs[currentIndex];
+      const fullSrc = thumb.dataset.full;
+      const alt = thumb.dataset.alt || thumb.querySelector('img')?.alt || '';
+
+      lightboxImage.src = fullSrc;
+      lightboxImage.alt = alt;
+      lightboxCaption.textContent = alt;
+      lightboxCount.textContent = (currentIndex + 1) + ' / ' + thumbs.length;
+    }
+
+    function openLightbox(index) {
+      showImage(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function showNext() {
+      showImage((currentIndex + 1) % thumbs.length);
+    }
+
+    function showPrev() {
+      showImage((currentIndex - 1 + thumbs.length) % thumbs.length);
+    }
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => openLightbox(index));
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    nextBtn.addEventListener('click', showNext);
+    prevBtn.addEventListener('click', showPrev);
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('is-open')) return;
+
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') showNext();
+      if (e.key === 'ArrowLeft') showPrev();
+    });
+  </script>
 </body>
 </html>
