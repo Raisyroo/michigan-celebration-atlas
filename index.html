@@ -18,6 +18,11 @@
       --ink: #3b281d;
       --ink-soft: #5e4936;
       --line: #c7ab7d;
+      --panel-line: rgba(120, 93, 60, 0.14);
+      --panel-bg: rgba(246, 237, 217, 0.42);
+      --shadow-soft: 0 8px 24px rgba(74, 52, 25, 0.06);
+      --green-btn: #6d8a66;
+      --green-btn-text: #fff2da;
     }
 
     * {
@@ -54,8 +59,8 @@
 
     .container {
       width: 100%;
-      max-width: none;
-      margin: 0;
+      max-width: 760px;
+      margin: 0 auto;
       padding: 0 12px;
     }
 
@@ -64,52 +69,51 @@
       background: transparent;
     }
 
-   .hero-frame {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background: transparent;
-  box-shadow: none;
-}
+    .hero-frame {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: transparent;
+      box-shadow: none;
+    }
 
-.hero-img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+    .hero-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
-.hero-cta-wrap {
-  transform: translateX(-50%) translateY(30px);
-  position: absolute;
-  left: 50%;
-  bottom: 0px !important;
-  transform: translateX(-50%);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  z-index: 5;
-  pointer-events: none;
-}
+    .hero-cta-wrap {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      z-index: 5;
+      pointer-events: none;
+    }
 
-.atlas-btn-image {
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
-  width: 74% !important;
-  max-width: 250px !important;
-  aspect-ratio: 466 / 111;
-  height: auto !important;
-  min-height: 0 !important;
-  border: none;
-  background: transparent;
-  background-image: url('/images/ui/nearbyBtn.png') !important;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% auto !important;
-  cursor: pointer;
-  padding: 0;
-  display: block;
-  pointer-events: auto;
-}
-   
+    .atlas-btn-image {
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+      width: 74% !important;
+      max-width: 250px !important;
+      aspect-ratio: 466 / 111;
+      height: auto !important;
+      min-height: 0 !important;
+      border: none;
+      background: transparent;
+      background-image: url('/images/ui/nearbyBtn.png') !important;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100% auto !important;
+      cursor: pointer;
+      padding: 0;
+      display: block;
+      pointer-events: auto;
+    }
+
     .section {
       padding: 14px 0;
     }
@@ -163,8 +167,8 @@
 
     .story-card {
       display: grid;
-      grid-template-columns: 40% 1fr;
-      gap: 22px;
+      grid-template-columns: minmax(0, 40%) minmax(0, 1fr);
+      gap: 18px;
       align-items: start;
       padding: 0;
       margin: 0;
@@ -177,6 +181,7 @@
     .story-poster-link {
       display: block;
       width: 100%;
+      min-width: 0;
     }
 
     .story-poster-frame {
@@ -189,7 +194,6 @@
     .story-poster,
     .story-poster-video {
       width: 100%;
-      height: 100%;
       display: block;
       border: none;
       border-radius: 0;
@@ -203,10 +207,7 @@
     .story-poster-video {
       width: 100%;
       height: auto;
-      display: block;
-      border: none;
       box-shadow: none;
-      background: transparent;
       object-fit: cover;
     }
 
@@ -483,58 +484,9 @@
       height: 110px;
     }
 
-    @media (min-width: 860px) {
-      .container {
-        padding: 0 16px;
-      }
-
-      .theme-row {
-        gap: 12px;
-      }
-
-      .bottom-nav {
-        width: min(760px, calc(100% - 24px));
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        border: 1px solid rgba(120,100,70,.14);
-        border-radius: 22px;
-        bottom: 12px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .story-card {
-        grid-template-columns: 40% 1fr;
-        gap: 18px;
-      }
-
-      .story-title {
-        font-size: 18px;
-        line-height: 1.02;
-        white-space: nowrap;
-      }
-
-      .story-copy {
-        font-size: 16px;
-        line-height: 1.45;
-      }
-
-      .story-link {
-        font-size: 18px;
-      }
-    }
-
     @media (max-width: 520px) {
       .story-card {
-        grid-template-columns: 40% 1fr;
         gap: 16px;
-      }
-
-      .story-title {
-        font-size: 18px;
-        line-height: 1.02;
-        white-space: nowrap;
       }
 
       .story-copy {
@@ -562,14 +514,11 @@
       }
 
       .story-card {
-        grid-template-columns: 40% 1fr;
         gap: 14px;
       }
 
       .story-title {
         font-size: 18px;
-        line-height: 1.02;
-        white-space: nowrap;
       }
 
       .story-copy {
@@ -578,7 +527,7 @@
         margin-bottom: 12px;
       }
 
-     .theme-label {
+      .theme-label {
         font-size: 11px;
       }
 
@@ -592,68 +541,133 @@
         font-size: 17px;
         padding: 8px 14px;
       }
-      @media (min-width: 1024px) {
+    }
 
-  .page-wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+    @media (min-width: 861px) {
+      .container {
+        max-width: 1180px;
+        padding: 0 20px;
+      }
 
-  .section {
-    padding: 28px 0;
-  }
+      .section {
+        padding: 24px 0;
+      }
 
-  .panel {
-    padding: 28px;
-    border-radius: 22px;
-    background: rgba(246, 237, 217, 0.55);
-    border: 1px solid rgba(120, 93, 60, 0.14);
-    box-shadow: 0 8px 24px rgba(74, 52, 25, 0.06);
-  }
+      .panel {
+        padding: 24px 26px;
+        border-radius: 24px;
+        background: var(--panel-bg);
+        border: 1px solid var(--panel-line);
+        box-shadow: var(--shadow-soft);
+      }
 
-  .story-card {
-    max-width: 920px;
-    margin: 0 auto;
-    gap: 30px;
-  }
+      .section-header {
+        margin-bottom: 22px;
+        gap: 18px;
+      }
 
-  .story-content {
-    max-width: 520px;
-  }
+      .section-title,
+      .theme-title {
+        font-size: 34px;
+      }
 
-  .story-title {
-    font-size: 26px;
-  }
+      .featured-stack {
+        max-width: 1040px;
+        margin: 0 auto;
+      }
 
-  .story-copy {
-    font-size: 18px;
-  }
+      .story-card {
+        grid-template-columns: 360px minmax(0, 1fr);
+        gap: 32px;
+        align-items: center;
+      }
 
-  .poster-gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-  }
+      .story-content {
+        max-width: 560px;
+      }
 
-  .theme-row {
-    gap: 16px;
-  }
+      .story-title {
+        font-size: 34px;
+        line-height: 1;
+        white-space: normal;
+      }
 
-  .theme-label {
-    font-size: 14px;
-  }
+      .story-copy {
+        font-size: 19px;
+        line-height: 1.42;
+        max-width: 22ch;
+      }
 
-  .bottom-nav {
-    display: none;
-  }
+      .story-link {
+        min-width: 230px;
+        min-height: 54px;
+        padding: 12px 20px;
+        font-size: 24px;
+        border-radius: 16px;
+      }
 
-  .footer-space {
-    height: 40px;
-  }
-        body {
-  outline: 12px solid red !important;
-}
-}
+      .search-strip,
+      .search-results,
+      #nearbyResults {
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .theme-row {
+        gap: 18px;
+      }
+
+      .theme-label {
+        font-size: 15px;
+        margin-top: 8px;
+      }
+
+      .poster-gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 22px;
+      }
+
+      .poster-meta h3 {
+        font-size: 22px;
+      }
+
+      .poster-meta p {
+        font-size: 14px;
+      }
+
+      .scenic-strip {
+        height: 170px;
+        margin-top: 20px;
+      }
+
+      .bottom-nav {
+        display: none;
+      }
+
+      .footer-space {
+        height: 36px;
+      }
+    }
+
+    @media (min-width: 1200px) {
+      .story-card {
+        grid-template-columns: 390px minmax(0, 1fr);
+      }
+
+      .story-title {
+        font-size: 38px;
+      }
+
+      .story-copy {
+        font-size: 21px;
+      }
+
+      .section-title,
+      .theme-title {
+        font-size: 40px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -661,12 +675,12 @@
     <div class="hero-frame">
       <img src="images/michigan-festival-hero-mobile.png" alt="Michigan festival scene" class="hero-img" fetchpriority="high" />
       <div class="hero-cta-wrap">
-       <button id="nearbyBtn" class="atlas-btn-image"></button>
+        <button id="nearbyBtn" class="atlas-btn-image" aria-label="Find festivals near you"></button>
       </div>
     </div>
   </section>
 
- <main class="container page-wrap">
+  <main class="container">
     <section class="section">
       <div class="panel">
         <div class="section-header">
@@ -746,6 +760,26 @@
               <p>Poster Collection</p>
             </div>
           </article>
+
+          <article class="poster-card">
+            <div class="poster-card-art">
+              <img src="/images/posters/romeo-poster.jpg" alt="Romeo Peach Festival poster" />
+            </div>
+            <div class="poster-meta">
+              <h3>Romeo Peach Festival</h3>
+              <p>Poster Collection</p>
+            </div>
+          </article>
+
+          <article class="poster-card">
+            <div class="poster-card-art">
+              <img src="/images/posters/bay-rama-poster.jpg" alt="Bay-Rama Fishfly Festival poster" />
+            </div>
+            <div class="poster-meta">
+              <h3>Bay-Rama Fishfly Festival</h3>
+              <p>Poster Collection</p>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -793,7 +827,7 @@
       posterImage: "/images/posters/romeo-poster.jpg",
       videoMp4: "/images/posters/romeo-poster-animation.mp4",
       landingUrl: "/romeo/index.html",
-      description: "A THE 2 sun-drenched slice of Americana, where the scent of fresh harvests and Labor Day parades have defined small-town summers for generations."
+      description: "A sun-drenched slice of Americana, where the scent of fresh harvests and Labor Day parades have defined small-town summers for generations."
     };
 
     const festivals = [
@@ -867,7 +901,7 @@
             <div class="story-rule"></div>
             <p class="story-copy">${festival.description}</p>
             <div class="story-actions">
-              <a href="${festival.landingUrl}" class="story-link info">Festival Information</a>
+              <a href="${festival.landingUrl}" class="story-link info">Explore the Festival</a>
             </div>
           </div>
         </article>
