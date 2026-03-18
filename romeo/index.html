@@ -186,50 +186,7 @@
       line-height: 1.05;
     }
 
-    .section-title {
-  position: relative;
-  text-align: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  margin: 3rem 0 2rem;
-  color: #3b2a1f;
-}
-
-/* horizontal lines */
-.section-title::before,
-.section-title::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 80px;
-  height: 1px;
-  background: #b89b7a;
-}
-
-.section-title::before {
-  left: calc(50% - 160px);
-}
-
-.section-title::after {
-  right: calc(50% - 160px);
-}
-
-/* decorative flourish under text */
-.section-title span {
-  display: inline-block;
-  position: relative;
-}
-
-.section-title span::after {
-  content: "❧"; /* vintage-style ornament */
-  display: block;
-  font-size: 0.9rem;
-  margin-top: 6px;
-  color: #b89b7a;
-  letter-spacing: 4px;
-}
-
-    .history-grid {
+     .history-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 20px;
@@ -295,6 +252,85 @@
       display: grid;
       gap: 18px;
     }
+
+    .gallery-heading {
+  position: relative;
+  margin: 0 0 22px;
+  text-align: center;
+  font-family: 'Amiri', serif;
+  font-size: 34px;
+  line-height: 1.05;
+  color: #3b281d;
+}
+
+.gallery-heading::before,
+.gallery-heading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 22%;
+  max-width: 140px;
+  height: 1px;
+  background: rgba(120, 93, 60, 0.28);
+}
+
+.gallery-heading::before {
+  left: 0;
+}
+
+.gallery-heading::after {
+  right: 0;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.gallery-thumb {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 4px 14px rgba(60, 40, 20, 0.08);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 18px;
+}
+
+.thumb-left img {
+  object-position: 42% center;
+}
+
+.gallery-actions {
+  text-align: center;
+}
+
+@media (min-width: 861px) {
+  .gallery-heading {
+    font-size: 58px;
+    margin-bottom: 28px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
 
     .info-block h3 {
       margin: 0 0 6px;
@@ -596,14 +632,16 @@
     </section>
 
     <section class="section-card" id="festival-gallery">
-    <h2 class="section-title">
-  <span>Festival Gallery</span>
-    </h2>
-
-     <div class="gallery-grid" id="festivalGallery">
+  <h2 class="gallery-heading">Festival Gallery</h2>
 
   <div class="gallery-grid" id="festivalGallery">
+    ...
+  </div>
 
+  <div class="gallery-actions">
+    <a class="btn btn-green" href="#festival-info">Festival Information</a>
+  </div>
+</section>
   <!-- Existing 4 -->
   <button class="gallery-thumb thumb-left" type="button" data-full="/images/gallery/romeo1.jpg" data-alt="Ferris wheel glowing above the midway at sunset">
     <img src="/images/gallery/romeo1.jpg" alt="Ferris wheel glowing above the midway at sunset" />
