@@ -667,7 +667,28 @@
       .theme-title {
         font-size: 40px;
       }
-    }
+      @media (min-width: 861px) {
+  .hero-frame {
+    max-height: 520px;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 520px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .hero-cta-wrap {
+    bottom: 22px;
+  }
+
+  .atlas-btn-image {
+    width: 420px !important;
+    max-width: 420px !important;
+  }
+}
   </style>
 </head>
 <body>
