@@ -1,11 +1,10 @@
 -- Celebration Atlas event-owned media schema.
 --
 -- Purpose:
---   Creates public.event_media as an additive companion table for media that is
---   owned by canonical public.events rows. This prepares Supabase-hosted media
---   records for the Romeo Peach Festival flyer pilot without changing existing
---   event records, flyer data, local assets, application code, RLS policies, or
---   Storage objects.
+--   Creates public.event_media as an additive companion table for approved media
+--   that belongs to canonical public.events rows. This prepares the Supabase
+--   database for a future Romeo Peach Festival flyer pilot without changing
+--   existing event records, application code, RLS policies, or Storage objects.
 --
 -- Manual Storage convention documented in docs/EVENT_MEDIA_SETUP.md:
 --   Bucket: celebration-atlas-media
@@ -16,7 +15,18 @@
 create table if not exists public.event_media (
   id uuid primary key default gen_random_uuid(),
   event_id uuid not null references public.events(id) on delete cascade,
-  media_role text not null check (
+  media_role text not null,
+  source text not null,
+  storage_bucket text,
+  storage_path text,
+  public_url text,
+  title text,
+  alt_text text,
+  sort_order integer not null default 0,
+  status text not null default 'draft',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  constraint event_media_media_role_check check (
     media_role in (
       'flyer',
       'thumbnail',
@@ -27,20 +37,20 @@ create table if not exists public.event_media (
       'brand'
     )
   ),
-  source text not null check (source in ('supabase', 'local', 'external')),
-  storage_bucket text,
-  storage_path text,
-  public_url text,
-  title text,
-  alt_text text,
-  sort_order integer not null default 0,
-  status text not null default 'draft' check (status in ('draft', 'approved', 'archived')),
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  constraint event_media_source_check check (
+    source in ('supabase', 'local', 'external')
+  ),
+  constraint event_media_status_check check (
+    status in ('draft', 'approved', 'archived')
+  ),
+  constraint event_media_storage_path_or_public_url_check check (
+    nullif(btrim(coalesce(storage_path, '')), '') is not null
+    or nullif(btrim(coalesce(public_url, '')), '') is not null
+  )
 );
 
 comment on table public.event_media is
-  'Additive event-owned media records linked to public.events. Approved Supabase records can be resolved ahead of local fallback media by application code later.';
+  'Additive event-owned media records linked to public.events. Approved records can be resolved by future application code without changing canonical event rows.';
 comment on column public.event_media.event_id is
   'Canonical event owner. Use public.events.slug only for manual lookup/seed examples, then store the UUID here.';
 comment on column public.event_media.media_role is
@@ -69,21 +79,33 @@ before update on public.event_media
 for each row
 execute function public.set_event_media_updated_at();
 
--- General lookup by owning event, role, status, and ordering.
-create index if not exists event_media_event_role_status_sort_idx
-  on public.event_media (event_id, media_role, status, sort_order, created_at desc);
-
--- Active media resolution index. This supports future application logic that
--- asks for the approved media for an event/role and can rank Supabase-hosted
--- records before local fallback records without deleting local data.
-create index if not exists event_media_approved_resolution_idx
-  on public.event_media (event_id, media_role, source, sort_order, created_at desc)
+-- Finding approved media by event while preserving role and display ordering.
+create index if not exists event_media_approved_by_event_idx
+  on public.event_media (event_id, media_role, sort_order, created_at desc)
   where status = 'approved';
 
--- Storage-path lookup for Supabase-backed media records. Multiple NULL values
--- are allowed, so this remains additive for local/external rows.
-create unique index if not exists event_media_supabase_storage_path_uidx
-  on public.event_media (storage_bucket, storage_path)
-  where source = 'supabase'
+-- Resolving one event's approved flyer efficiently.
+create index if not exists event_media_approved_flyer_idx
+  on public.event_media (event_id, sort_order, created_at desc)
+  where status = 'approved'
+    and media_role = 'flyer';
+
+-- Sorting all media for an event/role, including draft review queues.
+create index if not exists event_media_event_role_sort_idx
+  on public.event_media (event_id, media_role, sort_order, created_at desc);
+
+-- Prevent duplicate active media records for the same canonical event, role,
+-- and Supabase Storage object path. Archived rows are excluded so old records
+-- can be retained without blocking a replacement.
+create unique index if not exists event_media_active_event_role_storage_path_uidx
+  on public.event_media (event_id, media_role, storage_bucket, storage_path)
+  where status in ('draft', 'approved')
     and storage_bucket is not null
     and storage_path is not null;
+
+-- Prevent duplicate active media records for the same canonical event, role,
+-- and public URL for local or external media where no Storage path exists.
+create unique index if not exists event_media_active_event_role_public_url_uidx
+  on public.event_media (event_id, media_role, public_url)
+  where status in ('draft', 'approved')
+    and public_url is not null;
