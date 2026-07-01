@@ -85,6 +85,15 @@ export function isStorageObjectAbsentError(error) {
   return error.status === 400 && String(error.data?.statusCode) === '404';
 }
 
+export function storageUploadCurlArgs({ url }, bucket, objectPath) {
+  return [
+    '--request', 'POST',
+    '--data-binary', '@-',
+    '--fail-with-body',
+    `${url}/storage/v1/object/${encodeURIComponent(bucket)}/${objectPath.split('/').map(encodeURIComponent).join('/')}`
+  ];
+}
+
 async function supabaseRequest({ url, key }, endpoint, options = {}) {
   const method = options.method ?? 'GET';
   const args = [
@@ -234,35 +243,38 @@ export async function storageExists(env, bucket, objectPath, request = supabaseR
 async function applyBatch(env, results) {
   for (const result of results) {
     if (result.action === 'already-present') continue;
-    const exists = await storageExists(env, result.entry.targetBucket, result.entry.targetStoragePath);
-    if (exists) {
-      throw new Error(`${result.entry.canonicalSlug}: storage object already exists at ${result.entry.targetBucket}/${result.entry.targetStoragePath}; refusing to overwrite or attach a new approved flyer record.`);
-    }
-    await curl([
-        '--request', 'POST',
-        '--data-binary', '@-',
-        '--fail-with-body',
-        `${env.url}/storage/v1/object/${result.entry.targetBucket}/${result.entry.targetStoragePath}`
-      ], {
+    try {
+      const exists = await storageExists(env, result.entry.targetBucket, result.entry.targetStoragePath);
+      if (exists) {
+        throw new Error(`${result.entry.canonicalSlug}: storage object already exists at ${result.entry.targetBucket}/${result.entry.targetStoragePath}; refusing to overwrite or attach a new approved flyer record.`);
+      }
+      console.log(`Uploading to storage: ${result.entry.targetBucket}/${result.entry.targetStoragePath}`);
+      await curl(storageUploadCurlArgs(env, result.entry.targetBucket, result.entry.targetStoragePath), {
         config: curlHeaderConfig([['apikey', env.key], ['Authorization', `Bearer ${env.key}`], ['Content-Type', 'image/webp'], ['x-upsert', 'false']]),
         payload: result.fileBuffer
       });
-    const record = mediaRecord(result.entry, result.event.id);
-    if (result.action === 'update') {
-      await supabaseRequest(env, `/rest/v1/event_media?id=eq.${result.matching.id}`, {
-        method: 'PATCH',
-        headers: { Prefer: 'return=representation' },
-        body: JSON.stringify(record)
-      });
-    } else {
-      await supabaseRequest(env, '/rest/v1/event_media', {
-        method: 'POST',
-        headers: { Prefer: 'return=representation' },
-        body: JSON.stringify(record)
-      });
+      const record = mediaRecord(result.entry, result.event.id);
+      if (result.action === 'update') {
+        await supabaseRequest(env, `/rest/v1/event_media?id=eq.${result.matching.id}`, {
+          method: 'PATCH',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify(record)
+        });
+      } else {
+        await supabaseRequest(env, '/rest/v1/event_media', {
+          method: 'POST',
+          headers: { Prefer: 'return=representation' },
+          body: JSON.stringify(record)
+        });
+      }
+      result.storageAction = 'create';
+    } catch (error) {
+      result.error = error;
+      console.error(`${result.entry.canonicalSlug}: upload failed: ${error.message}`);
     }
-    result.storageAction = exists ? 'already-present' : 'create';
   }
+  const failures = results.filter((result) => result.error);
+  if (failures.length) throw new Error(`${failures.length} flyer upload(s) failed; see per-entry failures above.`);
 }
 
 function modeLabel() {
@@ -271,10 +283,10 @@ function modeLabel() {
 
 function summarizeResults(results) {
   return {
-    created: results.filter((r) => r.action === 'create' || r.action === 'update').length,
+    created: results.filter((r) => !r.error && (r.action === 'create' || r.action === 'update')).length,
     alreadyPresent: results.filter((r) => r.action === 'already-present').length,
     blocked: results.filter((r) => r.action === 'blocked').length,
-    failed: 0
+    failed: results.filter((r) => r.error).length
   };
 }
 
@@ -303,22 +315,28 @@ function printReport(results, { skippedDatabaseChecks = false } = {}) {
     console.log(`storage path: ${result.entry.targetBucket}/${result.entry.targetStoragePath}`);
     console.log(`media-record action: ${result.action}`);
     console.log(`intended event_media record: ${JSON.stringify(record)}`);
-    console.log(`final result: ${result.action === 'blocked' ? 'blocked' : apply ? 'applied/reconciled' : 'dry-run only; no writes'}`);
+    console.log(`final result: ${result.error ? `failed: ${result.error.message}` : result.action === 'blocked' ? 'blocked' : apply ? 'applied/reconciled' : 'dry-run only; no writes'}`);
   }
 }
 
 async function main() {
   console.log(`Flyer uploader starting: ${modeLabel()}`);
+  let results;
+  let skippedDatabaseChecks = false;
   try {
     const env = apply ? requireSupabaseCredentials() : getSupabaseCredentials();
     const manifest = await validateManifest();
     await validateSourceRoot();
-    const skippedDatabaseChecks = !env;
-    const results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
+    skippedDatabaseChecks = !env;
+    results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
     if (apply) await applyBatch(env, results);
     printReport(results, { skippedDatabaseChecks });
     printFinalSummary(results);
   } catch (error) {
+    if (results) {
+      printReport(results, { skippedDatabaseChecks });
+      printFinalSummary(results);
+    }
     console.error(`Flyer upload batch failed safely: ${error.message}`);
     process.exitCode = 1;
   }
