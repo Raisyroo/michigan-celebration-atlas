@@ -61,6 +61,29 @@ function curlHeaderConfig(headers) {
 }
 
 
+export class SupabaseHttpError extends Error {
+  constructor(message, { method, endpoint, status, data }) {
+    super(message);
+    this.name = 'SupabaseHttpError';
+    this.method = method;
+    this.endpoint = endpoint;
+    this.status = status;
+    this.data = data;
+  }
+}
+
+function isBucketMissingResponse(data) {
+  const fields = [data?.error, data?.message].filter(Boolean).map((value) => String(value).toLowerCase());
+  return fields.some((value) => value.includes('bucket'));
+}
+
+export function isStorageObjectAbsentError(error) {
+  if (!(error instanceof SupabaseHttpError)) return false;
+  if (isBucketMissingResponse(error.data)) return false;
+  if (error.status === 404) return true;
+  return error.status === 400 && String(error.data?.statusCode) === '404';
+}
+
 async function supabaseRequest({ url, key }, endpoint, options = {}) {
   const method = options.method ?? 'GET';
   const args = [
@@ -80,7 +103,14 @@ async function supabaseRequest({ url, key }, endpoint, options = {}) {
   const text = split >= 0 ? output.slice(0, split) : '';
   const status = Number(split >= 0 ? output.slice(split + 1) : '0');
   const data = text ? JSON.parse(text) : null;
-  if (status < 200 || status >= 300) throw new Error(`${method} ${endpoint} failed with ${status}: ${JSON.stringify(data)}`);
+  if (status < 200 || status >= 300) {
+    throw new SupabaseHttpError(`${method} ${endpoint} failed with ${status}: ${JSON.stringify(data)}`, {
+      method,
+      endpoint,
+      status,
+      data
+    });
+  }
   return data;
 }
 
@@ -190,12 +220,12 @@ async function localDryRunPreflight(manifest) {
   return results;
 }
 
-async function storageExists(env, bucket, objectPath) {
+export async function storageExists(env, bucket, objectPath, request = supabaseRequest) {
   try {
-    await supabaseRequest(env, `/storage/v1/object/info/${bucket}/${objectPath}`);
+    await request(env, `/storage/v1/object/info/${bucket}/${objectPath}`);
     return true;
   } catch (error) {
-    if (String(error.message).includes(' 404:')) return false;
+    if (isStorageObjectAbsentError(error)) return false;
     throw error;
   }
 }
@@ -204,8 +234,10 @@ async function applyBatch(env, results) {
   for (const result of results) {
     if (result.action === 'already-present') continue;
     const exists = await storageExists(env, result.entry.targetBucket, result.entry.targetStoragePath);
-    if (!exists) {
-      await curl([
+    if (exists) {
+      throw new Error(`${result.entry.canonicalSlug}: storage object already exists at ${result.entry.targetBucket}/${result.entry.targetStoragePath}; refusing to overwrite or attach a new approved flyer record.`);
+    }
+    await curl([
         '--request', 'POST',
         '--data-binary', '@-',
         '--fail-with-body',
@@ -214,7 +246,6 @@ async function applyBatch(env, results) {
         config: curlHeaderConfig([['apikey', env.key], ['Authorization', `Bearer ${env.key}`], ['Content-Type', 'image/webp'], ['x-upsert', 'false']]),
         payload: result.fileBuffer
       });
-    }
     const record = mediaRecord(result.entry, result.event.id);
     if (result.action === 'update') {
       await supabaseRequest(env, `/rest/v1/event_media?id=eq.${result.matching.id}`, {
@@ -252,15 +283,21 @@ function printReport(results, { skippedDatabaseChecks = false } = {}) {
   }
 }
 
-try {
-  const env = apply ? requireSupabaseCredentials() : getSupabaseCredentials();
-  const manifest = await validateManifest();
-  await validateSourceRoot();
-  const skippedDatabaseChecks = !env;
-  const results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
-  if (apply) await applyBatch(env, results);
-  printReport(results, { skippedDatabaseChecks });
-} catch (error) {
-  console.error(`Flyer upload batch failed safely: ${error.message}`);
-  process.exitCode = 1;
+async function main() {
+  try {
+    const env = apply ? requireSupabaseCredentials() : getSupabaseCredentials();
+    const manifest = await validateManifest();
+    await validateSourceRoot();
+    const skippedDatabaseChecks = !env;
+    const results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
+    if (apply) await applyBatch(env, results);
+    printReport(results, { skippedDatabaseChecks });
+  } catch (error) {
+    console.error(`Flyer upload batch failed safely: ${error.message}`);
+    process.exitCode = 1;
+  }
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await main();
 }
