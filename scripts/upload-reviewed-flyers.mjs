@@ -17,11 +17,16 @@ const allowedSignatures = [
 
 const apply = process.argv.includes('--apply');
 
-function getEnv() {
+function getSupabaseCredentials() {
   const url = process.env.SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_KEY;
-  if (!url || !key) throw new Error('Missing SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SERVICE_KEY environment variables.');
-  return { url: url.replace(/\/$/, ''), key };
+  return url && key ? { url: url.replace(/\/$/, ''), key } : null;
+}
+
+function requireSupabaseCredentials() {
+  const env = getSupabaseCredentials();
+  if (!env) throw new Error('Missing SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY/SUPABASE_SERVICE_KEY environment variables.');
+  return env;
 }
 
 async function curl(args, body) {
@@ -82,6 +87,15 @@ async function supabaseRequest({ url, key }, endpoint, options = {}) {
 async function validateManifest() {
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   if (!Array.isArray(manifest.entries) || manifest.entries.length !== 3) throw new Error('Manifest must contain exactly three reviewed entries.');
+  const excludedNames = new Set((manifest.excluded ?? []).map((entry) => entry.name));
+  for (const name of ['Romeo Peach Festival', 'Brown Trout Festival', 'Goodells Fair']) {
+    if (!excludedNames.has(name)) throw new Error(`Manifest excluded list must include ${name}.`);
+  }
+  for (const entry of manifest.entries) {
+    if (['romeo-peach-festival', 'brown-trout-festival', 'goodells-fair'].includes(entry.canonicalSlug)) {
+      throw new Error(`${entry.canonicalSlug}: excluded event must not appear in reviewed upload entries.`);
+    }
+  }
   const seen = new Set();
   for (const entry of manifest.entries) {
     const filename = path.basename(entry.sourcePath);
@@ -159,6 +173,23 @@ async function preflight(env, manifest) {
   return results;
 }
 
+
+async function localDryRunPreflight(manifest) {
+  const results = [];
+  for (const entry of manifest.entries) {
+    const fileBuffer = await validateFile(entry);
+    results.push({
+      entry,
+      event: { id: '<requires-supabase-preflight>', slug: entry.canonicalSlug, name: entry.title.replace(/ flyer$/, '') },
+      fileBuffer,
+      matching: null,
+      conflicting: [],
+      action: 'create'
+    });
+  }
+  return results;
+}
+
 async function storageExists(env, bucket, objectPath) {
   try {
     await supabaseRequest(env, `/storage/v1/object/info/${bucket}/${objectPath}`);
@@ -202,8 +233,11 @@ async function applyBatch(env, results) {
   }
 }
 
-function printReport(results) {
+function printReport(results, { skippedDatabaseChecks = false } = {}) {
   console.log(`Reviewed flyer upload batch (${apply ? 'APPLY' : 'DRY RUN'}): ${results.length} entries`);
+  if (skippedDatabaseChecks) {
+    console.log('Skipped: canonical event and existing approved-flyer verification requires Supabase credentials.');
+  }
   for (const result of results) {
     const record = mediaRecord(result.entry, result.event.id);
     console.log('\n---');
@@ -219,12 +253,13 @@ function printReport(results) {
 }
 
 try {
-  const env = getEnv();
+  const env = apply ? requireSupabaseCredentials() : getSupabaseCredentials();
   const manifest = await validateManifest();
   await validateSourceRoot();
-  const results = await preflight(env, manifest);
+  const skippedDatabaseChecks = !env;
+  const results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
   if (apply) await applyBatch(env, results);
-  printReport(results);
+  printReport(results, { skippedDatabaseChecks });
 } catch (error) {
   console.error(`Flyer upload batch failed safely: ${error.message}`);
   process.exitCode = 1;
