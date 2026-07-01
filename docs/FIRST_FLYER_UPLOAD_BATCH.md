@@ -36,7 +36,7 @@ The first batch intentionally excludes:
 npm run upload:flyers
 ```
 
-Dry run reads only the reviewed manifest, resolves flyer files from `FLYER_UPLOAD_SOURCE_ROOT` or the default `../celebration-atlas-app` source root, verifies local image files, confirms each canonical slug exists in `public.events`, checks that no different approved flyer already exists for each event, prints the exact object path and intended `event_media` record, and performs zero Storage or database writes.
+Dry run reads the reviewed manifest, resolves flyer files from `FLYER_UPLOAD_SOURCE_ROOT` or the default `../celebration-atlas-app` source root, verifies local image files, validates target storage paths, confirms excluded events remain out of the upload manifest, prints the exact object path and intended `event_media` record, and performs zero Storage or database writes. Without Supabase credentials, database-dependent canonical event and existing approved-flyer verification is explicitly skipped so the default dry run remains local-only and safe. When `SUPABASE_URL` and a service key are available, dry run additionally performs those read-only Supabase checks.
 
 The uploader fails clearly if the source checkout or any reviewed source file is unavailable.
 
