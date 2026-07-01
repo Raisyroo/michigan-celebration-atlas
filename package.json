@@ -5,6 +5,7 @@
   "scripts": {
     "inventory:flyers": "node scripts/inventory-flyers.mjs",
     "lint": "node --check scripts/inventory-flyers.mjs && node --check scripts/upload-reviewed-flyers.mjs",
-    "upload:flyers": "node scripts/upload-reviewed-flyers.mjs"
+    "upload:flyers": "node scripts/upload-reviewed-flyers.mjs",
+    "test": "node --test"
   }
 }
