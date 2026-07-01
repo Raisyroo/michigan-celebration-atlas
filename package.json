@@ -1,0 +1,9 @@
+{
+  "name": "michigan-celebration-atlas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "inventory:flyers": "node scripts/inventory-flyers.mjs",
+    "lint": "node --check scripts/inventory-flyers.mjs"
+  }
+}
