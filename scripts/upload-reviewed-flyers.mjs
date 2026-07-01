@@ -1,5 +1,6 @@
 import { mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { spawn } from 'node:child_process';
 import os from 'node:os';
 
@@ -264,8 +265,31 @@ async function applyBatch(env, results) {
   }
 }
 
+function modeLabel() {
+  return apply ? 'APPLY' : 'DRY RUN';
+}
+
+function summarizeResults(results) {
+  return {
+    created: results.filter((r) => r.action === 'create' || r.action === 'update').length,
+    alreadyPresent: results.filter((r) => r.action === 'already-present').length,
+    blocked: results.filter((r) => r.action === 'blocked').length,
+    failed: 0
+  };
+}
+
+function printFinalSummary(results) {
+  const summary = summarizeResults(results);
+  console.log('\nFLYER UPLOAD SUMMARY');
+  console.log(`Mode: ${modeLabel()}`);
+  console.log(`Created: ${summary.created}`);
+  console.log(`Already present: ${summary.alreadyPresent}`);
+  console.log(`Blocked: ${summary.blocked}`);
+  console.log(`Failed: ${summary.failed}`);
+}
+
 function printReport(results, { skippedDatabaseChecks = false } = {}) {
-  console.log(`Reviewed flyer upload batch (${apply ? 'APPLY' : 'DRY RUN'}): ${results.length} entries`);
+  console.log(`Reviewed flyer upload batch (${modeLabel()}): ${results.length} entries`);
   if (skippedDatabaseChecks) {
     console.log('Skipped: canonical event and existing approved-flyer verification requires Supabase credentials.');
   }
@@ -284,6 +308,7 @@ function printReport(results, { skippedDatabaseChecks = false } = {}) {
 }
 
 async function main() {
+  console.log(`Flyer uploader starting: ${modeLabel()}`);
   try {
     const env = apply ? requireSupabaseCredentials() : getSupabaseCredentials();
     const manifest = await validateManifest();
@@ -292,12 +317,19 @@ async function main() {
     const results = env ? await preflight(env, manifest) : await localDryRunPreflight(manifest);
     if (apply) await applyBatch(env, results);
     printReport(results, { skippedDatabaseChecks });
+    printFinalSummary(results);
   } catch (error) {
     console.error(`Flyer upload batch failed safely: ${error.message}`);
     process.exitCode = 1;
   }
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+export function isMainModule(moduleUrl, scriptPath = process.argv[1], options = {}) {
+  if (!scriptPath) return false;
+  const windows = options.windows ?? process.platform === 'win32';
+  return moduleUrl === pathToFileURL(scriptPath, { windows }).href;
+}
+
+if (isMainModule(import.meta.url)) {
   await main();
 }
