@@ -1,0 +1,53 @@
+{
+  "batch": "first-flyer-upload",
+  "dryRunDefault": true,
+  "entries": [
+    {
+      "canonicalSlug": "black-river-tattoo-convention",
+      "mediaRole": "flyer",
+      "targetBucket": "celebration-atlas-media",
+      "targetStoragePath": "events/black-river-tattoo-convention/flyer/black-river-tattoo-convention.webp",
+      "title": "Black River Tattoo Convention flyer",
+      "altText": "Flyer for the Black River Tattoo Convention in Port Huron, Michigan.",
+      "intendedRecordStatus": "approved",
+      "sourceRepository": "celebration-atlas-app",
+      "sourcePath": "public/event-media/flyers/black-river-tattoo-convention.webp"
+    },
+    {
+      "canonicalSlug": "mackinac-island-lilac-festival",
+      "mediaRole": "flyer",
+      "targetBucket": "celebration-atlas-media",
+      "targetStoragePath": "events/mackinac-island-lilac-festival/flyer/mackinac-island-lilac-festival.webp",
+      "title": "Mackinac Island Lilac Festival flyer",
+      "altText": "Flyer for the Mackinac Island Lilac Festival on Mackinac Island, Michigan.",
+      "intendedRecordStatus": "approved",
+      "sourceRepository": "celebration-atlas-app",
+      "sourcePath": "public/event-media/flyers/mackinac-island-lilac-festival.webp"
+    },
+    {
+      "canonicalSlug": "upper-peninsula-state-fair",
+      "mediaRole": "flyer",
+      "targetBucket": "celebration-atlas-media",
+      "targetStoragePath": "events/upper-peninsula-state-fair/flyer/upper-peninsula-state-fair.webp",
+      "title": "Upper Peninsula State Fair flyer",
+      "altText": "Flyer for the Upper Peninsula State Fair in Escanaba, Michigan.",
+      "intendedRecordStatus": "approved",
+      "sourceRepository": "celebration-atlas-app",
+      "sourcePath": "public/event-media/flyers/upper-peninsula-state-fair.webp"
+    }
+  ],
+  "excluded": [
+    {
+      "name": "Romeo Peach Festival",
+      "reason": "Approved Supabase flyer media already exists."
+    },
+    {
+      "name": "Brown Trout Festival",
+      "reason": "No canonical event record exists yet."
+    },
+    {
+      "name": "Goodells Fair",
+      "reason": "No canonical event record exists yet."
+    }
+  ]
+}
