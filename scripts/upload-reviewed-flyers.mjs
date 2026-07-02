@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -85,13 +86,77 @@ export function isStorageObjectAbsentError(error) {
   return error.status === 400 && String(error.data?.statusCode) === '404';
 }
 
-export function storageUploadCurlArgs({ url }, bucket, objectPath) {
-  return [
-    '--request', 'POST',
-    '--data-binary', '@-',
-    '--fail-with-body',
-    `${url}/storage/v1/object/${encodeURIComponent(bucket)}/${objectPath.split('/').map(encodeURIComponent).join('/')}`
-  ];
+export function storageObjectUrl({ url }, bucket, objectPath) {
+  const base = new URL('/storage/v1/object/', `${url.replace(/\/$/, '')}/`);
+  const safePath = [bucket, ...objectPath.split('/')].map((segment) => encodeURIComponent(segment)).join('/');
+  return new URL(safePath, base).href;
+}
+
+function contentTypeForPath(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  if (ext === '.webp') return 'image/webp';
+  if (ext === '.png') return 'image/png';
+  if (ext === '.jpg' || ext === '.jpeg') return 'image/jpeg';
+  throw new Error(`${filePath}: unsupported upload content type.`);
+}
+
+async function responseText(response) {
+  try {
+    return await response.text();
+  } catch {
+    return '';
+  }
+}
+
+export async function storageUploadFetch(env, bucket, objectPath, fileBuffer, { fetchImpl = globalThis.fetch, contentType = contentTypeForPath(objectPath) } = {}) {
+  if (!fetchImpl) throw new Error('Node fetch is unavailable; use Node 18 or newer.');
+  const endpoint = storageObjectUrl(env, bucket, objectPath);
+  const response = await fetchImpl(endpoint, {
+    method: 'POST',
+    headers: {
+      apikey: env.key,
+      Authorization: `Bearer ${env.key}`,
+      'Content-Type': contentType,
+      'x-upsert': 'false'
+    },
+    body: fileBuffer
+  });
+  if (!response.ok) {
+    const body = await responseText(response);
+    throw new SupabaseHttpError(`POST ${endpoint} failed with ${response.status}: ${body}`, {
+      method: 'POST',
+      endpoint,
+      status: response.status,
+      data: body
+    });
+  }
+  return response;
+}
+
+export function sha256(buffer) {
+  return createHash('sha256').update(buffer).digest('hex');
+}
+
+export async function storageDownloadFetch(env, bucket, objectPath, { fetchImpl = globalThis.fetch } = {}) {
+  if (!fetchImpl) throw new Error('Node fetch is unavailable; use Node 18 or newer.');
+  const endpoint = storageObjectUrl(env, bucket, objectPath);
+  const response = await fetchImpl(endpoint, {
+    method: 'GET',
+    headers: {
+      apikey: env.key,
+      Authorization: `Bearer ${env.key}`
+    }
+  });
+  if (!response.ok) {
+    const body = await responseText(response);
+    throw new SupabaseHttpError(`GET ${endpoint} failed with ${response.status}: ${body}`, {
+      method: 'GET',
+      endpoint,
+      status: response.status,
+      data: body
+    });
+  }
+  return Buffer.from(await response.arrayBuffer());
 }
 
 async function supabaseRequest({ url, key }, endpoint, options = {}) {
@@ -179,6 +244,13 @@ async function validateFile(entry) {
   return buffer;
 }
 
+export function mediaPreflightAction(matching, conflicting = []) {
+  if (conflicting.length) return 'blocked';
+  if (matching?.status === 'approved') return 'already-present';
+  if (matching) return 'upload-and-update';
+  return 'upload-and-record';
+}
+
 function mediaRecord(entry, eventId) {
   return {
     event_id: eventId,
@@ -205,11 +277,9 @@ async function preflight(env, manifest) {
     const media = await supabaseRequest(env, `/rest/v1/event_media?event_id=eq.${event.id}&media_role=eq.flyer&status=in.(draft,approved)&select=id,storage_bucket,storage_path,title,alt_text,status`);
     const matching = media.find((row) => row.storage_bucket === entry.targetBucket && row.storage_path === entry.targetStoragePath);
     const conflicting = media.filter((row) => row.status === 'approved' && row.id !== matching?.id);
-    const action = conflicting.length ? 'blocked' : matching?.status === 'approved' ? 'already-present' : matching ? 'update' : 'create';
+    const action = mediaPreflightAction(matching, conflicting);
     results.push({ entry, event, fileBuffer, matching, conflicting, action });
   }
-  const blocked = results.filter((r) => r.action === 'blocked');
-  if (blocked.length) throw new Error(`Preflight blocked: approved flyer media already exists for ${blocked.map((r) => r.entry.canonicalSlug).join(', ')}.`);
   return results;
 }
 
@@ -224,7 +294,7 @@ async function localDryRunPreflight(manifest) {
       fileBuffer,
       matching: null,
       conflicting: [],
-      action: 'create'
+      action: 'upload-and-record'
     });
   }
   return results;
@@ -240,21 +310,43 @@ export async function storageExists(env, bucket, objectPath, request = supabaseR
   }
 }
 
+export async function reconcileExistingObject(env, result, { download = storageDownloadFetch, request = supabaseRequest } = {}) {
+  const remoteBuffer = await download(env, result.entry.targetBucket, result.entry.targetStoragePath);
+  const localHash = sha256(result.fileBuffer);
+  const remoteHash = sha256(remoteBuffer);
+  if (localHash !== remoteHash) {
+    throw new Error(`${result.entry.canonicalSlug}: storage object already exists at ${result.entry.targetBucket}/${result.entry.targetStoragePath}, but SHA-256 differs; refusing to overwrite or reconcile.`);
+  }
+  await request(env, '/rest/v1/event_media', {
+    method: 'POST',
+    headers: { Prefer: 'return=representation' },
+    body: JSON.stringify(mediaRecord(result.entry, result.event.id))
+  });
+  result.finalResult = 'reconciled-existing-object';
+}
+
 async function applyBatch(env, results) {
   for (const result of results) {
-    if (result.action === 'already-present') continue;
+    if (result.action === 'already-present') {
+      result.finalResult = 'already-present';
+      continue;
+    }
+    if (result.action === 'blocked') {
+      result.finalResult = 'blocked';
+      continue;
+    }
     try {
       const exists = await storageExists(env, result.entry.targetBucket, result.entry.targetStoragePath);
       if (exists) {
-        throw new Error(`${result.entry.canonicalSlug}: storage object already exists at ${result.entry.targetBucket}/${result.entry.targetStoragePath}; refusing to overwrite or attach a new approved flyer record.`);
+        await reconcileExistingObject(env, result);
+        continue;
       }
       console.log(`Uploading to storage: ${result.entry.targetBucket}/${result.entry.targetStoragePath}`);
-      await curl(storageUploadCurlArgs(env, result.entry.targetBucket, result.entry.targetStoragePath), {
-        config: curlHeaderConfig([['apikey', env.key], ['Authorization', `Bearer ${env.key}`], ['Content-Type', 'image/webp'], ['x-upsert', 'false']]),
-        payload: result.fileBuffer
+      await storageUploadFetch(env, result.entry.targetBucket, result.entry.targetStoragePath, result.fileBuffer, {
+        contentType: contentTypeForPath(result.entry.targetStoragePath)
       });
       const record = mediaRecord(result.entry, result.event.id);
-      if (result.action === 'update') {
+      if (result.action === 'upload-and-update') {
         await supabaseRequest(env, `/rest/v1/event_media?id=eq.${result.matching.id}`, {
           method: 'PATCH',
           headers: { Prefer: 'return=representation' },
@@ -267,13 +359,14 @@ async function applyBatch(env, results) {
           body: JSON.stringify(record)
         });
       }
-      result.storageAction = 'create';
+      result.finalResult = 'uploaded-and-recorded';
     } catch (error) {
       result.error = error;
+      result.finalResult = result.finalResult ?? (error.message.includes('SHA-256 differs') ? 'blocked' : 'failed');
       console.error(`${result.entry.canonicalSlug}: upload failed: ${error.message}`);
     }
   }
-  const failures = results.filter((result) => result.error);
+  const failures = results.filter((result) => result.finalResult === 'failed');
   if (failures.length) throw new Error(`${failures.length} flyer upload(s) failed; see per-entry failures above.`);
 }
 
@@ -283,10 +376,11 @@ function modeLabel() {
 
 function summarizeResults(results) {
   return {
-    created: results.filter((r) => !r.error && (r.action === 'create' || r.action === 'update')).length,
+    uploadedAndRecorded: results.filter((r) => r.finalResult === 'uploaded-and-recorded').length,
+    reconciledExistingObject: results.filter((r) => r.finalResult === 'reconciled-existing-object').length,
     alreadyPresent: results.filter((r) => r.action === 'already-present').length,
-    blocked: results.filter((r) => r.action === 'blocked').length,
-    failed: results.filter((r) => r.error).length
+    blocked: results.filter((r) => r.finalResult === 'blocked' || (!r.finalResult && r.action === 'blocked')).length,
+    failed: results.filter((r) => r.finalResult === 'failed').length
   };
 }
 
@@ -294,7 +388,8 @@ function printFinalSummary(results) {
   const summary = summarizeResults(results);
   console.log('\nFLYER UPLOAD SUMMARY');
   console.log(`Mode: ${modeLabel()}`);
-  console.log(`Created: ${summary.created}`);
+  console.log(`Uploaded and recorded: ${summary.uploadedAndRecorded}`);
+  console.log(`Reconciled existing object: ${summary.reconciledExistingObject}`);
   console.log(`Already present: ${summary.alreadyPresent}`);
   console.log(`Blocked: ${summary.blocked}`);
   console.log(`Failed: ${summary.failed}`);
@@ -315,7 +410,8 @@ function printReport(results, { skippedDatabaseChecks = false } = {}) {
     console.log(`storage path: ${result.entry.targetBucket}/${result.entry.targetStoragePath}`);
     console.log(`media-record action: ${result.action}`);
     console.log(`intended event_media record: ${JSON.stringify(record)}`);
-    console.log(`final result: ${result.error ? `failed: ${result.error.message}` : result.action === 'blocked' ? 'blocked' : apply ? 'applied/reconciled' : 'dry-run only; no writes'}`);
+    const finalResult = result.error ? `${result.finalResult ?? 'failed'}: ${result.error.message}` : result.finalResult ?? (apply ? result.action : 'dry-run only; no writes');
+    console.log(`final result: ${finalResult}`);
   }
 }
 
